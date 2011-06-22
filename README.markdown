@@ -1,20 +1,26 @@
 ## Welcome!
 
-This repository is designed to allow Spring users and team members to contribute self-contained projects reproducing issues logged against Spring's JIRA issue tracker at https://jira.springsource.org.  It offers the following advantages to attaching .zip, or even patch files to JIRA issues:
+This repository is designed to allow Spring users and team members to contribute self-contained projects reproducing issues logged against Spring's JIRA issue tracker at https://jira.springsource.org.  It offers the following advantages over attaching .zip or even patch files to JIRA issues:
 
-* A streamlined process for evaluating issues -- more bugs fixed more quickly!
+* A streamlined process for evaluating issues so more bugs get fixed more quickly!
 * A set of template projects to choose from
-* Two-way communication with the Spring team based on working code -- we can make modifications and you can track them
+* Two-way communication with the Spring team based on working code
 * Improved code sharing across the Spring team
 * A back-reference and a valuable archive of small Spring projects across a wide range of use cases and features
 
-We hope you'll find it to be a convenient and useful way of interacting with the Spring team.
+All around a better way of interacting with the Spring team.
 
 
-## How to use this repository
+### Logging an issue against Spring's JIRA issue tracker
 
-The instructions below assume that you've encountered a bug against the core Spring Framework project.  If that's the case, carry on!
+1. First, [search SPR JIRA](https://jira.springframework.org/browse/SPR) to see if your issue has already been reported. If so, there may already be a reproduction issue in this repository!
+1. If after searching an issue does not already exist, [create a new issue](https://jira.springsource.org/secure/CreateIssue!default.jspa)
+    * You will now have an issue named, for example, "SPR-9876".  Make note of this, as you'll need it below when creating your project.
 
+
+## Using this repository to demonstrate the issue
+
+Assuming you've encountered and logged a bug against the core Spring Framework project you can now add a project to demonstrate it. 
 
 ### First-time setup
 
@@ -23,29 +29,29 @@ The instructions below assume that you've encountered a bug against the core Spr
 
 ### Create a project that reproduces your issue
 
-The idea is to create the smallest possible project that can reproduce your issue.  The project may be built with either Maven or Gradle, and must contain only sources, XML and other necessary text files.  No JARs, please!
+The idea is to create the smallest possible project to demonstrate the issue.  The project may be built with Maven or Gradle, and must contain only sources, XML and other necessary text files.  No JARs, please!
 
 For the purpose of these instructions, we'll assume your new JIRA issue ID is "SPR-9876"
 
 #### Steps
 
-1\. In your local clone of spring-framework-issues, copy one of the 'template' directories starting with `SPR-0000`.
+1\. In your local clone of this repository, copy the appopriate 'template' directory. Their names start with `SPR-0000`.
 
-Spring Framework issue:
+For Core Spring Framework issues:
 
 ```bash
 cd spring-framework-issues
 cp -r SPR-0000 SPR-9876
 ```
 
-Spring MVC issue:
+For Spring MVC issues:
 
 ```bash
 cd spring-framework-issues
 cp -r SPR-0000-war-xml SPR-9876
 ```
 
-2\. Modify the pom.xml to change the Maven artifactId to your JIRA issue ID.
+2\. Modify the pom.xml to change the artifactId to your JIRA issue ID.
 
 ```xml
 <groupId>org.springframework.issues</groupId>
@@ -71,12 +77,6 @@ git push
 6\. [Send a pull request from the Github web interface](http://help.github.com/send-pull-requests/)
 
 * The Spring Framework team will be notified and will look at your request
-
-### Log an issue against Spring's JIRA issue tracker
-
-1. First, [search SPR JIRA](https://jira.springframework.org/browse/SPR) to see if your issue has already been reported. If so, there may already be a reproduction issue in this repository!
-1. If after searching an issue does not already exist, [create a new issue](https://jira.springsource.org/secure/CreateIssue!default.jspa)
-    * You will now have an issue named, for example, "SPR-9876".  Make note of this, as you'll need it below when creating your project.
 
 ... and that's it!
 
