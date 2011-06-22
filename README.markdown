@@ -11,7 +11,7 @@ This repository is designed to allow Spring users and team members to contribute
 All around a better way of interacting with the Spring team.
 
 
-### Logging an issue against Spring's JIRA issue tracker
+## Logging an issue against Spring's JIRA issue tracker
 
 1. First, [search SPR JIRA](https://jira.springframework.org/browse/SPR) to see if your issue has already been reported. If so, there may already be a reproduction issue in this repository!
 1. If after searching an issue does not already exist, [create a new issue](https://jira.springsource.org/secure/CreateIssue!default.jspa)
@@ -20,7 +20,7 @@ All around a better way of interacting with the Spring team.
 
 ## Using this repository to demonstrate the issue
 
-Assuming you've encountered and logged a bug against the core Spring Framework project you can now add a project to demonstrate it. 
+Assuming you've encountered and created an issue in the core Spring Framework project you can now add a project to demonstrate it. 
 
 ### First-time setup
 
