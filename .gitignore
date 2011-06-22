@@ -4,3 +4,5 @@
 .springBeans
 target
 *.sw?
+.gradle
+build
