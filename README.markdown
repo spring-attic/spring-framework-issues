@@ -1,11 +1,12 @@
 ## Welcome!
 
-This repository is designed to allow Spring users and team members to contribute self-contained projects reproducing issues logged against Spring's JIRA issue tracker at https://jira.springsource.org.  We think it provides a superior alternative to attaching .zip files to JIRA issues for a few reasons:
+This repository is designed to allow Spring users and team members to contribute self-contained projects reproducing issues logged against Spring's JIRA issue tracker at https://jira.springsource.org.  It offers the following advantages to attaching .zip, or even patch files to JIRA issues:
 
-* Streamlines the process of evaluating potential issues, meaning more bugs fixed more quickly!
-* Facilitates two-way communication via working code: we can make modifications to your contributed projects as necessary and you can track it directly
-* Makes it possible to share code easily across the team
-* Provides a valuable archive of small working Spring projects across a wide range of use cases and framework features
+* A streamlined process for evaluating issues -- more bugs fixed more quickly!
+* A set of template projects to choose from
+* Two-way communication with the Spring team based on working code -- we can make modifications and you can track them
+* Improved code sharing across the Spring team
+* A back-reference and a valuable archive of small Spring projects across a wide range of use cases and features
 
 We hope you'll find it to be a convenient and useful way of interacting with the Spring team.
 
@@ -20,28 +21,31 @@ The instructions below assume that you've encountered a bug against the core Spr
 1. [Create a Github account](https://github.com/signup/free) if you don't already have one
 1. [Fork this repository and clone it locally](http://help.github.com/fork-a-repo/)
 
-### Log an issue against Spring's JIRA issue tracker
-
-1. First, [search SPR JIRA](https://jira.springframework.org/browse/SPR) to see if your issue has already been reported. If so, there may already be a reproduction issue in this repository!
-1. If after searching an issue does not already exist, [create a new issue](https://jira.springsource.org/secure/CreateIssue!default.jspa)
-    * You will now have an issue named, for example, "SPR-9876".  Make note of this, as you'll need it below when creating your project.
-
 ### Create a project that reproduces your issue
 
-The idea is to create the smallest possible project that can reproduce your issue.  Issues may be built with either Maven or Gradle, and must contain only sources, XML and other necessary text files.  No JARs, please!
+The idea is to create the smallest possible project that can reproduce your issue.  The project may be built with either Maven or Gradle, and must contain only sources, XML and other necessary text files.  No JARs, please!
 
 For the purpose of these instructions, we'll assume your new JIRA issue ID is "SPR-9876"
 
 #### Steps
 
-1\. In your local clone of spring-framework-issues, copy the `SPR-0000` directory. This is a simple 'template' issue to help you get started.
+1\. In your local clone of spring-framework-issues, copy one of the 'template' directories starting with `SPR-0000`.
+
+Spring Framework issue:
 
 ```bash
 cd spring-framework-issues
 cp -r SPR-0000 SPR-9876
 ```
 
-2\. Modify the pom.xml to change the Maven artifactId to your JIRA issue ID
+Spring MVC issue:
+
+```bash
+cd spring-framework-issues
+cp -r SPR-0000-war-xml SPR-9876
+```
+
+2\. Modify the pom.xml to change the Maven artifactId to your JIRA issue ID.
 
 ```xml
 <groupId>org.springframework.issues</groupId>
@@ -49,22 +53,30 @@ cp -r SPR-0000 SPR-9876
 <version>1.0-SNAPSHOT</version>
 ```
 
-3\. Import the project into your IDE and modify it as necessary to reproduce your issue.
+3\. Review the list of dependencies and version numbers, uncommenting, adding or deleting as necessary.
+
+
+4\. Import the project into your IDE and modify it as necessary to reproduce your issue.
 
 * It is already a buildable Maven project, so you may use your IDE's built-in support for Maven to do the importing.
 
-4\. Add, commit, and push your local fork
+5\. Add, commit, and push your local fork
 
 ```bash
 git add SPR-9876
-git commit -m"Add repro project for SPR-9876"
+git commit -m "Add repro project for SPR-9876"
 git push
 ```
 
-5\. [Send a pull request from the Github web interface](http://help.github.com/send-pull-requests/)
+6\. [Send a pull request from the Github web interface](http://help.github.com/send-pull-requests/)
 
 * The Spring Framework team will be notified and will look at your request
-* It is also a good idea to add a comment to your JIRA issue noting that a pull request has been made
+
+### Log an issue against Spring's JIRA issue tracker
+
+1. First, [search SPR JIRA](https://jira.springframework.org/browse/SPR) to see if your issue has already been reported. If so, there may already be a reproduction issue in this repository!
+1. If after searching an issue does not already exist, [create a new issue](https://jira.springsource.org/secure/CreateIssue!default.jspa)
+    * You will now have an issue named, for example, "SPR-9876".  Make note of this, as you'll need it below when creating your project.
 
 ... and that's it!
 
