@@ -18,14 +18,14 @@ this from within Eclipse using the Run->Run Configurations menu, or from the Mav
 command line with the following:
 
 ```bash
-$ mvn -e exec:java -Dexec.mainClass="org.springframework.issues.Spr8482Main" -Dexec.args="--greeting=Wilkommen"
+$ mvn package exec:java -Dexec.mainClass="org.springframework.issues.Spr8482Main" -Dexec.args="--greeting=Wilkommen"
 ```
 
 Now, try leaving the --greeting command line argument in place while also setting a
 'greeting' environment variable when running the application:
 
 ```bash
-$ greeting=Bienvenidos  mvn -e exec:java -Dexec.mainClass="org.springframework.issues.Spr8482Main" -Dexec.args="--greeting=Wilkommen"
+$ greeting=Bienvenidos  mvn package exec:java -Dexec.mainClass="org.springframework.issues.Spr8482Main" -Dexec.args="--greeting=Wilkommen"
 ```
 
 You'll notice that 'Bienvenidos' is now the greeting.  This is because the system
