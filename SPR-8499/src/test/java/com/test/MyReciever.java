@@ -5,7 +5,7 @@ public class MyReciever {
 		return null;
 	}
 	public void setInterface(MyInterface parent) {
-		System.out.println("we got the interface!");
+		System.out.println("we got the interface! " + parent);
 	}
 	public void callMethod() {
 		System.out.println("OK");
