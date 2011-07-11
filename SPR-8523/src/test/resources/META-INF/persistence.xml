@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<persistence version="2.0">
+  <persistence-unit name="pepper">
+    <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+    <class>com.vodori.jpa.model.AbstractParent</class>
+    <class>com.vodori.jpa.model.ConcreteChild</class>
+    </persistence-unit>
+</persistence>
