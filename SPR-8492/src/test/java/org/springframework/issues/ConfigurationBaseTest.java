@@ -42,7 +42,7 @@ public class ConfigurationBaseTest {
 		User user = new User();
 		user.setId(100);
 		user.setName("Neu");
-		user.setCity("Zürich");
+		user.setCity("ZÃ¼rich");
 		userService.saveUser(user);
 		List<String> names = userService.getNames();
 		assertEquals(names.size(), 6);
@@ -54,7 +54,7 @@ public class ConfigurationBaseTest {
 		User user = new User();
 		user.setId(100);
 		user.setName("NeuDochAlt");
-		user.setCity("Zürich");
+		user.setCity("ZÃ¼rich");
 		userService.saveUser(user);
 		List<String> names = userService.getNames();
 		assertEquals(names.size(), 6);
