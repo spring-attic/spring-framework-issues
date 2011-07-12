@@ -190,7 +190,7 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-                    <argLine>-javaagent:"${user.home}/.m2/repository/org/springframework/spring-instrument/3.1.0.M2/spring-instrument-3.1.0.M2.jar"</argLine>
+					<argLine>-javaagent:"${user.home}/.m2/repository/org/springframework/spring-instrument/${org.springframework.version}/spring-instrument-${org.springframework.version}.jar"</argLine>
 					<includes>
 						<include>**/*Tests.java</include>
 					</includes>
