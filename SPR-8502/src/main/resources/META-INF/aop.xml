@@ -1,0 +1,9 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+	<weaver options="-verbose -Xset:weaveJavaxPackages=true -showWeaveInfo">
+		<include within="poc.configurable.*"/>
+		<exclude within="*..*CGLIB*"/>
+		<exclude within="*..*javassist*"/>
+		<exclude within="*..*Service*"/>
+	</weaver>
+</aspectj>
