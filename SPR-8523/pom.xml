@@ -7,107 +7,14 @@
 	<name>Spring Issue Reproduction Project</name>
 	<packaging>jar</packaging>
 	<dependencies>
-		<!--
-			Support for testing Spring applications with tools such as JUnit and TestNG
-			This artifact is generally always defined with a 'test' scope for the integration testing framework and unit testing stubs
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<!--
-			Core utilities used by other modules.
-			Define this if you use Spring Utility APIs (org.springframework.core.*/org.springframework.util.*)
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!--
-			Expression Language (depends on spring-core)
-			Define this if you use Spring Expression APIs (org.springframework.expression.*)
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!--
-			Bean Factory and JavaBeans utilities (depends on spring-core)
-			Define this if you use Spring Bean APIs (org.springframework.beans.*)
-		-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		<!--
-			Aspect Oriented Programming (AOP) Framework (depends on spring-core, spring-beans)
-			Define this if you use Spring AOP APIs (org.springframework.aop.*)
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!--
-			Application Context (depends on spring-core, spring-expression, spring-aop, spring-beans)
-			This is the central artifact for Spring's Dependency Injection Container and is generally always defined
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!--
-			Various Application Context utilities, including EhCache, JavaMail, Quartz, and Freemarker integration
-			Define this if you need any of these integrations
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!--
-			Transaction Management Abstraction (depends on spring-core, spring-beans, spring-aop, spring-context)
-			Define this if you use Spring Transactions or DAO Exception Hierarchy
-			(org.springframework.transaction.*/org.springframework.dao.*)
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!--
-			Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, and iBatis.
-			(depends on spring-core, spring-beans, spring-context, spring-tx)
-			Define this if you need ORM (org.springframework.orm.*)
-		-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!--
-			Object-to-XML Mapping (OXM) abstraction and integration with JAXB, JiBX, Castor, XStream, and XML Beans.
-			(depends on spring-core, spring-beans, spring-context)
-			Define this if you need OXM (org.springframework.oxm.*)
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!--
-			Spring MVC for Servlet Environments (depends on spring-core, spring-beans, spring-context, spring-web)
-			Define this if you use Spring MVC with a Servlet Container such as Apache Tomcat (org.springframework.web.servlet.*)
-		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
@@ -116,34 +23,31 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8</version>
-			<scope>test</scope>
+			<groupId>org.apache.openjpa</groupId>
+			<artifactId>openjpa</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
 		</dependency>
-		 <!--  HSQLDB for testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.2.4</version>
 			<scope>test</scope>
-		</dependency>
-		<!-- OpenJPA Support.  This is used by the exception logger to maintain a
-			 database table of exceptions and by the notification manager -->
-		<dependency>
-			<groupId>org.apache.openjpa</groupId>
-			<artifactId>openjpa</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-		<dependency>
-				 <groupId>commons-dbcp</groupId>
-				 <artifactId>commons-dbcp</artifactId>
-				 <version>1.4</version>
 		</dependency>
 	</dependencies>
 	<repositories>

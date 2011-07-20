@@ -1,58 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+			<property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+			<property name="url" value="jdbc:hsqldb:mem:testDBInMemory"/>
+			<property name="username" value="sa"/>
+			<property name="password" value=""/>
+		</bean>
 
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-            <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
-            <property name="url" value="jdbc:hsqldb:mem:testDBInMemory"/>
-            <property name="username" value="sa"/>
-            <property name="password" value=""/>
-        </bean>
+		<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter">
+			<property name="database" value="HSQL"/>
+			<property name="showSql" value="true"/>
+			<property name="generateDdl" value="true"/>
+		</bean>
 
-        <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter">
-            <description>
-                JPA Vendor Adapter bean
-            </description>
-            <property name="database" value="HSQL"/>
-            <property name="showSql" value="true"/>
-            <property name="generateDdl" value="true"/>
-        </bean>
+		<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="persistenceUnitManager" ref="persistenceUnitManager"/>
+			<property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+			<property name="jpaDialect">
+				<bean class="org.springframework.orm.jpa.vendor.OpenJpaDialect"/>
+			</property>
+			<property name="jpaPropertyMap">
+				<map>
+					<entry key="openjpa.Log" value="DefaultLevel=TRACE"/>
+				</map>
+			</property>
+		</bean>
 
+		<bean id="persistenceUnitManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+			<property name="defaultDataSource" ref="dataSource"/>
+		</bean>
 
-
-        <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-            <property name="persistenceUnitManager" ref="persistenceUnitManager"/>
-            <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-            <property name="jpaDialect" ref="jpaDialect"/>
-            <property name="jpaPropertyMap">
-                <map>
-                    <entry key="openjpa.Log" value="DefaultLevel=TRACE"/>
-                </map>
-            </property>
-            <property name="loadTimeWeaver">
-                <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
-            </property>
-        </bean>
-
-        <bean name="jpaDialect" class="org.springframework.orm.jpa.vendor.OpenJpaDialect">
-        </bean>
-
-        <bean id="persistenceUnitManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
-            <property name="defaultDataSource" ref="dataSource"/>
-
-        </bean>
-
-
-        <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-            <property name="entityManagerFactory" ref="entityManagerFactory"/>
-        </bean>
-
-
-        <context:component-scan base-package="com.vodori.jpa.model"/>
-        <context:component-scan base-package="com.vodori.jpa.dao"/>
-
-
-
+		<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+			<property name="entityManagerFactory" ref="entityManagerFactory"/>
+		</bean>
 </beans>
