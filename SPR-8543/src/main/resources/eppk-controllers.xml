@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:security="http://www.springframework.org/schema/security"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+<!-- 
+  <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+ -->
+  <!-- registers all beans with @Component annotation, especially @Controller -->
+  <context:component-scan base-package="net.decalog.eppk" />
+  
+  <!-- share the same mapper between multiple views / message converters -->
+  <bean id="jsonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+  </bean>
+  
+  <!-- message converter to use when the input is JSON -->
+  <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+    <property name="objectMapper" ref="jsonObjectMapper"/>
+  </bean>
+  
+  <bean id="mappingJacksonJsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+    <property name="objectMapper" ref="jsonObjectMapper"/>
+  </bean>
+
+  <!-- bean that is called to parse the body of an incoming POST or PUT request
+       the body must be "json-encoded" -->
+  <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    <property name="messageConverters">
+      <list>
+        <ref bean="mappingJacksonHttpMessageConverter"/>  
+      </list>
+    </property>
+  </bean>
+  
+  <!-- bean that is called to choose the view to render the result of the request : JSON -->
+  <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <property name="mediaTypes">
+      <map>
+        <entry key="json" value="application/json" />
+      </map>
+    </property>
+    <property name="defaultViews">
+      <list>
+        <ref bean="mappingJacksonJsonView" />
+      </list>
+    </property>
+    <property name="defaultContentType" value="application/json" />
+    <property name="ignoreAcceptHeader" value="true" />
+  </bean>
+</beans>

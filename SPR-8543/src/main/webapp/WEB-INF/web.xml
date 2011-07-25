@@ -1,0 +1,32 @@
+<!DOCTYPE web-app PUBLIC
+"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+"http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>e-Paprika</display-name>
+
+    <!-- where to find the spring config for business logic -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:/appContext-eppk.xml</param-value>
+    </context-param>
+    
+    <!-- the "global to all servlets" (even if we have only one servlet) application configuration 
+    see the context-param above for the XML file used -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <!-- the only servlet of the application is a DispatcherServlet configured in eppk-servlet.xml 
+    and called for /rest/* -->
+	<servlet>
+		<servlet-name>eppk</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+    
+	<servlet-mapping>
+		<servlet-name>eppk</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+</web-app>
