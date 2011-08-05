@@ -6,3 +6,4 @@ target
 *.sw?
 .gradle
 build
+.DS_Store
