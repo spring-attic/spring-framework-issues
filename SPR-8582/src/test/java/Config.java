@@ -1,4 +1,3 @@
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,16 +13,13 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 @ImportResource("inherited.xml")
 public class Config {
 
-	@Autowired
-	private TheBeanWithMessageSource theBeanWithMessageSource;
-
 	@Bean
 	public MessageSource messageSource() {
 		return new ResourceBundleMessageSource();
 	}
 
 	@Bean
-	public TheBeanThatUsesTheBeanWithMessageSource theOtherBean() {
+	public TheBeanThatUsesTheBeanWithMessageSource theOtherBean(TheBeanWithMessageSource theBeanWithMessageSource) {
 		TheBeanThatUsesTheBeanWithMessageSource theOtherBean =
 				new TheBeanThatUsesTheBeanWithMessageSource();
 		theOtherBean.setBean(theBeanWithMessageSource);
