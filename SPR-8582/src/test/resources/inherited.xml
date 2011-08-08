@@ -2,8 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean name="theBean" class="TheBeanWithMessageSource">
+	<bean name="theBean1" class="TheBeanWithMessageSource">
 		<property name="messageSource" ref="messageSource" />
 	</bean>
 
+	<bean name="theBean2" class="TheBeanWithMessageSource">
+		<property name="messageSource" ref="messageSource" />
+	</bean>
 </beans>

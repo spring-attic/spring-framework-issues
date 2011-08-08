@@ -7,7 +7,7 @@
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" />
 
 	<bean id="theOtherBean" class="TheBeanThatUsesTheBeanWithMessageSource">
-		<property name="bean" ref="theBean" />
+		<property name="bean" ref="theBean1" />
 	</bean>
 
 </beans>

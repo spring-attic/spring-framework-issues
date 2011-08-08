@@ -1,3 +1,4 @@
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,8 @@ public class Config {
 	}
 
 	@Bean
-	public TheBeanThatUsesTheBeanWithMessageSource theOtherBean(TheBeanWithMessageSource theBeanWithMessageSource) {
+	public TheBeanThatUsesTheBeanWithMessageSource theOtherBean(
+			@Qualifier("theBean1") TheBeanWithMessageSource theBeanWithMessageSource) {
 		TheBeanThatUsesTheBeanWithMessageSource theOtherBean =
 				new TheBeanThatUsesTheBeanWithMessageSource();
 		theOtherBean.setBean(theBeanWithMessageSource);
