@@ -1,11 +1,11 @@
 package org.springframework.samples.config.basic.account;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.google.gson.GsonBuilder;
 
-@Configurable
+@Configuration
 public class AppConfig {
 
 	@Bean(name = "gsonBuilder")

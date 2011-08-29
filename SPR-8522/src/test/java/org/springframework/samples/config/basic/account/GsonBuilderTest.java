@@ -1,17 +1,10 @@
 package org.springframework.samples.config.basic.account;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
-import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-//import org.springframework.samples.config.basic.account.domain.Account;
-//import org.springframework.samples.config.basic.account.repository.AccountRepository;
-//import org.springframework.samples.config.basic.account.service.TransferService;
 
 import com.google.gson.GsonBuilder;
 
