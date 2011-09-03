@@ -6,62 +6,51 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
-           http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-           http://www.springframework.org/schema/aop 
-           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-            http://www.springframework.org/schema/context 
-            http://www.springframework.org/schema/context/spring-context-3.0.xsd"
-            >
-            
-            
-	
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
 	<bean id="a" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target" ref="a-target"/>
-        <property name="interceptorNames" value="anyInterceptor"/>
-        <property name="proxyInterfaces" value="org.springframework.issues.IA"/>
-    </bean>
-	
+		<property name="target" ref="a-target"/>
+		<property name="interceptorNames" value="anyInterceptor"/>
+		<property name="proxyInterfaces" value="org.springframework.issues.IA"/>
+	</bean>
+
 	<bean id="a-target" class="org.springframework.issues.A">
 		<property name="c" ref="c"/>
 		<property name="cWithAutoWired" ref="c-with-autowired"/>
 	</bean>
-	
+
 	<bean id="b" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target" ref="b-target"/>
-        <property name="interceptorNames" value="anyInterceptor"/>
-        <property name="proxyInterfaces" value="org.springframework.issues.IB"/>
-    </bean>
-	
+		<property name="target" ref="b-target"/>
+		<property name="interceptorNames" value="anyInterceptor"/>
+		<property name="proxyInterfaces" value="org.springframework.issues.IB"/>
+	</bean>
+
 	<bean id="b-target" class="org.springframework.issues.B">
 		<property name="c" ref="c"/>
 		<property name="cWithAutoWired" ref="c-with-autowired"/>
 	</bean>
-	
+
 	<bean id="c" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target" ref="c-target"/>
-        <property name="interceptorNames" value="anyInterceptor"/>
-        <property name="proxyInterfaces" value="org.springframework.issues.IC"/>
-    </bean>
-	
+		<property name="target" ref="c-target"/>
+		<property name="interceptorNames" value="anyInterceptor"/>
+		<property name="proxyInterfaces" value="org.springframework.issues.IC"/>
+	</bean>
+
 	<bean id="c-target" class="org.springframework.issues.C">
 		<property name="d" ref="d"/>
 	</bean>
-	
+
 	<bean id="c-with-autowired" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target" ref="c-with-autowired-target"/>
-        <property name="interceptorNames" value="anyInterceptor"/>
-        <property name="proxyInterfaces" value="org.springframework.issues.ICWithAutoWired"/>
-    </bean>
-	
-	<bean id="c-with-autowired-target" class="org.springframework.issues.CWithAutoWired">
+		<property name="target" ref="c-with-autowired-target"/>
+		<property name="interceptorNames" value="anyInterceptor"/>
+		<property name="proxyInterfaces" value="org.springframework.issues.ICWithAutoWired"/>
 	</bean>
-	
-	<bean id="d" class="org.springframework.issues.D">
-	</bean>
-	
-	<bean id="anyInterceptor"
-        class="org.springframework.issues.AnyInterceptor">
-    </bean>
-	
+
+	<bean id="c-with-autowired-target" class="org.springframework.issues.CWithAutoWired"/>
+
+	<bean id="d" class="org.springframework.issues.D"/>
+
+	<bean id="anyInterceptor" class="org.springframework.issues.AnyInterceptor"/>
+
 </beans>
