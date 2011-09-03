@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"app-test-context.xml"})
-public class TestInterceptor {
+public class InterceptorTests {
 
 	@Autowired private IC c;
 	@Autowired @Qualifier("c-with-autowired") private ICWithAutoWired cWithAutoWired;

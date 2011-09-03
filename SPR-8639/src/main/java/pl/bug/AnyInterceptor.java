@@ -12,7 +12,6 @@ public class AnyInterceptor implements MethodInterceptor {
 
 	private List<String> invokedBy = new ArrayList<String>();
 	
-	@Override
 	public Object invoke( MethodInvocation invocation ) throws Throwable {
 		
 		invokedBy.add(invocation.getThis().getClass().getName());
