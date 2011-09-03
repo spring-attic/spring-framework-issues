@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:flow="http://www.springframework.org/schema/webflow-config"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+            http://www.springframework.org/schema/context 
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+            >
+            
+            
+	
+	<bean id="a" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="a-target"/>
+        <property name="interceptorNames" value="anyInterceptor"/>
+        <property name="proxyInterfaces" value="pl.bug.IA"/>
+    </bean>
+	
+	<bean id="a-target" class="pl.bug.A">
+		<property name="c" ref="c"/>
+		<property name="cWithAutoWired" ref="c-with-autowired"/>
+	</bean>
+	
+	<bean id="b" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="b-target"/>
+        <property name="interceptorNames" value="anyInterceptor"/>
+        <property name="proxyInterfaces" value="pl.bug.IB"/>
+    </bean>
+	
+	<bean id="b-target" class="pl.bug.B">
+		<property name="c" ref="c"/>
+		<property name="cWithAutoWired" ref="c-with-autowired"/>
+	</bean>
+	
+	<bean id="c" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="c-target"/>
+        <property name="interceptorNames" value="anyInterceptor"/>
+        <property name="proxyInterfaces" value="pl.bug.IC"/>
+    </bean>
+	
+	<bean id="c-target" class="pl.bug.C">
+		<property name="d" ref="d"/>
+	</bean>
+	
+	<bean id="c-with-autowired" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="c-with-autowired-target"/>
+        <property name="interceptorNames" value="anyInterceptor"/>
+        <property name="proxyInterfaces" value="pl.bug.ICWithAutoWired"/>
+    </bean>
+	
+	<bean id="c-with-autowired-target" class="pl.bug.CWithAutoWired">
+	</bean>
+	
+	<bean id="d" class="pl.bug.D">
+	</bean>
+	
+	<bean id="anyInterceptor"
+        class="pl.bug.AnyInterceptor">
+    </bean>
+	
+</beans>
