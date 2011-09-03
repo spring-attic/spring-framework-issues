@@ -19,10 +19,10 @@
 	<bean id="a" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="a-target"/>
         <property name="interceptorNames" value="anyInterceptor"/>
-        <property name="proxyInterfaces" value="pl.bug.IA"/>
+        <property name="proxyInterfaces" value="org.springframework.issues.IA"/>
     </bean>
 	
-	<bean id="a-target" class="pl.bug.A">
+	<bean id="a-target" class="org.springframework.issues.A">
 		<property name="c" ref="c"/>
 		<property name="cWithAutoWired" ref="c-with-autowired"/>
 	</bean>
@@ -30,10 +30,10 @@
 	<bean id="b" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="b-target"/>
         <property name="interceptorNames" value="anyInterceptor"/>
-        <property name="proxyInterfaces" value="pl.bug.IB"/>
+        <property name="proxyInterfaces" value="org.springframework.issues.IB"/>
     </bean>
 	
-	<bean id="b-target" class="pl.bug.B">
+	<bean id="b-target" class="org.springframework.issues.B">
 		<property name="c" ref="c"/>
 		<property name="cWithAutoWired" ref="c-with-autowired"/>
 	</bean>
@@ -41,27 +41,27 @@
 	<bean id="c" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="c-target"/>
         <property name="interceptorNames" value="anyInterceptor"/>
-        <property name="proxyInterfaces" value="pl.bug.IC"/>
+        <property name="proxyInterfaces" value="org.springframework.issues.IC"/>
     </bean>
 	
-	<bean id="c-target" class="pl.bug.C">
+	<bean id="c-target" class="org.springframework.issues.C">
 		<property name="d" ref="d"/>
 	</bean>
 	
 	<bean id="c-with-autowired" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="c-with-autowired-target"/>
         <property name="interceptorNames" value="anyInterceptor"/>
-        <property name="proxyInterfaces" value="pl.bug.ICWithAutoWired"/>
+        <property name="proxyInterfaces" value="org.springframework.issues.ICWithAutoWired"/>
     </bean>
 	
-	<bean id="c-with-autowired-target" class="pl.bug.CWithAutoWired">
+	<bean id="c-with-autowired-target" class="org.springframework.issues.CWithAutoWired">
 	</bean>
 	
-	<bean id="d" class="pl.bug.D">
+	<bean id="d" class="org.springframework.issues.D">
 	</bean>
 	
 	<bean id="anyInterceptor"
-        class="pl.bug.AnyInterceptor">
+        class="org.springframework.issues.AnyInterceptor">
     </bean>
 	
 </beans>

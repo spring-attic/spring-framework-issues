@@ -1,4 +1,4 @@
-package pl.bug;
+package org.springframework.issues;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

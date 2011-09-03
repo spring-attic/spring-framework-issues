@@ -1,4 +1,4 @@
-package pl.bug;
+package org.springframework.issues;
 
 
 
