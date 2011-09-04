@@ -27,9 +27,10 @@ public class InterceptorTests {
 	@Test
 	public void repro() throws Exception {
 		c.getD();
-		cWithAutoWired.getD();
+		assertEquals( 1, anyInterceptor.getInvokedBy().size() );
 
-		assertEquals( anyInterceptor.getInvokedBy().size(), 1 );
-		assertEquals( anyInterceptor.getInvokedBy().get(0), C.class.getName());
+		cWithAutoWired.getD();
+		//failed, anyInterceptor invoked only once
+		assertEquals( 2, anyInterceptor.getInvokedBy().size() );
 	}
 }
