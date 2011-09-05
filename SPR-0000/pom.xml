@@ -4,7 +4,6 @@
 	<groupId>org.springframework.issues</groupId>
 	<artifactId>SPR-0000</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>Spring Issue Reproduction Project</name>
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
@@ -13,15 +12,15 @@
 			<version>3.1.0.BUILD-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
 		</dependency>
 	</dependencies>
 	<repositories>
@@ -39,6 +38,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -46,6 +46,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.2</version>
 				<configuration>
 					<includes>
 						<include>**/*Tests.java</include>
