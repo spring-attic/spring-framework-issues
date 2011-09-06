@@ -29,7 +29,8 @@ public class InterceptorTests {
 		c.getD();
 		cWithAutoWired.getD();
 
-		assertEquals( anyInterceptor.getInvokedBy().size(), 1 );
-		assertEquals( anyInterceptor.getInvokedBy().get(0), C.class.getName());
+		assertEquals( anyInterceptor.getInvokedBy().size(), 2 );
+		assertEquals( anyInterceptor.getInvokedBy().get(0), C.class.getName() );
+		assertEquals( anyInterceptor.getInvokedBy().get(1), CWithAutoWired.class.getName() );
 	}
 }
