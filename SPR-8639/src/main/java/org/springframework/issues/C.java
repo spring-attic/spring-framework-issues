@@ -1,15 +1,9 @@
 package org.springframework.issues;
 
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class C implements IC {
+public class C {
 
-	private D d;
+	@Autowired D d;
 
-	public void setD( D d ) {
-		this.d = d;
-	}
-
-	public D getD() {
-		return d;
-	}
 }

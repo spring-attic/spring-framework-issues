@@ -1,18 +1,9 @@
 package org.springframework.issues;
 
 
-public class A implements IA {
+public class A {
 
-	@SuppressWarnings("unused")
-	private IC c;
-	@SuppressWarnings("unused")
-	private ICWithAutoWired cWithAutoWired;
-
-	public void setC( IC c ) {
-		this.c = c;
+	public void setC(C c) {
 	}
 
-	public void setcWithAutoWired( ICWithAutoWired cWithAutoWired ) {
-		this.cWithAutoWired = cWithAutoWired;
-	}
 }
