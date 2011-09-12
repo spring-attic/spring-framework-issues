@@ -35,38 +35,30 @@ For the purpose of these instructions, we'll assume your new JIRA issue ID is "S
 
 #### Steps
 
-1\. In your local clone of this repository, copy the appopriate 'template' directory. Their names start with `SPR-0000`.
+1\. In your local clone of this repository, create a copy of the appopriate 'template' directory. Their names start with `SPR-0000`.
 
 For Core Spring Framework issues:
 
 ```bash
 cd spring-framework-issues
-cp -r SPR-0000 SPR-9876
+./create-repro-project.sh SPR-0000/ SPR-9876
 ```
 
 For Spring MVC issues:
 
 ```bash
 cd spring-framework-issues
-cp -r SPR-0000-war-xml SPR-9876
+./create-repro-project.sh SPR-0000-war-xml/ SPR-9876
 ```
 
-2\. Modify the pom.xml to change the artifactId to your JIRA issue ID.
-
-```xml
-<groupId>org.springframework.issues</groupId>
-<artifactId>SPR-9876</artifactId>
-<version>1.0-SNAPSHOT</version>
-```
-
-3\. Review the list of dependencies and version numbers, uncommenting, adding or deleting as necessary.
+2\. Review the list of dependencies and version numbers and modify the pom.xml as necessary.
 
 
-4\. Import the project into your IDE and modify it as necessary to reproduce your issue.
+3\. Import the project into your IDE and modify it as necessary to reproduce your issue.
 
 * It is already a buildable Maven project, so you may use your IDE's built-in support for Maven to do the importing.
 
-5\. Add, commit, and push your local fork
+4\. Add, commit, and push your local fork
 
 ```bash
 git add SPR-9876
@@ -74,7 +66,7 @@ git commit -m "Add repro project for SPR-9876"
 git push
 ```
 
-6\. [Send a pull request from the Github web interface](http://help.github.com/send-pull-requests/)
+5\. [Send a pull request from the Github web interface](http://help.github.com/send-pull-requests/)
 
 * The Spring Framework team will be notified and will look at your request
 

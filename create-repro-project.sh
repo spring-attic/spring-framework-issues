@@ -18,6 +18,13 @@ if [ -d "$target_dir" ]; then
     echo "target directory $target_dir already exists"
     exit 3
 fi
+# remove trailing slash
+case "$source_dir" in 
+    */)
+        length=${#source_dir}
+        source_dir=${source_dir:0:$length-1}
+        ;;
+esac
 expr="s/$source_dir/$target_dir/"
 set -x
 mkdir $target_dir

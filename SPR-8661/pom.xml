@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.issues</groupId>
-	<artifactId>SPR-0000-war-xml</artifactId>
+	<artifactId>SPR-8661</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>Spring MVC Issue Reproduction Project</name>
 	<packaging>war</packaging>
@@ -66,8 +66,12 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- JSTL <dependency> <groupId>javax.servlet</groupId> <artifactId>jstl</artifactId> 
-			<version>1.2</version> </dependency> -->
+		<!-- JSTL -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 
 		<!-- JSR 303 with Hibernate Validator <dependency> <groupId>javax.validation</groupId> 
 			<artifactId>validation-api</artifactId> <version>1.0.0.GA</version> </dependency> 
