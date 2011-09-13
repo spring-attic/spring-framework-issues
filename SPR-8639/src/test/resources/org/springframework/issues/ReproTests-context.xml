@@ -7,22 +7,32 @@
 
 	<context:annotation-config/>
 
-	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-		<property name="interceptorNames" value="myInterceptor"/>
-		<property name="beanNames" value="a,b,c"/>
-	</bean>
-
 	<bean id="myInterceptor" class="org.springframework.issues.MyInterceptor"/>
 
-	<bean id="a" class="org.springframework.issues.A">
-		<property name="c" ref="c"/>
+	<bean id="a" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<bean class="org.springframework.issues.A">
+				<property name="c" ref="c"/>
+			</bean>
+		</property>
+		<property name="interceptorNames" value="myInterceptor"/>
 	</bean>
 
-	<bean id="b" class="org.springframework.issues.B">
-		<property name="c" ref="c"/>
+	<bean id="b" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<bean class="org.springframework.issues.B">
+				<property name="c" ref="c"/>
+			</bean>
+		</property>
+		<property name="interceptorNames" value="myInterceptor"/>
 	</bean>
 
-	<bean id="c" class="org.springframework.issues.C"/>
+	<bean id="c" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<bean class="org.springframework.issues.C"/>
+		</property>
+		<property name="interceptorNames" value="myInterceptor"/>
+	</bean>
 
 	<!-- will be @Autowired into C -->
 	<bean id="d" class="org.springframework.issues.D"/>
