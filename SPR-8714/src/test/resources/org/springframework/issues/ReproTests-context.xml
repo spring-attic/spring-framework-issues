@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <bean id="testMapFactory" class="org.springframework.issues.TestMapFactory" />
+
+	<bean id="testMap" factory-bean="testMapFactory" factory-method="createTestMap"/>
+
+	<bean id="testMapConsumer" class="org.springframework.issues.TestMapConsumer">
+        <property name="testMap" ref="testMap"/>
+    </bean>
+
+</beans>
