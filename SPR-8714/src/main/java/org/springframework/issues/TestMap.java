@@ -16,13 +16,11 @@
 
 package org.springframework.issues;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * See 
+ * Original source
  * https://github.com/rgladwell/spring-map-converter-issue/blob/master/src/main/java/uk/co/bbc/spring/issue/TestMap.java
  */
 @SuppressWarnings("serial")
@@ -34,18 +32,8 @@ public class TestMap<K, V> extends HashMap<K, V> implements Map<K, V> {
 		init = true;
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		return Collections.EMPTY_SET;
-	}
-
-	@Override
-	public int size() {
-		if (!init) {
-			throw new IllegalStateException("map not initialised");
-		}
-		return super.size();
+	public boolean isInitialized() {
+		return this.init;
 	}
 
 }
