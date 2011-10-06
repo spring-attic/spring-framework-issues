@@ -35,7 +35,7 @@ import static org.junit.Assert.assertThat;
  */
 public class ClientTests {
 
-	private static final String baseUrl = "http://localhost:8080/SPR-8711-1.0-SNAPSHOT/test/";
+	private static final String baseUrl = "http://localhost:8080/SPR-8711/test/";
 
 	private RestTemplate template;
 

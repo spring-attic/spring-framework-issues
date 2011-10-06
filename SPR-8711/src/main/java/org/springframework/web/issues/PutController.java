@@ -29,7 +29,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 public class PutController {
 
     @RequestMapping(value = "update", method = PUT)
-    public void update(@RequestBody TestObject object) {
+    public @ResponseBody void update(@RequestBody TestObject object) {
         System.out.println(object);
     }
 
