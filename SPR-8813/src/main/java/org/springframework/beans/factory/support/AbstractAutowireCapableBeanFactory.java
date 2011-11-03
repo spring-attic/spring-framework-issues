@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2010 the original author or authors.
+ * Copyright 2002-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 
 package org.springframework.beans.factory.support;
+
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
@@ -38,6 +39,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.aop.framework.Advised;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -364,13 +367,23 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		if (autowireMode == AUTOWIRE_CONSTRUCTOR) {
 			throw new IllegalArgumentException("AUTOWIRE_CONSTRUCTOR not supported for existing bean instance");
 		}
-		// Use non-singleton bean definition, to avoid registering bean as dependent bean.
-		RootBeanDefinition bd =
-				new RootBeanDefinition(ClassUtils.getUserClass(existingBean), autowireMode, dependencyCheck);
-		bd.setScope(BeanDefinition.SCOPE_PROTOTYPE);
-		BeanWrapper bw = new BeanWrapperImpl(existingBean);
-		initBeanWrapper(bw);
-		populateBean(bd.getBeanClass().getName(), bd, bw);
+		try {
+			// unwrap aop proxy target if necessary
+			Class<?> clazz = ClassUtils.getUserClass(existingBean);
+			if (AopUtils.isAopProxy(existingBean)) {
+				existingBean = ((Advised)existingBean).getTargetSource().getTarget();
+				clazz = AopUtils.getTargetClass(existingBean);
+			}
+			// Use non-singleton bean definition, to avoid registering bean as dependent bean.
+			RootBeanDefinition bd =
+					new RootBeanDefinition(clazz, autowireMode, dependencyCheck);
+			bd.setScope(BeanDefinition.SCOPE_PROTOTYPE);
+			BeanWrapper bw = new BeanWrapperImpl(existingBean);
+			initBeanWrapper(bw);
+			populateBean(clazz.getName(), bd, bw);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 	public void applyBeanPropertyValues(Object existingBean, String beanName) throws BeansException {
