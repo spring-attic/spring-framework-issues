@@ -4,6 +4,7 @@ import static org.springframework.beans.factory.config.AutowireCapableBeanFactor
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -26,7 +27,7 @@ public class ReproTests {
 		Baz bean = ctx.getBean(Baz.class);
 		Assert.assertEquals(bean.getClass(), Baz.class);
 		Assert.assertEquals(1, bean.getValueCounter());
-		ctx.getBeanFactory().autowireBeanProperties(bean, AUTOWIRE_BY_NAME, false);
+		ctx.getBeanFactory().autowireBeanProperties(unwrapAopProxyIfNecessary(bean), AUTOWIRE_BY_NAME, false);
 		Assert.assertEquals(2, bean.getValueCounter());
 	}
 
@@ -39,7 +40,7 @@ public class ReproTests {
 		Bar bean = ctx.getBean(Bar.class);
 		Assert.assertTrue(AopUtils.isJdkDynamicProxy(bean));
 		Assert.assertEquals(1, bean.getValueCounter());
-		ctx.getBeanFactory().autowireBeanProperties(bean, AUTOWIRE_BY_NAME, false);
+		ctx.getBeanFactory().autowireBeanProperties(unwrapAopProxyIfNecessary(bean), AUTOWIRE_BY_NAME, false);
 		Assert.assertEquals(2, bean.getValueCounter());
 	}
 
@@ -52,7 +53,7 @@ public class ReproTests {
 		Foo bean = ctx.getBean(Foo.class);
 		Assert.assertTrue(AopUtils.isCglibProxy( bean ));
 		Assert.assertEquals(1, bean.getValueCounter());
-		ctx.getBeanFactory().autowireBeanProperties(bean, AUTOWIRE_BY_NAME, false);
+		ctx.getBeanFactory().autowireBeanProperties(unwrapAopProxyIfNecessary(bean), AUTOWIRE_BY_NAME, false);
 		Assert.assertEquals(2, bean.getValueCounter());
 	}
 
@@ -64,5 +65,16 @@ public class ReproTests {
 			apc.setBeanNames(new String[] { "foo", "bar" });
 			return apc;
 		}
+	}
+
+	private static Object unwrapAopProxyIfNecessary(Object bean) {
+		if (AopUtils.isAopProxy(bean)) {
+			try {
+				return ((Advised)bean).getTargetSource().getTarget();
+			} catch (Exception ex) {
+				throw new IllegalStateException("AOP proxy target cannot be resolved", ex);
+			}
+		}
+		return bean;
 	}
 }
