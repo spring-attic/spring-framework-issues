@@ -9,8 +9,13 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:component-scan base-package="org.springframework.web.issues" />
 
-	<bean id="simpleBean" class="org.springframework.web.issues.SimpleBean"
+	<bean id="myBeanClass" class="org.springframework.web.issues.SimpleBean"
 		factory-method="init" scope="request">
-		<aop:scoped-proxy />
+	</bean>
+	<bean id="simpleBean" class="org.springframework.web.issues.SimpleBean" scope="request">
+	</bean>
+	<bean id="myProxiedBeanClass" class="org.springframework.web.issues.SimpleBean"
+		factory-method="init" scope="request">
+		<aop:scoped-proxy/>
 	</bean>
 </beans>
