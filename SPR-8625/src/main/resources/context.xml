@@ -1,0 +1,72 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/lang 
+http://www.springframework.org/schema/lang/spring-lang-2.5.xsd
+http://camel.apache.org/schema/spring 
+http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camel:camelContext id="camelContext">
+        <camel:routeBuilder ref="routeBuilder"/>        
+    </camel:camelContext>
+
+    <bean id="routeBuilder" depends-on="routeModelExtender"
+        class="org.openehealth.tutorial.SampleRouteBuilder">
+    </bean>
+
+    <!-- Code mapping service using map.groovy as mapping table -->
+    <bean id="mappingService" 
+        class="org.openehealth.ipf.commons.map.BidiMappingService">
+        <property name="mappingScript" value="classpath:map.groovy"/>
+    </bean>
+
+    <!-- DSL extensions provided by platform-camel-core -->
+    <bean id="coreModelExtension" 
+        class="org.openehealth.ipf.platform.camel.core.extend.CoreModelExtension">
+    </bean>
+
+    <!-- DSL extensions provided by platform-camel-hl7 -->
+    <bean id="hl7ModelExtension"
+        class="org.openehealth.ipf.platform.camel.hl7.extend.Hl7ModelExtension"/>
+
+    <!-- HAPI extensions provided by modules-hl7 -->
+    <bean id="hapiModelExtension"
+        class="org.openehealth.ipf.modules.hl7.extend.HapiModelExtension">
+        <property name="mappingService" ref="mappingService" />
+    </bean>
+
+    <bean id="mappingExtension" 
+        class="org.openehealth.ipf.commons.map.extend.MappingExtension">
+        <property name="mappingService" ref="mappingService" />
+    </bean>
+
+    <bean id="routeModelExtender" 
+        class="org.openehealth.ipf.platform.camel.core.extend.DefaultModelExtender">
+        <property name="routeModelExtensions">
+            <list>
+                <ref bean="coreModelExtension" />  <!-- Register core DSL extensions -->
+                <ref bean="hl7ModelExtension" />   <!-- Register HL7 DSL extensions -->
+                <ref bean="hapiModelExtension" />  <!-- Register HAPI extensions -->
+                <ref bean="mappingExtension" />    <!-- Register mapping extensions -->
+            </list>
+        </property>
+    </bean>
+
+   <!-- All we need for validation: a validator, a validation context, -->
+   <!-- and two set of rules                                           -->
+   <bean id="myValidatorBean" class="org.openehealth.ipf.modules.hl7.validation.support.HL7Validator"/>
+
+   <bean id="validationContext"
+       class="org.openehealth.ipf.modules.hl7.validation.ValidationContextFactoryBean"/>
+
+   <bean id="defaultTypeRules"
+       class="org.openehealth.ipf.modules.hl7.validation.builder.DefaultTypeRulesBuilder"/>
+
+   <bean id="myCustomRules"
+       class="org.openehealth.tutorial.SampleRulesBuilder"/>
+
+</beans>

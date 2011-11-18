@@ -2,6 +2,7 @@
 .project
 .settings
 .springBeans
+.idea
 target
 *.sw?
 .gradle
