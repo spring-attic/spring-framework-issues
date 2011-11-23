@@ -7,16 +7,19 @@ import java.util.Date;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 public class AuditAspectTests extends BaseTestClass
 {
   @Autowired
   private IAuditRepository auditRepository;
+ 
+  @Autowired
+  private AuditService service;
 
   @Test
   public void testAudit()
   {
-    AuditService service = new AuditService();
     // make sure call IS NOT audited
     service.unAuditedCall();
     assertThat(auditRepository.count(), CoreMatchers.is(0L));
@@ -26,6 +29,9 @@ public class AuditAspectTests extends BaseTestClass
     assertThat(auditRepository.count(), CoreMatchers.is(1L));
   }
 
+}
+
+  @Component
   class AuditService
   {
     @Auditable(actionCode = "auditedCall", auditMessage = "value returned was %r%")
@@ -39,4 +45,3 @@ public class AuditAspectTests extends BaseTestClass
       return "current time is " + new Date();
     }
   }
-}
