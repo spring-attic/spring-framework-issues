@@ -1,6 +1,5 @@
 package org.springframework.web.issues;
 
-
 public class SimpleBean {
 
 	static public MyBeanClass init() {
@@ -8,6 +7,10 @@ public class SimpleBean {
 	}
 
 	static public class MyBeanClass {
+
+		public String getFoo() {
+			return "foo";
+		}
 
 	}
 }
