@@ -32,6 +32,12 @@
 	</dependency>
 	</dependencies>
 	<properties>
-		<spring.version>3.0.6.RELEASE</spring.version>
+		<spring.version>3.1.0.RC2</spring.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>spring.milestones</id>
+			<url>http://repo.springsource.org/milestone</url>
+		</repository>
+	</repositories>
 </project>
