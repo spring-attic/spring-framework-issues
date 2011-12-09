@@ -1,24 +1,19 @@
 package test;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-@RunWith(SpringJUnit4ClassRunner.class)
- @ContextConfiguration("classpath:applicationContext.xml")
 public class ContextTest {
 
-	@Autowired
-	FirstService firstService;
-
-	@Autowired
-	SecondService secondService;
-
 	@Test
-	public void testMe() {
-		System.out.println(firstService);
-		System.out.println(secondService);
+	public void repro() {
+		AnnotationConfigApplicationContext ctx =
+				new AnnotationConfigApplicationContext();
+		ctx.register(FirstDao.class);
+		ctx.register(SecondDao.class);
+		ctx.register(FirstService.class);
+		ctx.register(SecondService.class);
+		ctx.refresh();
 	}
+
 }
