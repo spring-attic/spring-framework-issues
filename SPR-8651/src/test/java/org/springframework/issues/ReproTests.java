@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Unsucessfully attempts to reproduce the issue described by SPR-8651, in which
@@ -39,6 +40,7 @@ public class ReproTests {
 
 	@Configuration
 	@EnableScheduling
+	@EnableTransactionManagement
 	static class ReproConfig {
 
 		@Bean
