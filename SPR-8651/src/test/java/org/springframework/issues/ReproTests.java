@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.CallCountingTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -40,7 +42,7 @@ public class ReproTests {
 
 	@Configuration
 	@EnableScheduling
-	@EnableTransactionManagement
+	@EnableTransactionManagement(proxyTargetClass=true)
 	static class ReproConfig {
 
 		@Bean
@@ -51,6 +53,11 @@ public class ReproTests {
 		@Bean
 		public PersistenceExceptionTranslationPostProcessor peTranslationPostProcessor() {
 			return new PersistenceExceptionTranslationPostProcessor();
+		}
+
+		@Bean
+		public PlatformTransactionManager txManager() {
+			return new CallCountingTransactionManager();
 		}
 
 		@Bean
