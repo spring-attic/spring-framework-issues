@@ -23,10 +23,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<!-- M1 works -->
-<!-- 			<version>3.1.0.M1</version> -->
-			<!-- M2 fails -->
-			<version>3.1.0.M2</version>
+			<version>3.1.0.BUILD-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
