@@ -9,7 +9,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.1.0.BUILD-SNAPSHOT</version>
+			<version>3.2.0.BUILD-20111215.141618-1</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -27,7 +27,7 @@
 		<repository>
 			<id>spring-maven-snapshot</id>
 			<name>Springframework Maven Snapshot Repository</name>
-			<url>http://maven.springframework.org/snapshot</url>
+			<url>http://repo.springsource.org/snapshot</url>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
 	</repositories>
