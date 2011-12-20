@@ -80,7 +80,7 @@ In certain cases, it may make sense to submit a project for improvement requests
 
 ### What about patches against the Spring Framework itself? Should I still attach those to my JIRA issue?
 
-For now, yes.  It is possible that Spring Framework will move from it's current home in SVN to Github -- when that happens, we may consider pull requests against forks of that repository.
+Yes, patches against JIRA will always be supported, but keep in mind that the Spring Framework project itself is hosted on GitHub as well, and pull requests are even better! See the "Contributing" section of the Spring Framework [readme](https://github.com/SpringSource/spring-framework#readme) for details.
 
 ### Can I still attach .zip files to my JIRA issue?  Is it required to use this repository?
 
