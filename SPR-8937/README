@@ -1,0 +1,17 @@
+Sample code for SPR-8937
+------------------------
+
+First run:
+
+  mvn exec:java -Dexec.mainClass="org.springframework.jira.GoodBean"
+
+and it all works fine.
+
+The run:
+
+  mvn exec:java -Dexec.mainClass="org.springframework.jira.BadBean"
+
+and now we get the exception - 
+  java.beans.IntrospectionException: type mismatch between indexed and non-indexed methods: address
+
+Then change the pom.xml to use 3.0.7 and both tests run without problems.
