@@ -19,6 +19,11 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/servlet-context.xml</param-value>
 		</init-param>
+		<!-- comment out the following and wiring for servlet-context.xml will fail -->
+		<init-param>
+			<param-name>spring.profiles.active</param-name>
+			<param-value>PRODUCKSEAN</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 

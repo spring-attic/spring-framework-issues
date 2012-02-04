@@ -19,4 +19,13 @@
 
 	<context:component-scan base-package="org.springframework.web.issues" />
 
+	<!-- wiring for this bean will fail if the PRODUCKSEAN profile is not activated -->
+	<bean id="foo" class="com.acme.Foo">
+		<constructor-arg ref="bar"/>
+	</bean>
+
+	<beans profile="PRODUCKSEAN">
+		<bean id="bar" class="com.acme.Bar"/>
+	</beans>
+
 </beans>
