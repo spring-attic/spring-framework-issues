@@ -13,6 +13,16 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<context-param>
+		<param-name>contextInitializerClasses</param-name>
+		<param-value>spr8991.Spr8991ACI</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>answer</param-name>
+		<param-value>42</param-value>
+	</context-param>
+
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
