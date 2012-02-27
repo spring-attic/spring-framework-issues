@@ -46,4 +46,9 @@
             </set>
         </property>
     </bean>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="errorInternal" />
+        <property name="warnLogCategory" value="spr9157" />
+    </bean>
 </beans>
