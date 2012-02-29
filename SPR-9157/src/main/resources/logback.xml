@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Makes the logger system available via JMX  -->
+    <jmxConfigurator />
+    
+    <!-- Auto-define an appender that sends the console messages to the Logback Eclipse console plugin -->
+    <!-- <consolePlugin /> -->
+    
+    <!-- APPENDERS  -->
+
+    <!-- A debug file appender -->
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:\\Temp\\logDebug.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>${logback.debugFile}.%i.log</FileNamePattern>
+		    <MinIndex>1</MinIndex>
+	    	<MaxIndex>5</MaxIndex>
+	     </rollingPolicy>
+        
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>20MB</MaxFileSize>
+        </triggeringPolicy>
+    
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%date %-5level %logger [%thread] [%file : %line] - %msg%n</Pattern>
+        </layout>
+    </appender>
+    
+    <!-- An error file appender -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+
+        <file>C:\\Temp\\logError.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>${logback.errorFile}.%i.log</FileNamePattern>
+		    <MinIndex>1</MinIndex>
+	    	<MaxIndex>2</MaxIndex>
+	     </rollingPolicy>
+        
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>20MB</MaxFileSize>
+        </triggeringPolicy>
+    
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%date %-5level %logger [%thread] [%file : %line] - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <!-- An appender that sends the messages to console -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%date %-5level %logger{36} [%thread] [%file : %line] - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <!-- LOGGERS  -->
+
+    <!-- The root logger sends the messages > INFO to all the appenders (the ERROR_FILE filters internally only to WARNS and ERRORS)-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="DEBUG_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+        <!-- <appender-ref ref="lilithMultiplex" /> -->
+    </root>
+    
+    <!-- The root logger sends all the messages coming from package com.kiko.store to the appenders inherited from the ROOT logger-->
+    <logger name="hu.ferengra" level="ALL">
+    </logger>
+
+    <logger name="org.springframework" level="ALL">
+    </logger>
+  
+</configuration>
