@@ -1,0 +1,2 @@
+http://localhost:8080/spr9157/environments.html
+http://localhost:8080/spr9157/environment.html?environment=name
