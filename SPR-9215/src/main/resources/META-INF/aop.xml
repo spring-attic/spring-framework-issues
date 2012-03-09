@@ -1,0 +1,7 @@
+<aspectj>
+	<weaver options="-debug -verbose">
+		<include within="org.springframework.issues..*" />
+		<exclude within="org.springframework.issues..*CGLIB*" />
+		<exclude within="org.springframework.issues..datamodel.*" />
+	</weaver>
+</aspectj>
