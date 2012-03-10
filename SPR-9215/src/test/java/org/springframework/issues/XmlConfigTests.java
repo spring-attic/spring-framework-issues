@@ -18,7 +18,7 @@ public class XmlConfigTests {
 	@Test
 	public void xmlConfigurationTest() {
 		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
-		ctx.load("classpath:org/springframework/issues/ReproTests-context.xml");
+		ctx.load("classpath:/org/springframework/issues/ReproTests-context.xml");
 		ctx.refresh();
 		try {
 			TestService ts = ctx.getBean(TestService.class);
