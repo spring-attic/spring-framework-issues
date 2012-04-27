@@ -1,14 +1,17 @@
 package org.springframework.issues;
 
+import javax.inject.Provider;
+
+
 public class Foo {
 
-	private final Bar bar;
+    Provider<ProviderClass<String, String>> testProvider;
 
-	public Foo(Bar bar) {
-		this.bar = bar;
-	}
+    public Foo(Provider<ProviderClass<String, String>> testProvider) {
+        this.testProvider = testProvider;
+    }
 
-	public Bar getBar() {
-		return this.bar;
-	}
+    public ProviderClass getProviderClass(){
+        return testProvider.get();
+    }
 }

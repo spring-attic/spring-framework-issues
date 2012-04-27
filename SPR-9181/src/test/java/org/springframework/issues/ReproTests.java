@@ -1,8 +1,5 @@
 package org.springframework.issues;
 
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-
 import org.junit.Test;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -19,10 +16,13 @@ public class ReproTests {
 		ctx.load("classpath:org/springframework/issues/ReproTests-context.xml");
 		ctx.refresh();
 
-		Foo foo = ctx.getBean(Foo.class);
+        // First time works
 		Bar bar = ctx.getBean(Bar.class);
+        bar.getFoo().getProviderClass();
 
-		assertThat(foo.getBar(), sameInstance(bar));
+        // Second call crashes
+        bar = ctx.getBean(Bar.class);
+        bar.getFoo().getProviderClass();
 	}
 
 }
