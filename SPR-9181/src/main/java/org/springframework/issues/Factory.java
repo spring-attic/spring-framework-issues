@@ -20,7 +20,7 @@ public class Factory {
     @Bean
     @Scope(SCOPE_PROTOTYPE)
     public Foo testFactory(
-            final Provider<ProviderClass<String, String>> testProvider
+            final Provider<ProviderClass> testProvider
     ) {
         return new Foo(testProvider);
     }

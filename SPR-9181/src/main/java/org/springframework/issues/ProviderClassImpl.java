@@ -13,7 +13,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
  */
 @Named
 @Scope(SCOPE_PROTOTYPE)
-public class ProviderClassImpl<T extends Object, Y extends Object> implements ProviderClass<T,Y> {
+public class ProviderClassImpl implements ProviderClass {
 
     public ProviderClassImpl(){
 

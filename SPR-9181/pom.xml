@@ -9,8 +9,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-		<!--	<version>3.2.0.BUILD-SNAPSHOT</version> -->
+		    <!--	<version>3.2.0.BUILD-SNAPSHOT</version> -->
+            <!-- Crahes -->
 			<version>3.1.1.RELEASE</version>
+            <!-- Works -->
+            <!-- 	<version>3.1.0.RELEASE</version> -->
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

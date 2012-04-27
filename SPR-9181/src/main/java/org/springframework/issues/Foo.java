@@ -5,9 +5,9 @@ import javax.inject.Provider;
 
 public class Foo {
 
-    Provider<ProviderClass<String, String>> testProvider;
+    Provider<ProviderClass> testProvider;
 
-    public Foo(Provider<ProviderClass<String, String>> testProvider) {
+    public Foo(Provider<ProviderClass> testProvider) {
         this.testProvider = testProvider;
     }
 

@@ -5,5 +5,5 @@ package org.springframework.issues;
  *
  * @author andr
  */
-public interface ProviderClass<T extends Object, Y extends Object> {
+public interface ProviderClass {
 }
