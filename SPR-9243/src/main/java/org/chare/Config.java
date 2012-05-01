@@ -9,9 +9,7 @@ import org.springframework.context.annotation.Import;
 @Import({
 	org.chare.service.Config.class,
 	org.chare.otherService.Config.class
-}
-		)
-
+})
 public class Config {
 
 }

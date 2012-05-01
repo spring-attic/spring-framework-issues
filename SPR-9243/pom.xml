@@ -11,7 +11,7 @@
 <!-- FIXME change to this version to pass the test
 		<org.springframework-version>3.1.0.RELEASE</org.springframework-version>
 -->
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+		<org.springframework-version>3.2.0.BUILD-SNAPSHOT</org.springframework-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 	</properties>
 	<dependencies>
@@ -25,7 +25,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.web</artifactId>
+			<artifactId>spring-web</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
 
@@ -65,21 +65,10 @@
 	<repositories>
 
 		<repository>
-			<id>spring.maven.milestone</id>
-			<name>Spring Milestone Maven Repo</name>
-			<url>http://repository.springsource.com/maven/bundles/milestone</url>
+			<id>repo.springsource.org</id>
+			<name>SpringSource Repository</name>
+			<url>http://repo.springsource.org/libs-snapshot</url>
 		</repository>
-		<repository>
-			<id>spring.maven.release</id>
-			<name>Spring Release Maven Repo</name>
-			<url>http://repository.springsource.com/maven/bundles/release</url>
-		</repository>
-		<repository>
-			<id>com.springsource.repository.bundles.external</id>
-			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
-			<url>http://repository.springsource.com/maven/bundles/external</url>
-		</repository>
-
 	</repositories>
 	<build>
 		<plugins>
