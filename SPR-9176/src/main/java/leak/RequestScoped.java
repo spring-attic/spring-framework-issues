@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class RequestScoped implements BeanFactoryAware {
 
 	@SuppressWarnings("unused")
-	@Resource // workaround: use @Autowired
+	@Resource
 	private HttpServletRequest request;
 
 	private DefaultListableBeanFactory factory;
