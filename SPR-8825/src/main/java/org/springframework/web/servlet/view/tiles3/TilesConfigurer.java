@@ -16,7 +16,6 @@
 
 package org.springframework.web.servlet.view.tiles3;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
@@ -36,7 +35,6 @@ import org.apache.tiles.TilesContainer;
 import org.apache.tiles.TilesException;
 import org.apache.tiles.access.TilesAccess;
 import org.apache.tiles.definition.DefinitionsFactory;
-import org.apache.tiles.definition.DefinitionsFactoryException;
 import org.apache.tiles.definition.DefinitionsReader;
 import org.apache.tiles.definition.dao.BaseLocaleUrlDefinitionDAO;
 import org.apache.tiles.definition.dao.CachingLocaleUrlDefinitionDAO;
@@ -52,12 +50,12 @@ import org.apache.tiles.factory.BasicTilesContainerFactory;
 import org.apache.tiles.impl.BasicTilesContainer;
 import org.apache.tiles.impl.mgmt.CachingTilesContainer;
 import org.apache.tiles.locale.LocaleResolver;
-import org.apache.tiles.preparer.BasicPreparerFactory;
-import org.apache.tiles.preparer.PreparerFactory;
+import org.apache.tiles.preparer.factory.PreparerFactory;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.servlet.ServletApplicationContext;
 import org.apache.tiles.request.servlet.ServletUtil;
-import org.apache.tiles.request.util.ApplicationContextAware;
+import org.apache.tiles.request.ApplicationContextAware;
+import org.apache.tiles.request.ApplicationResource;
 import org.apache.tiles.startup.DefaultTilesInitializer;
 import org.apache.tiles.startup.TilesInitializer;
 import org.slf4j.Logger;
@@ -79,12 +77,12 @@ import org.springframework.web.servlet.view.tiles2.SpringLocaleResolver;
  * mechanism for JSP-based web applications.
  *
  * <p>The TilesConfigurer simply configures a TilesContainer using a set of files
- * containing definitions, to be accessed by {@link TilesView} instances. This is a
+ * containing definitions, to be accessed by {@link RendererView} instances. This is a
  * Spring-based alternative (for usage in Spring configuration) to the Tiles-provided
  * {@link org.apache.tiles.web.startup.TilesListener} (for usage in <code>web.xml</code>).
  *
- * <p>TilesViews can be managed by any {@link org.springframework.web.servlet.ViewResolver}.
- * For simple convention-based view resolution, consider using {@link TilesViewResolver}.
+ * <p>RendererViews can be managed by any {@link org.springframework.web.servlet.ViewResolver}.
+ * For simple convention-based view resolution, consider using {@link RendererViewResolver}.
  *
  * <p>A typical TilesConfigurer bean definition looks as follows:
  *
@@ -104,8 +102,8 @@ import org.springframework.web.servlet.view.tiles2.SpringLocaleResolver;
  * The values in the list are the actual Tiles XML files containing the definitions.
  *
  * @author mick semb wever
- * @see TilesView
- * @see TilesViewResolver
+ * @see RendererView
+ * @see RendererViewResolver
  */
 public class TilesConfigurer implements ServletContextAware, InitializingBean, DisposableBean {
 
@@ -334,21 +332,16 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
         }
 
 		@Override
-		protected List<URL> getSourceURLs(ApplicationContext applicationContext) {
+		protected List<ApplicationResource> getSources(ApplicationContext applicationContext) {
 			if (definitions != null) {
-				try {
-					List<URL> result = new LinkedList<URL>();
-					for (String definition : definitions) {
-						result.addAll(applicationContext.getResources(definition));
-					}
-					return result;
-				}
-				catch (IOException ex) {
-					throw new DefinitionsFactoryException("Cannot load definition URLs", ex);
-				}
+                List<ApplicationResource> result = new LinkedList<ApplicationResource>();
+                for (String definition : definitions) {
+                    result.addAll(applicationContext.getResources(definition));
+                }
+                return result;
 			}
 			else {
-				return super.getSourceURLs(applicationContext);
+				return super.getSources(applicationContext);
 			}
 		}
 
