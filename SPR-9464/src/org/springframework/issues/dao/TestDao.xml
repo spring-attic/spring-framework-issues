@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springframework.issues.dao.TestDao">
+	<select id="queryDummyValue" resultType="_int">
+		<![CDATA[
+SELECT dummy_value
+  FROM test
+ WHERE dummy_key = 'test_key'
+		]]>
+	</select>
+</mapper>
