@@ -7,8 +7,8 @@
 	<div id="container">
 
 		<div id="content">
-			<h1>Welcome to Bug!</h1>
-			<p><a href="home?foo=bar"/>Broken Link</a></p>
+			<h1>Your Bug Photos</h1>
+			<p>Parameters: ${parameters}</p>
 		</div>
 	</div>
 </body>

@@ -13,8 +13,6 @@
 	<oauth:resource id="sparklr" type="authorization_code" client-id="tonr" client-secret="secret"
 		access-token-uri="${accessTokenUri}" user-authorization-uri="${userAuthorizationUri}" scope="read" />
 
-	<context:property-placeholder location="classpath:/sparklr.properties" />
-	
 	<bean id="conversionService" class="org.springframework.core.convert.support.DefaultConversionService"/>
 
 	<mvc:default-servlet-handler />
@@ -42,10 +40,10 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<bean id="sparklrController" class="org.springframework.security.oauth.examples.tonr.mvc.SparklrController">
-		<property name="restTemplate">
-			<oauth:rest-template resource="sparklr" />
-		</property>
+	<bean id="sparklrController" class="org.springframework.security.oauth.examples.tonr.mvc.HomeController">
+		<property name="clientContext" value="#{@restTemplate.oAuth2ClientContext}"/>
 	</bean>
+
+	<oauth:rest-template id="restTemplate" resource="sparklr" />
 
 </beans>
