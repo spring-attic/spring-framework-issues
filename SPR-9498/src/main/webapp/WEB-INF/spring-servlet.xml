@@ -11,24 +11,7 @@
 
 	<bean id="conversionService" class="org.springframework.core.convert.support.DefaultConversionService"/>
 
-	<mvc:default-servlet-handler />
-
-	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
-		</mvc:message-converters>
-	</mvc:annotation-driven>
-
-	<bean id="contentViewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="mediaTypes">
-			<map>
-				<entry key="json" value="application/json" />
-			</map>
-		</property>
-		<property name="defaultViews">
-			<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-		</property>
-	</bean>
+	<mvc:annotation-driven/>
 
 	<!--Basic application beans. -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -36,16 +19,16 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<bean id="sparklrController" class="org.springframework.security.oauth.examples.tonr.mvc.HomeController">
-		<property name="clientContext" ref="context"/>
+	<bean class="org.springframework.security.oauth.examples.tonr.mvc.HomeController">
+		<property name="clientContext" ref="foo"/>
 	</bean>
 
-	<bean id="context" class="org.springframework.security.oauth2.client.context.DefaultOAuth2ClientContext" scope="session">
+	<bean id="foo" class="org.springframework.security.oauth.examples.tonr.mvc.DefaultFoo" scope="request">
 		<aop:scoped-proxy proxy-target-class="false"/>
 		<constructor-arg ref="tokenRequest"/>
 	</bean>
 
-	<bean id="tokenRequest" class="org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest" scope="request">
+	<bean id="tokenRequest" class="org.springframework.security.oauth.examples.tonr.mvc.DefaultBar" scope="request">
 		<aop:scoped-proxy proxy-target-class="false"/>
 		<constructor-arg value="#{request.parameterMap}"/>
 	</bean>

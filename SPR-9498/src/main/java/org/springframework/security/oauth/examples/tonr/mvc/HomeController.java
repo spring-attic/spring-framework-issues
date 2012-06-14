@@ -1,6 +1,5 @@
 package org.springframework.security.oauth.examples.tonr.mvc;
 
-import org.springframework.security.oauth2.client.context.OAuth2ClientContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
-	private OAuth2ClientContext context;
+	private Foo context;
 
-	public void setClientContext(OAuth2ClientContext context) {
+	public void setClientContext(Foo context) {
 		this.context = context;
 	}
 
