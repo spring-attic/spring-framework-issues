@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<import resource="file:./src/main/webapp/WEB-INF/spring-servlet.xml"/>
-	
+	<bean id="conversionService" class="org.springframework.core.convert.support.DefaultConversionService" />
+
+	<!--Basic application beans. -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean class="org.springframework.issues.HomeController">
+		<property name="foo" ref="foo" />
+	</bean>
+
+	<bean id="foo" class="org.springframework.issues.DefaultFoo" scope="request">
+		<aop:scoped-proxy proxy-target-class="false" />
+		<constructor-arg ref="tokenRequest" />
+	</bean>
+
+	<bean id="tokenRequest" class="org.springframework.issues.DefaultBar" scope="request">
+		<aop:scoped-proxy proxy-target-class="false" />
+		<constructor-arg value="#{request.parameterMap}" />
+	</bean>
+
 	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
 		<property name="scopes">
 			<map>
