@@ -12,7 +12,7 @@ public class HomeController {
 
 	private Foo context;
 
-	public void setClientContext(Foo context) {
+	public void setFoo(Foo context) {
 		this.context = context;
 	}
 

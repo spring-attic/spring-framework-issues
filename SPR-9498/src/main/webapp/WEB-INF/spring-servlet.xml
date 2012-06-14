@@ -18,7 +18,7 @@
 	</bean>
 
 	<bean class="org.springframework.issues.HomeController">
-		<property name="clientContext" ref="foo" />
+		<property name="foo" ref="foo" />
 	</bean>
 
 	<bean id="foo" class="org.springframework.issues.DefaultFoo" scope="request">
