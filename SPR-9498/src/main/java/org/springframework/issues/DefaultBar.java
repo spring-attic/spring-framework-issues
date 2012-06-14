@@ -11,13 +11,23 @@
  * subcomponent's license, as noted in the LICENSE file.
  */
 
-package org.springframework.security.oauth.examples.tonr.mvc;
+package org.springframework.issues;
 
-import org.springframework.util.MultiValueMap;
+import java.util.Arrays;
+import java.util.Map;
+
+import org.springframework.util.LinkedMultiValueMap;
 
 /**
  * @author Dave Syer
  * 
  */
-public interface Bar extends MultiValueMap< String, String> {
+public class DefaultBar extends LinkedMultiValueMap<String, String> implements Bar {
+
+	public DefaultBar(Map<String, String[]> parameters) {
+		for (String key : parameters.keySet()) {
+			super.put(key, Arrays.asList(parameters.get(key)));
+		}
+	}
+
 }

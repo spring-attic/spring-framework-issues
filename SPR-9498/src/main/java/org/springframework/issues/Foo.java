@@ -11,23 +11,14 @@
  * subcomponent's license, as noted in the LICENSE file.
  */
 
-package org.springframework.security.oauth.examples.tonr.mvc;
+package org.springframework.issues;
 
 
 /**
  * @author Dave Syer
- *
+ * 
  */
-public class DefaultFoo implements Foo {
+public interface Foo {
 
-	private Bar accessTokenRequest;
-
-	public DefaultFoo(Bar accessTokenRequest) {
-		this.accessTokenRequest = accessTokenRequest;
-	}
-	
-	public Bar getAccessTokenRequest() {
-		return accessTokenRequest;
-	}
-
+	Bar getAccessTokenRequest();
 }

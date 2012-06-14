@@ -11,14 +11,13 @@
  * subcomponent's license, as noted in the LICENSE file.
  */
 
-package org.springframework.security.oauth.examples.tonr.mvc;
+package org.springframework.issues;
 
+import org.springframework.util.MultiValueMap;
 
 /**
  * @author Dave Syer
  * 
  */
-public interface Foo {
-
-	Bar getAccessTokenRequest();
+public interface Bar extends MultiValueMap< String, String> {
 }

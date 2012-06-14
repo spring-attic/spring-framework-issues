@@ -1,4 +1,4 @@
-package org.springframework.security.oauth.examples.tonr.mvc;
+package org.springframework.issues;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -11,7 +11,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package org.springframework.security.oauth.examples.tonr;
+package org.springframework.issues;
 
 import org.junit.Test;
 import org.springframework.context.support.GenericXmlApplicationContext;
