@@ -20,5 +20,5 @@ package org.springframework.issues;
  */
 public interface Foo {
 
-	Bar getAccessTokenRequest();
+	Bar getBar();
 }

@@ -22,7 +22,6 @@ import org.junit.Test;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -48,13 +47,21 @@ public class ContextTests {
 	}
 
 	@Test
-	public void test() {
+	public void testOK() {
+		request.setParameter("foo", "bar");
+		GenericXmlApplicationContext context = new GenericXmlApplicationContext("classpath:/ok-context.xml");
+		Foo foo = context.getBean(Foo.class);
+		assertNotNull(foo);
+		assertEquals("bar", foo.getBar().getFirst("foo"));
+	}
+
+	@Test
+	public void testFails() {
 		request.setParameter("foo", "bar");
 		GenericXmlApplicationContext context = new GenericXmlApplicationContext("classpath:/test-context.xml");
-		HomeController controller = context.getBean(HomeController.class);
-		Foo foo = (Foo) ReflectionTestUtils.getField(controller, "context");
+		Foo foo = context.getBean(Foo.class);
 		assertNotNull(foo);
-		assertEquals("bar", foo.getAccessTokenRequest().getFirst("foo"));
+		assertEquals("bar", foo.getBar().getFirst("foo"));
 	}
 
 }

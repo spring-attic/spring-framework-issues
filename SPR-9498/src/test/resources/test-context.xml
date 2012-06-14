@@ -6,33 +6,6 @@
 
 	<bean id="conversionService" class="org.springframework.core.convert.support.DefaultConversionService" />
 
-	<!--Basic application beans. -->
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/jsp/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
-
-	<bean class="org.springframework.issues.HomeController">
-		<property name="foo" ref="foo" />
-	</bean>
-
-	<bean id="foo" class="org.springframework.issues.DefaultFoo" scope="request">
-		<aop:scoped-proxy proxy-target-class="false" />
-		<constructor-arg ref="tokenRequest" />
-	</bean>
-
-	<bean id="tokenRequest" class="org.springframework.issues.DefaultBar" scope="request">
-		<aop:scoped-proxy proxy-target-class="false" />
-		<constructor-arg value="#{request.parameterMap}" />
-	</bean>
-
-	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-		<property name="scopes">
-			<map>
-				<entry key="request"><bean class="org.springframework.web.context.request.RequestScope"/></entry>
-				<entry key="session"><bean class="org.springframework.web.context.request.SessionScope"/></entry>
-			</map>
-		</property>
-	</bean>
-
+	<import resource="ok-context.xml"/>
+	
 </beans>

@@ -20,14 +20,14 @@ package org.springframework.issues;
  */
 public class DefaultFoo implements Foo {
 
-	private Bar accessTokenRequest;
+	private Bar bar;
 
-	public DefaultFoo(Bar accessTokenRequest) {
-		this.accessTokenRequest = accessTokenRequest;
+	public DefaultFoo(Bar bar) {
+		this.bar = bar;
 	}
 	
-	public Bar getAccessTokenRequest() {
-		return accessTokenRequest;
+	public Bar getBar() {
+		return bar;
 	}
 
 }
