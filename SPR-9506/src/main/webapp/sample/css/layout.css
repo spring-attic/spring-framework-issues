@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* layouts */
+#wrapper	{width:100%;}
+#wrap		{padding:0 20px; min-width:800px;}
+#header		{position:relative; height:43px; border-bottom:1px solid #BBB; overflow:hidden;}
+#container	{position:relative; width:100%;}
+#footer		{position:relative; clear:both; border-top:1px solid #BBB; padding:10px 0 20px 0; margin:0; font-family:Arial, Helvetica, sans-serif;}
+
+
+
+/* view_leftmenu */
+.view_leftmenu #leftmenu {position:relative; float:left; width:19%; height:200px; z-index:10;}
+.view_leftmenu #container {position:relative; float:right; width:78%; padding-left:20px; background:#FFF url(../images/bg_leftmenu.gif) repeat-y left top; z-index:11;}
+	.view_leftmenu .ie7fix #footer {padding-top:5px;}
+
+
+
+/* popup */
+.popup #wrap	{min-width:300px;}
+.popup .view table th {width:35%;}
+.popup .view table td {width:65%;}

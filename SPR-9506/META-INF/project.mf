@@ -1,0 +1,33 @@
+#=== Anyframe Information ========
+anyframe.home=
+
+#=== Project Information ====
+project.name=formbind
+project.home=C:\\workspace2\\formbind
+project.version=1.0-SNAPSHOT
+project.type=web
+project.build=maven
+project.template.home=C:\\Users\\SDS\\.anyframe\\templates
+project.template=map
+project.daoframework=query
+package.name=formbind
+web.context.path=formbind
+
+#=== DB Information ========
+db.type=hsqldb
+db.name=sampledb
+db.schema=PUBLIC
+db.server=localhost
+db.port=-1
+db.driver=org.hsqldb.jdbcDriver
+db.url=jdbc:hsqldb:hsql://localhost/sampledb
+db.userId=SA
+db.password=
+db.lib=C:\\Users\\SDS\\.m2\\repository\\hsqldb\\hsqldb\\2.0.0\\hsqldb-2.0.0.jar
+db.dialect=org.hibernate.dialect.HSQLDialect
+db.groupId=hsqldb
+db.artifactId=hsqldb
+db.version=2.0.0
+
+#=== Etc. ========
+offline=false

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugins>
+  <plugin name="core">
+    <groupId>org.anyframe.plugin</groupId>
+    <artifactId>anyframe-core-pi</artifactId>
+    <version>1.0.4</version>
+    <essential>true</essential>
+  </plugin>
+  <plugin name="datasource">
+    <groupId>org.anyframe.plugin</groupId>
+    <artifactId>anyframe-datasource-pi</artifactId>
+    <version>1.0.1</version>
+    <essential>true</essential>
+  </plugin>
+  <plugin name="spring">
+    <groupId>org.anyframe.plugin</groupId>
+    <artifactId>anyframe-spring-pi</artifactId>
+    <version>1.0.1</version>
+    <essential>true</essential>
+  </plugin>
+  <plugin name="logging">
+    <groupId>org.anyframe.plugin</groupId>
+    <artifactId>anyframe-logging-pi</artifactId>
+    <version>1.0.1</version>
+    <essential>true</essential>
+  </plugin>
+  <plugin name="query">
+    <groupId>org.anyframe.plugin</groupId>
+    <artifactId>anyframe-query-pi</artifactId>
+    <version>1.1.3</version>
+    <essential>false</essential>
+  </plugin>
+</plugins>
