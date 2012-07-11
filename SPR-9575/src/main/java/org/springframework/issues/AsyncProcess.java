@@ -16,7 +16,7 @@ public class AsyncProcess implements AsyncProcessInterface {
 	 */
 	//("portalAsyncExecutor")
 	
-	@Async(value="portalPoolTaskExecutor")
+	@Async("portalPoolTaskExecutor")
 	public Future<String> findBalanceAsync(final String account) {
 		long startTime = System.currentTimeMillis();
 	
