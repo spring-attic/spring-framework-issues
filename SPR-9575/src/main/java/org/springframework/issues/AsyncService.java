@@ -6,6 +6,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class AsyncService {
 		ResultDto dto = new ResultDto();
 		future =  portletCache.get(targetDiv);
 		if (future==null) {
+			System.out.println("is asyncProcess an @Async proxy? " + AopUtils.isAopProxy(asyncProcess));
 			future = asyncProcess.findBalanceAsync(targetDiv);
 			portletCache.put(targetDiv, future);
 		} 
