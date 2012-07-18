@@ -10,10 +10,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.HttpRequestHandler;
 
 @Transactional
-public class ConsoleHandler implements HttpRequestHandler, ApplicationContextAware, MyHttpRequestHandler {
+public class ConsoleHandler implements ConsoleHttpRequestHandler, ApplicationContextAware {
 
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 	}
