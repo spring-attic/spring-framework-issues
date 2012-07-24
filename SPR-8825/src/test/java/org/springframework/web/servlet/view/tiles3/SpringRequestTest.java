@@ -5,17 +5,17 @@ import static org.junit.Assert.*;
 
 import java.util.Locale;
 
-import org.apache.tiles.request.Request;
+import org.apache.tiles.request.DispatchRequest;
 import org.junit.Before;
 import org.junit.Test;
 
 public class SpringRequestTest {
-    private Request request;
+    private DispatchRequest request;
     private SpringRequest testTarget;
 
     @Before
     public void setUp() {
-        request = createMock(Request.class);
+        request = createMock(DispatchRequest.class);
         testTarget = new SpringRequest(request, Locale.ITALY);
     }
 

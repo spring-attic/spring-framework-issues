@@ -10,16 +10,19 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.ServletContext;
 import org.apache.tiles.request.ApplicationResource;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.mock.web.MockServletContext;
 
 public class SpringApplicationContextTest {
 
     private SpringApplicationContext testTarget;
+    private ServletContext servletContext = new MockServletContext();
     private ApplicationContext applicationContext;
 
     @Before
@@ -27,15 +30,16 @@ public class SpringApplicationContextTest {
         testTarget = new SpringApplicationContext();
         applicationContext = createMock(ApplicationContext.class);
         testTarget.setApplicationContext(applicationContext);
-    }
+        testTarget.setServletContext(servletContext);
+   }
 
     @Test
     public void testInitParams() {
+        expect(applicationContext.getBeanDefinitionNames()).andReturn(new String[] {}).anyTimes();
         Map<String, String> initParams = new HashMap<String, String>();
-        initParams.put("param1", "value1");
-        initParams.put("param2", "value2");
+        servletContext.setInitParameter("param1", "value1");
+        servletContext.setInitParameter("param2", "value2");
         replay(applicationContext);
-        testTarget.setInitParams(initParams);
         for (Entry<String, String> entry : initParams.entrySet()) {
             assertEquals(entry.getKey() + " has a different value", entry.getValue(),
                     testTarget.getInitParams().get(entry.getKey()));
@@ -45,15 +49,13 @@ public class SpringApplicationContextTest {
 
     @Test
     public void testApplicationScope() {
-        expect(applicationContext.getBeanDefinitionNames()).andReturn(new String[] { "bean1", "bean2" });
         Object bean1 = new Object();
-        expect(applicationContext.getBean("bean1")).andReturn(bean1);
+        servletContext.setAttribute("bean1", bean1);
         Object bean2 = new Object();
-        expect(applicationContext.getBean("bean2")).andReturn(bean2);
+        servletContext.setAttribute("bean2", bean2);
         replay(applicationContext);
         assertEquals("bean1 is not found", bean1, testTarget.getApplicationScope().get("bean1"));
         assertEquals("bean2 is not found", bean2, testTarget.getApplicationScope().get("bean2"));
-        assertEquals("wrong list of beans", 2, testTarget.getApplicationScope().size());
         verify(applicationContext);
     }
 

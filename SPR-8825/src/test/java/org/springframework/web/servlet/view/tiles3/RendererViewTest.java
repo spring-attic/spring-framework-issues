@@ -10,6 +10,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tiles.access.TilesAccess;
+import org.apache.tiles.impl.BasicTilesContainer;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.render.Renderer;
@@ -55,6 +57,9 @@ public class RendererViewTest {
         response.setContentType(contentType);
 
         applicationContext = createMock(ApplicationContext.class);
+        Map<String, Object> appScope = new HashMap<String, Object>();
+        appScope.put(TilesAccess.CONTAINER_ATTRIBUTE, new BasicTilesContainer());
+        expect(applicationContext.getApplicationScope()).andReturn(appScope).anyTimes();
         renderer = createMock(Renderer.class);
         model = new HashMap<String, Object>();
         model.put("modelAttribute", "modelValue");

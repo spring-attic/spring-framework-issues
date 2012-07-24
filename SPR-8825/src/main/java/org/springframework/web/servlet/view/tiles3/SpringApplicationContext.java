@@ -23,70 +23,55 @@ package org.springframework.web.servlet.view.tiles3;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+
 import org.apache.tiles.request.ApplicationResource;
-import org.apache.tiles.request.attribute.HasKeys;
-import org.apache.tiles.request.collection.ReadOnlyEnumerationMap;
 import org.apache.tiles.request.locale.URLApplicationResource;
+import org.apache.tiles.request.servlet.ServletApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
+import org.springframework.web.context.ServletContextAware;
 
 /**
  * An {@link org.apache.tiles.request.ApplicationContext} based on Spring's {@link ApplicationContext}.
  *
+ * @author Nicolas Le Bas
+ * @author mick semb wever
  */
-public class SpringApplicationContext implements org.apache.tiles.request.ApplicationContext, ApplicationContextAware {
-    private static final Map<String, String> DEFAULT_INIT_PARAMS = new HashMap<String, String>();
+public class SpringApplicationContext implements org.apache.tiles.request.ApplicationContext, ApplicationContextAware, ServletContextAware {
 
-    private Map<String, Object> applicationScope;
     private ApplicationContext applicationContext;
-    private Map<String, String> initParams = Collections.unmodifiableMap(DEFAULT_INIT_PARAMS);
-
-    private final class SpringApplicationScopeExtractor implements HasKeys<Object> {
-        @Override
-        public Enumeration<String> getKeys() {
-            return Collections.enumeration(Arrays.asList(SpringApplicationContext.this.applicationContext
-                    .getBeanDefinitionNames()));
-        }
-
-        @Override
-        public Object getValue(String key) {
-            return SpringApplicationContext.this.applicationContext.getBean(key);
-        }
-    }
+    private ServletApplicationContext delegate;
 
     @Override
-    public ApplicationContext getContext() {
-        return applicationContext;
+    public ServletContext getContext() {
+        return (ServletContext) delegate.getContext();
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-        applicationScope = new ReadOnlyEnumerationMap<Object>(new SpringApplicationScopeExtractor());
+    }
+
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        delegate = new ServletApplicationContext(servletContext);
     }
 
     @Override
     public Map<String, Object> getApplicationScope() {
-        return applicationScope;
-    }
-
-    public void setInitParams(Map<String, String> initParams) {
-        Map<String, String> paramMap = new HashMap<String, String>(DEFAULT_INIT_PARAMS);
-        paramMap.putAll(initParams);
-        this.initParams = Collections.unmodifiableMap(paramMap);
+        return delegate.getApplicationScope();
     }
 
     @Override
     public Map<String, String> getInitParams() {
-        return initParams;
+        return delegate.getInitParams();
     }
 
     @Override

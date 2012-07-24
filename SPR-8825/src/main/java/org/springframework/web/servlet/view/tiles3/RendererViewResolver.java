@@ -32,7 +32,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.tiles.access.TilesAccess;
+import org.apache.tiles.renderer.DefinitionRenderer;
 import org.apache.tiles.request.ApplicationContext;
+import org.apache.tiles.request.DispatchRequest;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.attribute.Addable;
 import org.apache.tiles.request.render.Renderer;
@@ -40,7 +43,24 @@ import org.springframework.util.PatternMatchUtils;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractCachingViewResolver;
 
-
+/**
+ * Convenience subclass of {@link org.springframework.web.servlet.view.AbstractCachingViewResolver} that supports
+ * {@link RendererView} (i.e. Tiles definitions) and custom subclasses of it.
+ *
+ * <p>The renderer class used by this resolver is specified via the "renderer" property.
+ * If not specified it defaults to a DefinitionRenderer.
+ * This default relies depends on a TilesContainer which must be available in
+ * the ApplicationContext. This container is typically set up via a
+ * {@link TilesConfigurer} bean definition in the application context.
+ * A typical bean definition is just:
+ *
+ * <pre>&lt;bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.RendererViewResolver"/></pre>
+ *
+ *
+ * @author Nicolas Le Bas
+ * @since 3.2
+ * @see RendererView
+ */
 public class RendererViewResolver extends AbstractCachingViewResolver {
 
     private ApplicationContext tilesContext;
@@ -61,13 +81,16 @@ public class RendererViewResolver extends AbstractCachingViewResolver {
     static final List<String> SCOPES = Arrays.asList("application", "session", "request");
 
 
-    /**
+    /** Defaults to SpringApplicationContext.
+     *
      * @param tilesContext the tilesContext to set
      */
     public void setTilesContext(ApplicationContext tilesContext) {
         this.tilesContext = tilesContext;
     }
     /**
+     * Defaults to DefinitionRenderer.
+     *
      * @param renderer the renderer to set
      */
     public void setRenderer(Renderer renderer) {
@@ -144,14 +167,14 @@ public class RendererViewResolver extends AbstractCachingViewResolver {
         this.viewNames = viewNames;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected void initApplicationContext(org.springframework.context.ApplicationContext context) {
         super.initApplicationContext(context);
         if (this.tilesContext == null) {
-            SpringApplicationContext sac = new SpringApplicationContext();
-            sac.setApplicationContext(context);
-            this.tilesContext = sac;
+            this.tilesContext = context.getBean(SpringApplicationContext.class);
+            if(this.tilesContext == null) {
+                throw new IllegalStateException("no SpringApplicationContext bean found");
+            }
         }
     }
 
@@ -159,83 +182,82 @@ public class RendererViewResolver extends AbstractCachingViewResolver {
         synchronized (localeRequests) {
             Request result = localeRequests.get(locale);
             if (result == null) {
-                result = new SpringRequest(new Request() {
-
+                result = new SpringRequest(new DispatchRequest() {
                     @Override
                     public boolean isUserInRole(String role) {
                         return true;
                     }
-
                     @Override
                     public boolean isResponseCommitted() {
                         return true;
                     }
-
                     @Override
                     public Writer getWriter() throws IOException {
                         throw new UnsupportedOperationException("Dummy request");
                     }
-
                     @Override
                     public Addable<String> getResponseHeaders() {
                         throw new UnsupportedOperationException("Dummy request");
                     }
-
                     @Override
                     public Locale getRequestLocale() {
                         throw new UnsupportedOperationException("Dummy request");
                     }
-
                     @Override
                     public PrintWriter getPrintWriter() throws IOException {
                         throw new UnsupportedOperationException("Dummy request");
                     }
-
                     @Override
                     public Map<String, String[]> getParamValues() {
                         return Collections.<String, String[]> emptyMap();
                     }
-
                     @Override
                     public Map<String, String> getParam() {
                         return Collections.<String, String> emptyMap();
                     }
-
                     @Override
                     public OutputStream getOutputStream() throws IOException {
                         throw new UnsupportedOperationException("Dummy request");
                     }
-
                     @Override
                     public Map<String, String[]> getHeaderValues() {
                         return Collections.<String, String[]> emptyMap();
                     }
-
                     @Override
                     public Map<String, String> getHeader() {
                         return Collections.<String, String> emptyMap();
                     }
-
                     @Override
                     public Map<String, Object> getContext(String scope) {
                         return Collections.<String, Object> emptyMap();
                     }
-
                     @Override
                     public List<String> getAvailableScopes() {
                         return Collections.<String> emptyList();
                     }
-
                     @Override
                     public ApplicationContext getApplicationContext() {
                         return RendererViewResolver.this.tilesContext;
                     }
-                } , locale);
+                    @Override
+                    public void dispatch(String path) throws IOException {
+                        throw new UnsupportedOperationException("Dummy request");
+                    }
+                    @Override
+                    public void include(String path) throws IOException {
+                        throw new UnsupportedOperationException("Dummy request");
+                    }
+                    @Override
+                    public void setContentType(String contentType) {
+                        throw new UnsupportedOperationException("Dummy request");
+                    }
+                }, locale);
                 localeRequests.put(locale, result);
             }
             return result;
         }
     }
+
     @Override
     protected View loadView(String viewName, Locale locale) throws Exception {
         if(viewNames != null) {
@@ -251,9 +273,12 @@ public class RendererViewResolver extends AbstractCachingViewResolver {
         if(suffix != null) {
             targetViewNameBuilder.append(suffix);
         }
+        if(renderer == null){
+            renderer = new DefinitionRenderer(TilesAccess.getContainer(tilesContext));
+        }
         String targetViewName = targetViewNameBuilder.toString();
-        if (renderer.isRenderable(targetViewName.toString(), getLocaleRequest(locale))) {
-            RendererView view = new RendererView(this.tilesContext, this.renderer, targetViewName.toString(), locale);
+        if (renderer.isRenderable(targetViewName, getLocaleRequest(locale))) {
+            RendererView view = new RendererView(this.tilesContext, this.renderer, targetViewName, locale);
             if (this.contentType != null) {
                 view.setContentType(this.contentType);
             }

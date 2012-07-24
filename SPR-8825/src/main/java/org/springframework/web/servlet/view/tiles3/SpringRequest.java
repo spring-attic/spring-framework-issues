@@ -2,14 +2,14 @@ package org.springframework.web.servlet.view.tiles3;
 
 import java.util.Locale;
 
-import org.apache.tiles.request.DefaultRequestWrapper;
-import org.apache.tiles.request.Request;
+import org.apache.tiles.request.DispatchRequest;
+import org.apache.tiles.request.DispatchRequestWrapper;
 
-public class SpringRequest extends DefaultRequestWrapper {
+public class SpringRequest extends DispatchRequestWrapper {
 
     private Locale locale;
 
-    protected SpringRequest(Request context, Locale locale) {
+    protected SpringRequest(DispatchRequest context, Locale locale) {
         super(context);
         this.locale = locale;
     }
