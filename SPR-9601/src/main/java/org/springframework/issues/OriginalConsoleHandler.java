@@ -21,14 +21,30 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * This class matches the original description of SPR-9601.
+ */
 @RequestMapping("/console")
-public interface ConsoleHttpRequestHandler {
+@Transactional
+public class OriginalConsoleHandler implements HttpRequestHandler, ApplicationContextAware {
 
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	}
+
+    @Override
 	@RequestMapping(method = RequestMethod.GET)
-	public abstract void handleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException;
+	public void handleRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		response.getWriter().write("Success");
+	}
 
 }
