@@ -39,9 +39,7 @@ import org.apache.tiles.request.DispatchRequest;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.attribute.Addable;
 import org.apache.tiles.request.render.Renderer;
-import org.springframework.util.PatternMatchUtils;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.AbstractCachingViewResolver;
+import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
 
 /**
  * Convenience subclass of {@link org.springframework.web.servlet.view.AbstractCachingViewResolver} that supports
@@ -61,25 +59,18 @@ import org.springframework.web.servlet.view.AbstractCachingViewResolver;
  * @since 3.2
  * @see RendererView
  */
-public class RendererViewResolver extends AbstractCachingViewResolver {
+public class RendererViewResolver extends AbstractTemplateViewResolver {
 
     private ApplicationContext tilesContext;
     private Renderer renderer;
-    private String prefix;
-    private String suffix;
-    private String contentType;
-    private Map<String, Object> attributesMap;
-    private String requestContextAttribute;
-    private boolean exposeRequestAttributes = false;
-    private boolean allowRequestOverride = false;
-    private boolean exposeSessionAttributes = false;
-    private boolean allowSessionOverride = false;
-    private boolean exposeSpringMacroHelpers = true;
     private boolean exposeModelInRequest = true;
-    private String[] viewNames = null;
     private Map<Locale, Request> localeRequests = new HashMap<Locale, Request>();
     static final List<String> SCOPES = Arrays.asList("application", "session", "request");
 
+    @Override
+    protected Class getViewClass() {
+        return RendererView.class;
+    }
 
     /** Defaults to SpringApplicationContext.
      *
@@ -97,74 +88,10 @@ public class RendererViewResolver extends AbstractCachingViewResolver {
         this.renderer = renderer;
     }
     /**
-     * @param prefix the prefix to set
-     */
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-    /**
-     * @param suffix the suffix to set
-     */
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
-    }
-    /**
-     * @param contentType the contentType to set
-     */
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-    /**
-     * @param attributesMap the attributesMap to set
-     */
-    public void setAttributesMap(Map<String, Object> attributesMap) {
-        this.attributesMap = attributesMap;
-    }
-    /**
-     * @param requestContextAttribute the requestContextAttribute to set
-     */
-    public void setRequestContextAttribute(String requestContextAttribute) {
-        this.requestContextAttribute = requestContextAttribute;
-    }
-    /**
-     * @param exposeRequestAttributes the exposeRequestAttributes to set
-     */
-    public void setExposeRequestAttributes(boolean exposeRequestAttributes) {
-        this.exposeRequestAttributes = exposeRequestAttributes;
-    }
-    /**
-     * @param allowRequestOverride the allowRequestOverride to set
-     */
-    public void setAllowRequestOverride(boolean allowRequestOverride) {
-        this.allowRequestOverride = allowRequestOverride;
-    }
-    /**
-     * @param exposeSessionAttributes the exposeSessionAttributes to set
-     */
-    public void setExposeSessionAttributes(boolean exposeSessionAttributes) {
-        this.exposeSessionAttributes = exposeSessionAttributes;
-    }
-    /**
-     * @param allowSessionOverride the allowSessionOverride to set
-     */
-    public void setAllowSessionOverride(boolean allowSessionOverride) {
-        this.allowSessionOverride = allowSessionOverride;
-    }
-    /**
-     * @param exposeSpringMacroHelpers the exposeSpringMacroHelpers to set
-     */
-    public void setExposeSpringMacroHelpers(boolean exposeSpringMacroHelpers) {
-        this.exposeSpringMacroHelpers = exposeSpringMacroHelpers;
-    }
-    /**
      * @param exposeSpringMacroHelpers the exposeInRequest to set
      */
     public void setExposeModelInRequest(boolean exposeModelInRequest) {
         this.exposeModelInRequest = exposeModelInRequest;
-    }
-
-    public void setViewNames(String[] viewNames) {
-        this.viewNames = viewNames;
     }
 
     @Override
@@ -259,41 +186,27 @@ public class RendererViewResolver extends AbstractCachingViewResolver {
     }
 
     @Override
-    protected View loadView(String viewName, Locale locale) throws Exception {
-        if(viewNames != null) {
-            if(!PatternMatchUtils.simpleMatch(viewNames, viewName)) {
-                return null;
-            }
-        }
-        StringBuilder targetViewNameBuilder = new StringBuilder();
-        if(prefix != null) {
-            targetViewNameBuilder.append(prefix);
-        }
-        targetViewNameBuilder.append(viewName);
-        if(suffix != null) {
-            targetViewNameBuilder.append(suffix);
-        }
-        if(renderer == null){
+    protected RendererView loadView(String viewName, Locale locale) throws Exception {
+        if (renderer == null) {
             renderer = new DefinitionRenderer(TilesAccess.getContainer(tilesContext));
         }
-        String targetViewName = targetViewNameBuilder.toString();
-        if (renderer.isRenderable(targetViewName, getLocaleRequest(locale))) {
-            RendererView view = new RendererView(this.tilesContext, this.renderer, targetViewName, locale);
-            if (this.contentType != null) {
-                view.setContentType(this.contentType);
-            }
-            view.setRequestContextAttribute(this.requestContextAttribute);
-            view.setAttributesMap(this.attributesMap);
-            view.setExposeRequestAttributes(this.exposeRequestAttributes);
-            view.setAllowRequestOverride(this.allowRequestOverride);
-            view.setExposeSessionAttributes(this.exposeSessionAttributes);
-            view.setAllowSessionOverride(this.allowSessionOverride);
-            view.setExposeSpringMacroHelpers(this.exposeSpringMacroHelpers);
-            view.setExposeModelInRequest(exposeModelInRequest);
-            View result = (View) getApplicationContext().getAutowireCapableBeanFactory().initializeBean(view, viewName);
-            return result;
+        if (renderer.isRenderable(getPrefix() + viewName + getSuffix(), getLocaleRequest(locale))) {
+            RendererView view = (RendererView) super.loadView(viewName, locale);
+            view.setLocale(locale);
+            return view;
         } else {
             return null;
         }
     }
+
+    @Override
+    protected RendererView buildView(String viewName) throws Exception {
+        RendererView view = (RendererView) super.buildView(viewName);
+        view.setTilesApplicationContext(tilesContext);
+        view.setRenderer(renderer);
+        view.setUrl(viewName);
+        view.setExposeModelInRequest(exposeModelInRequest);
+        return view;
+    }
+
 }

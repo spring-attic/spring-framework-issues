@@ -63,7 +63,11 @@ public class RendererViewTest {
         renderer = createMock(Renderer.class);
         model = new HashMap<String, Object>();
         model.put("modelAttribute", "modelValue");
-        testTarget = new RendererView(applicationContext, renderer, path, locale);
+        testTarget = new RendererView();
+        testTarget.setTilesApplicationContext(applicationContext);
+        testTarget.setRenderer(renderer);
+        testTarget.setUrl(path);
+        testTarget.setLocale(locale);
     }
 
     @Test

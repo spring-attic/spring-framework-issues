@@ -49,19 +49,24 @@ public class RendererView extends AbstractTemplateView {
     private boolean exposeModelInRequest = true;
     private boolean exposeForwardAttributes = false;
 
-    public RendererView(ApplicationContext applicationContext, Renderer renderer, String path, Locale locale) {
-        super.setUrl(path);
-        this.applicationContext = applicationContext;
-        this.renderer = renderer;
-        this.locale = locale;
-    }
-
     @Override
     protected void initServletContext(ServletContext servletContext) {
         super.initServletContext(servletContext);
         if (servletContext.getMajorVersion() == 2 && servletContext.getMinorVersion() < 5) {
             this.exposeForwardAttributes = true;
         }
+    }
+
+    public void setTilesApplicationContext(ApplicationContext applicationContext){
+        this.applicationContext = applicationContext;
+    }
+
+    public void setRenderer(Renderer renderer){
+        this.renderer = renderer;
+    }
+
+    public void setLocale(Locale locale){
+        this.locale = locale;
     }
 
     /**
