@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE project [<!ENTITY common SYSTEM "common.xml">]>
+<configuration scan="true">
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				[%d{HH:mm:ss.SSS}][%thread][%-5level][%logger{36}] - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+	
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+	
+</configuration>
