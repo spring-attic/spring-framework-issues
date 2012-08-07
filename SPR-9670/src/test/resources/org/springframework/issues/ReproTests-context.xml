@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<bean id="ParentBeanGroup" class="java.util.ArrayList" scope="prototype">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="SampleBean1"/>               
+                <ref bean="SampleBean2"/>
+                <ref bean="SampleBean3"/>
+                <ref bean="SampleBean4"/>           
+            </list>
+        </constructor-arg>
+    </bean>
+ 
+    <bean id="SampleBean1" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="id" value="SampleBean1" />
+        <property name="children" ref="SampleChildren1"/>
+    </bean>
+ 
+    <bean id="SampleBean2" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="id" value="SampleBean2" />
+        <property name="children" ref="SampleChildren1"/>
+    </bean>
+ 
+    <bean id="SampleBean3" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="id" value="SampleBean3" />
+        <property name="children" ref="SampleChildren2"/>
+    </bean>
+ 
+     <bean id="SampleBean4" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="id" value="SampleBean4" />
+        <property name="children" ref="SampleChildren2"/>
+    </bean>
+ 
+ 
+    <bean id="SampleChildren1" class="java.util.ArrayList" scope="prototype">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="Child1SampleBean1"/>
+                <ref bean="Child1SampleBean2"/>              
+                <ref bean="SharedChildSampleBean1"/>
+                <ref bean="SharedChildSampleBean2"/>
+                <ref bean="SharedChildSampleBean3"/>
+                <ref bean="SharedChildSampleBean4"/>
+                <ref bean="Child1SampleBean3"/>             
+            </list>
+        </constructor-arg>
+    </bean>
+ 
+    <bean id="SampleChildren2" class="java.util.ArrayList" scope="prototype">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="Child2SampleBean1"/>
+                <ref bean="Child2SampleBean2"/>
+                <ref bean="SharedChildSampleBean1"/>
+                <ref bean="SharedChildSampleBean2"/>
+                <ref bean="SharedChildSampleBean3"/>           
+                <ref bean="SharedChildSampleBean4"/>
+                <ref bean="Child2SampleBean3"/>  
+            </list>
+        </constructor-arg>
+    </bean>
+ 
+    <bean id="Child1SampleBean1" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="Child1SampleBean1 Title" />
+        <property name="id" value="Child1SampleBean1 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="Child1SampleBean2" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="Child1SampleBean2 Title" />
+        <property name="id" value="Child1SampleBean2 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="SharedChildSampleBean1" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="SharedChildSampleBean1 Title" />
+        <property name="id" value="SharedChildSampleBean1 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="SharedChildSampleBean2" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="SharedChildSampleBean2 Title" />
+        <property name="id" value="SharedChildSampleBean2 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="SharedChildSampleBean3" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="SharedChildSampleBean3 Title" />
+        <property name="id" value="Child1SampleBean1 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="SharedChildSampleBean4" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="SharedChildSampleBean4 Title" />
+        <property name="id" value="SharedChildSampleBean4 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="Child1SampleBean3" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="CChild1SampleBean3 Title" />
+        <property name="id" value="Child1SampleBean3 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="Child2SampleBean3" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="Child 2 Sample Bean 3 Title" />
+        <property name="id" value="Child 2 Sample Bean 3 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="Child2SampleBean1" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="Child 2 Sample Bean 1 Title" />
+        <property name="id" value="Child 2 Sample Bean 1 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+    
+    <bean id="Child2SampleBean2" class="org.springframework.issues.SampleBean" scope="prototype">
+        <property name="title" value="Child 2 Sample Bean 2 Title" />
+        <property name="id" value="Child 2 Sample Bean 2 Id" />
+        <property name="loc" value="/some/location/should/possibly/go/here"/>
+        <property name="trackerId" value="some_tracker_id" />
+        <property name="visible" value="true"/>
+    </bean>
+
+</beans>
