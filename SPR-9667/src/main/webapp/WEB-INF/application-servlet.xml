@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.2.xsd">
+
+	<!-- Scans the classpath of this application for @Components to deploy as beans -->
+	<context:component-scan base-package="com.spring.test" />	
+
+	<!-- Load parameters files -->
+	<context:property-placeholder location="classpath:/configuration/application.properties" />
+	
+	<!-- Configures the @Controller programming model -->
+	<mvc:annotation-driven />
+
+	<!-- Forwards requests to the "/" resource to the "welcome" view -->
+	<mvc:view-controller path="/" view-name="index"/>
+
+	<!-- Configures Handler Interceptors -->	
+	<mvc:interceptors>
+		<!-- Changes the locale when a 'locale' request parameter is sent; e.g. /?locale=de -->
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<!-- Manage cache header expire date for static and restfull data -->
+		<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor" p:cacheSeconds="0" p:alwaysUseFullPath="true" >
+		    <property name="cacheMappings">
+		        <props>
+		            <!-- cache should be for 1 month = 2592000 but -1 for tests-->
+		            <prop key="/static/**">-1</prop>
+		            <!-- don't set cache headers -->
+		            <prop key="/api/**">-1</prop>
+		        </props>
+		    </property>
+		</bean>
+	</mvc:interceptors>
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
+	<mvc:resources mapping="/static/**" location="/static/" />
+
+	<!-- Resolves view names to protected .jsp resources within the /WEB-INF/views directory -->
+	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="order" value="0"/>
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".html"/>
+		<property name="templateMode" value="HTML5" />
+	</bean>
+	
+	<bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+	</bean>
+	
+	<bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+	</bean>
+
+	<!-- Resolves view names json -->
+	<bean id="ContentNegotiatingViewResolverId" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1"/>
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="mediaTypes">
+		<map>
+		  <entry key="json" value="application/json"/>
+		</map>
+		  </property>
+		  <property name="viewResolvers">
+			<list>
+			  <bean id="BeanNameViewResolverId" class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+			</list>
+		  </property>
+		  <property name="defaultViews">
+			<list>
+			  <bean id="MappingJacksonJsonViewId" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+			</list>
+		 </property>
+		 <property name="defaultContentType" value="application/json" />
+		<property name="favorPathExtension" value="true" />
+	</bean>
+
+</beans>
