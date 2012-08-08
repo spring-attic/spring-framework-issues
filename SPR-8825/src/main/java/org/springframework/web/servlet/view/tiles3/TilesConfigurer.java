@@ -16,7 +16,6 @@
 
 package org.springframework.web.servlet.view.tiles3;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +64,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.servlet.view.tiles2.SpringLocaleResolver;
+import org.springframework.web.servlet.view.tiles3.SpringLocaleResolver;
 
 /**
  * Helper class to configure Tiles 3.x for the Spring Framework. See
@@ -273,10 +272,10 @@ public class TilesConfigurer implements ApplicationContextAware, ServletContextA
     @Override
 	public void afterPropertiesSet() throws TilesException {
 
-        SpringApplicationContext preliminaryContext = applicationContext.getBean(SpringApplicationContext.class);
+        ApplicationContext preliminaryContext = applicationContext.getBean(ApplicationContext.class);
         if(null == preliminaryContext){
-            throw new IllegalStateException("no SpringApplicationContext bean found."
-                    + " please add <bean class=\"org.springframework.web.servlet.view.tiles3.SpringApplicationContext\"/>"
+            throw new IllegalStateException("no ApplicationContext bean found."
+                    + " please add <bean class=\"org.apache.tiles.request.servlet.wildcard.WildcardServletApplicationContext\"><constructor-arg ref=\"servletContext\"/></bean>"
                     + " to your spring web context");
         }
  		if (this.tilesInitializer == null) {

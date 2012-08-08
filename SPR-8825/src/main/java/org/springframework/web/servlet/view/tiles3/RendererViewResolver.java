@@ -32,8 +32,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.tiles.access.TilesAccess;
-import org.apache.tiles.renderer.DefinitionRenderer;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.DispatchRequest;
 import org.apache.tiles.request.Request;
@@ -68,25 +66,46 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
     static final List<String> SCOPES = Arrays.asList("application", "session", "request");
 
     @Override
+    @SuppressWarnings("rawtypes")
     protected Class getViewClass() {
         return RendererView.class;
     }
 
-    /** Defaults to SpringApplicationContext.
+    /** Defaults to any suitable ApplicationContext configured in spring.
      *
      * @param tilesContext the tilesContext to set
      */
     public void setTilesContext(ApplicationContext tilesContext) {
         this.tilesContext = tilesContext;
     }
+    
     /**
-     * Defaults to DefinitionRenderer.
+     * Get the TilesContext in use.
+     * 
+     * @return the tilesContext in use
+     */
+    public ApplicationContext getTilesContext() {
+        return tilesContext;
+    }
+    
+    /**
+     * Must be set. Use {@link TilesViewResolver} to set it up for Apache Tiles.
      *
      * @param renderer the renderer to set
      */
     public void setRenderer(Renderer renderer) {
         this.renderer = renderer;
     }
+    
+    /**
+     * Get the Renderer in use.
+     * 
+     * @return the Renderer in use
+     */
+    public Renderer getRenderer() {
+        return renderer;
+    }
+    
     /**
      * @param exposeSpringMacroHelpers the exposeInRequest to set
      */
@@ -98,9 +117,9 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
     protected void initApplicationContext(org.springframework.context.ApplicationContext context) {
         super.initApplicationContext(context);
         if (this.tilesContext == null) {
-            this.tilesContext = context.getBean(SpringApplicationContext.class);
+            this.tilesContext = context.getBean(ApplicationContext.class);
             if(this.tilesContext == null) {
-                throw new IllegalStateException("no SpringApplicationContext bean found");
+                throw new IllegalStateException("no ApplicationContext bean found");
             }
         }
     }
@@ -187,9 +206,6 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
 
     @Override
     protected RendererView loadView(String viewName, Locale locale) throws Exception {
-        if (renderer == null) {
-            renderer = new DefinitionRenderer(TilesAccess.getContainer(tilesContext));
-        }
         if (renderer.isRenderable(getPrefix() + viewName + getSuffix(), getLocaleRequest(locale))) {
             RendererView view = (RendererView) super.loadView(viewName, locale);
             view.setLocale(locale);
@@ -204,7 +220,7 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
         RendererView view = (RendererView) super.buildView(viewName);
         view.setTilesApplicationContext(tilesContext);
         view.setRenderer(renderer);
-        view.setUrl(viewName);
+        view.setUrl(getPrefix() + viewName + getSuffix());
         view.setExposeModelInRequest(exposeModelInRequest);
         return view;
     }

@@ -40,18 +40,18 @@ public class RendererViewTest {
 
     @Before
     public void setUp() {
-		springContext = new StaticWebApplicationContext();
-		springContext.setServletContext(new MockServletContext());
-		springContext.refresh();
+        springContext = new StaticWebApplicationContext();
+        springContext.setServletContext(new MockServletContext());
+        springContext.refresh();
 
         path = "/template.test";
         contentType = "application/test";
         locale = Locale.ITALY;
 
-		request = new MockHttpServletRequest();
-		request.setAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE, springContext);
-		request.setAttribute(DispatcherServlet.LOCALE_RESOLVER_ATTRIBUTE, new AcceptHeaderLocaleResolver());
-		request.setAttribute(DispatcherServlet.THEME_RESOLVER_ATTRIBUTE, new FixedThemeResolver());
+        request = new MockHttpServletRequest();
+        request.setAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE, springContext);
+        request.setAttribute(DispatcherServlet.LOCALE_RESOLVER_ATTRIBUTE, new AcceptHeaderLocaleResolver());
+        request.setAttribute(DispatcherServlet.THEME_RESOLVER_ATTRIBUTE, new FixedThemeResolver());
 
         response = new MockHttpServletResponse();
         response.setContentType(contentType);
