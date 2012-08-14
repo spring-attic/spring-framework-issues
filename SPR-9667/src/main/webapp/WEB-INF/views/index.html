@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title th:text="${AppName} + ' - V0.0.7 - Main'">AppName Vx.x.x</title>
+		<style type="text/css">
+			body {
+				color:#000; 
+				background-color: #fff;
+			}
+			html, body, #wrapper {
+				height:100%;
+				margin: 0;
+				padding: 0;
+				border: none;
+				text-align: center;
+			}
+			#wrapper {
+				background-color: #ccccff;
+				margin: 0 auto;
+				text-align: left;
+				vertical-align: middle;
+				width: 100%;
+			}
+		</style>
+	</head>
+	
+	<body >
+		<OBJECT id="wrapper" th:data="${AppURL}" >Warning: index.html could not be included.</OBJECT>
+	</body>
+	
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>Main Page</title>
+<link rel="stylesheet" type="text/css" href="css/app.css" />
+</head>
+<body>
+
+	<button data-bind="click: GETAction">Send GET</button>
+	<textarea id="get" rows='3' cols='60'> </textarea>
+	
+	<button data-bind="click: POSTAction">Send POST</button>
+	<textarea id="post" rows='3' cols='60'> </textarea>
+	
+	<button data-bind="click: PUTAction">Send PUT</button>
+	<textarea id="put" rows='3' cols='60'> </textarea>
+	
+	<button data-bind="click: DELAction">Send DEL</button>
+	<textarea id="del" rows='3' cols='60'> </textarea>
+	
+	<div id="logout">
+		<p>
+			<a href="../../../j_spring_security_logout">Logout</a>
+		</p>
+	</div>
+	
+	<!-- LIBRAIRIES -->
+	<script type="text/javascript" src="js/libs/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="js/libs/jquery-ui-1.8.18.custom.min.js"></script>
+	<script type="text/javascript" src="js/libs/knockout-2.1.0.js"></script>
+	<script type="text/javascript" src="js/libs/log4javascript.1.4.2.min.js"></script>
+
+	<script type="text/javascript" src="js/app.js"></script>
+
+</body>
+</html>

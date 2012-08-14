@@ -1,0 +1,254 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.spring</groupId>
+	<artifactId>test</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1</version>
+
+	<url>http://maven.apache.org</url>
+	<name>test</name>
+	<description>
+		spring 3.1 to 3.2 migration - non regression test
+	</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<targetJdk>1.6</targetJdk>
+		<org.springframework.version>3.1.1.RELEASE</org.springframework.version> <!-- switch to 3.2.0.BUILD-SNAPSHOT -->
+		<spring.sec.version>3.1.1.RELEASE</spring.sec.version>
+		<spring-data-redis.version>1.0.0.RELEASE</spring-data-redis.version>
+		
+		<cglib.version>2.2.2</cglib.version>
+		
+		<thymeleaf.version>2.0.10</thymeleaf.version>
+
+		<org.slf4j.version>1.6.4</org.slf4j.version>
+		<logback.version>1.0.6</logback.version>
+
+		<jackson-mapper-asl.version>1.9.8</jackson-mapper-asl.version>
+
+		<servlet-api.version>3.0.20100224</servlet-api.version>
+		
+		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+		<maven-war-plugin.version>2.2</maven-war-plugin.version>
+
+	</properties>
+	<dependencies>
+
+		<!-- Spring -->
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+	    <dependency>
+	    	<groupId>org.springframework</groupId>
+	    	<artifactId>spring-aop</artifactId>
+	    	<version>${org.springframework.version}</version>
+	    	<scope>compile</scope>
+	    </dependency>
+
+		<!-- Spring Security -->
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-acl</artifactId>
+			<version>${spring.sec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.sec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.sec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.sec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.sec.version}</version>
+		</dependency>
+		 
+		<!-- CGLib is also required for EHCache -->
+		
+		<dependency>
+		      <groupId>cglib</groupId>
+		      <artifactId>cglib-nodep</artifactId>            
+		      <version>${cglib.version}</version>
+		</dependency>
+		
+		<!-- Logging -->
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
+		<!-- JSP replacant, to avoid library compatibility issue between tomcat and jetty that are very tricky to solve --> 
+		
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring3</artifactId>
+			<version>${thymeleaf.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- HTTP server -->
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-servlet_3.0_spec</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Jackson JSON Mapper -->
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson-mapper-asl.version}</version>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+
+		<finalName>${project.artifactId}-V${project.version}-R${buildNumber}</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+
+			<!-- For Compilation -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<debug>true</debug>
+					<optimize>false</optimize>
+					<showWarnings>true</showWarnings>
+					<fork>true</fork>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
+				</configuration>
+			</plugin>
+
+			<!-- For MANIFEST management -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+			   <executions>
+			     <execution>
+			       <id>prepare-war</id>
+			       <phase>prepare-package</phase>
+			       <goals>
+			         <goal>exploded</goal>
+			       </goals>
+			     </execution>
+			   </executions>
+				<configuration>
+					<useCache>true</useCache>
+					<packagingExcludes>**/*.DS_Store,**/*.svn,**/*.classpath,**/*.project,**/*.settings</packagingExcludes>
+					<archive>
+						<manifest>
+							<addClasspath>false</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<addDefaultSpecificationEntries>false</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+							<Implementation-artifactId-Id>${project.artifactId}</Implementation-artifactId-Id>
+							<Implementation-timeStamp-Build>${timestampNumber}</Implementation-timeStamp-Build>
+							<SCM-Revision>${buildNumber}</SCM-Revision>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<repositories>
+		<!-- Main MAVEN Repository -->
+		<repository>
+			<id>MavenRepo1</id>
+			<name>Maven Repository</name>
+			<url>http://repo1.maven.org/maven2/</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+
+        <!-- For testing against latest Spring snapshots -->
+        <repository>
+            <id>org.springframework.maven.snapshot</id>
+            <name>Spring Maven Snapshot Repository</name>
+            <url>http://maven.springframework.org/snapshot</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        
+        <!-- For developing against latest Spring milestones -->
+        <repository>
+            <id>org.springframework.maven.milestone</id>
+            <name>Spring Maven Milestone Repository</name>
+            <url>http://maven.springframework.org/milestone</url>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+        
+	</repositories>
+ 
+</project>
