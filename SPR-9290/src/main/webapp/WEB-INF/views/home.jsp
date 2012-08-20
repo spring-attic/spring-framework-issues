@@ -7,6 +7,6 @@
 </head>
 <body>
   <h1>Home</h1>
-  <p><a href="test">Test</a>
+  <p><a href="example">Test raising exception</a>
 </body>
 </html>

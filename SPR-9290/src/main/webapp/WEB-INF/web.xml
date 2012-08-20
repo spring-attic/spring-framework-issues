@@ -28,7 +28,7 @@
 	</servlet-mapping>
 	
 	<error-page>
-		<location>/WEB-INF/views/error.jsp</location>
+		<location>/error</location>
 	</error-page>
 
 	<!-- Disables Servlet Container welcome file handling. Needed for compatibility 
