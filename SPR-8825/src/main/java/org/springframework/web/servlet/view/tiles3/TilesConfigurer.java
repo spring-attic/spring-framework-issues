@@ -16,9 +16,6 @@
 
 package org.springframework.web.servlet.view.tiles3;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,18 +28,17 @@ import javax.el.ListELResolver;
 import javax.el.MapELResolver;
 import javax.el.ResourceBundleELResolver;
 import javax.servlet.ServletContext;
+import javax.servlet.jsp.JspFactory;
 
 import org.apache.tiles.TilesContainer;
 import org.apache.tiles.TilesException;
 import org.apache.tiles.access.TilesAccess;
 import org.apache.tiles.definition.DefinitionsFactory;
-import org.apache.tiles.definition.DefinitionsFactoryException;
 import org.apache.tiles.definition.DefinitionsReader;
 import org.apache.tiles.definition.dao.BaseLocaleUrlDefinitionDAO;
 import org.apache.tiles.definition.dao.CachingLocaleUrlDefinitionDAO;
 import org.apache.tiles.definition.digester.DigesterDefinitionsReader;
 import org.apache.tiles.el.ELAttributeEvaluator;
-import org.apache.tiles.el.JspExpressionFactoryFactory;
 import org.apache.tiles.el.TilesContextBeanELResolver;
 import org.apache.tiles.el.TilesContextELResolver;
 import org.apache.tiles.evaluator.AttributeEvaluatorFactory;
@@ -52,12 +48,9 @@ import org.apache.tiles.factory.BasicTilesContainerFactory;
 import org.apache.tiles.impl.BasicTilesContainer;
 import org.apache.tiles.impl.mgmt.CachingTilesContainer;
 import org.apache.tiles.locale.LocaleResolver;
-import org.apache.tiles.preparer.BasicPreparerFactory;
-import org.apache.tiles.preparer.PreparerFactory;
+import org.apache.tiles.preparer.factory.PreparerFactory;
 import org.apache.tiles.request.ApplicationContext;
-import org.apache.tiles.request.servlet.ServletApplicationContext;
-import org.apache.tiles.request.servlet.ServletUtil;
-import org.apache.tiles.request.util.ApplicationContextAware;
+import org.apache.tiles.request.ApplicationResource;
 import org.apache.tiles.startup.DefaultTilesInitializer;
 import org.apache.tiles.startup.TilesInitializer;
 import org.slf4j.Logger;
@@ -68,9 +61,10 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.servlet.view.tiles2.SpringLocaleResolver;
+import org.springframework.web.servlet.view.tiles3.SpringLocaleResolver;
 
 /**
  * Helper class to configure Tiles 3.x for the Spring Framework. See
@@ -79,12 +73,12 @@ import org.springframework.web.servlet.view.tiles2.SpringLocaleResolver;
  * mechanism for JSP-based web applications.
  *
  * <p>The TilesConfigurer simply configures a TilesContainer using a set of files
- * containing definitions, to be accessed by {@link TilesView} instances. This is a
+ * containing definitions, to be accessed by {@link RendererView} instances. This is a
  * Spring-based alternative (for usage in Spring configuration) to the Tiles-provided
  * {@link org.apache.tiles.web.startup.TilesListener} (for usage in <code>web.xml</code>).
  *
- * <p>TilesViews can be managed by any {@link org.springframework.web.servlet.ViewResolver}.
- * For simple convention-based view resolution, consider using {@link TilesViewResolver}.
+ * <p>RendererViews can be managed by any {@link org.springframework.web.servlet.ViewResolver}.
+ * For simple convention-based view resolution, consider using {@link RendererViewResolver}.
  *
  * <p>A typical TilesConfigurer bean definition looks as follows:
  *
@@ -102,12 +96,11 @@ import org.springframework.web.servlet.view.tiles2.SpringLocaleResolver;
  * &lt;/bean></pre>
  *
  * The values in the list are the actual Tiles XML files containing the definitions.
+ * Without specifying this list it defaults to "/WEB-INF/tiles.xml".
  *
  * @author mick semb wever
- * @see TilesView
- * @see TilesViewResolver
  */
-public class TilesConfigurer implements ServletContextAware, InitializingBean, DisposableBean {
+public class TilesConfigurer implements ApplicationContextAware, ServletContextAware, InitializingBean, DisposableBean {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -129,7 +122,9 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
 
 	private final Map<String, String> tilesPropertyMap = new HashMap<String, String>();
 
-	private ServletContext servletContext;
+	private org.springframework.context.ApplicationContext applicationContext;
+
+    private ServletContext servletContext;
 
 
 	public TilesConfigurer() {
@@ -158,10 +153,12 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
 	 * @see org.apache.tiles.extras.complete.CompleteAutoloadTilesInitializer
 	 */
 	public void setCompleteAutoload(boolean completeAutoload) {
+        this.completeAutoload = completeAutoload;
 		if (completeAutoload) {
 			try {
-				Class clazz = getClass().getClassLoader().loadClass(
-						"org.apache.tiles.extras.complete.CompleteAutoloadTilesInitializer");
+				Class clazz = getClass().getClassLoader()
+                        .loadClass("org.apache.tiles.extras.complete.CompleteAutoloadTilesInitializer");
+
 				this.tilesInitializer = (TilesInitializer) clazz.newInstance();
 			}
 			catch (Exception ex) {
@@ -256,12 +253,15 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
 		this.useMutableTilesContainer = useMutableTilesContainer;
 	}
 
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 
     @Override
-	public void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
-
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
 	/**
 	 * Creates and exposes a TilesContainer for this web application,
@@ -272,28 +272,28 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
     @Override
 	public void afterPropertiesSet() throws TilesException {
 
-        ServletApplicationContext preliminaryContext = new ServletApplicationContext(servletContext);
+        ApplicationContext preliminaryContext = applicationContext.getBean(ApplicationContext.class);
+        if(null == preliminaryContext){
+            throw new IllegalStateException("no ApplicationContext bean found."
+                    + " please add <bean class=\"org.apache.tiles.request.servlet.wildcard.WildcardServletApplicationContext\"><constructor-arg ref=\"servletContext\"/></bean>"
+                    + " to your spring web context");
+        }
  		if (this.tilesInitializer == null) {
 			this.tilesInitializer = createTilesInitializer();
 		}
  		this.tilesInitializer.initialize(preliminaryContext);
 
-        BasicTilesContainer container = (BasicTilesContainer) TilesAccess
-                .getContainer(ServletUtil.getApplicationContext(servletContext));
+        BasicTilesContainer container = (BasicTilesContainer) TilesAccess.getContainer(preliminaryContext);
 
 		if (this.completeAutoload) {
 			// We need to do this after initialization simply because we're reusing the
 			// original CompleteAutoloadTilesInitializer above. We cannot subclass
 			// CompleteAutoloadTilesInitializer when compiling against Tiles 2.1...
-			logger.debug("Registering Tiles 3.0 LocaleResolver for complete-autoload setup");
- 			try {
-				DefinitionsFactory definitionsFactory = container.getDefinitionsFactory();
-				Method setter = definitionsFactory.getClass().getMethod("setLocaleResolver", LocaleResolver.class);
-				setter.invoke(definitionsFactory, new SpringLocaleResolver());
-			}
-			catch (Exception ex) {
-				throw new IllegalStateException("Cannot override LocaleResolver with SpringLocaleResolver", ex);
-			}
+			logger.debug("Registering Tiles 3.0 SpringLocaleResolver for complete-autoload setup");
+            BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(container.getDefinitionsFactory());
+            if (bw.isWritableProperty("localeResolver")) {
+                bw.setPropertyValue("localeResolver", new SpringLocaleResolver());
+            }
 		}
 	}
 
@@ -315,7 +315,6 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
 		tilesInitializer.destroy();
 	}
 
-
 	private class SpringTilesInitializer extends DefaultTilesInitializer {
 
 		@Override
@@ -334,28 +333,21 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
         }
 
 		@Override
-		protected List<URL> getSourceURLs(ApplicationContext applicationContext) {
+		protected List<ApplicationResource> getSources(ApplicationContext applicationContext) {
 			if (definitions != null) {
-				try {
-					List<URL> result = new LinkedList<URL>();
-					for (String definition : definitions) {
-						result.addAll(applicationContext.getResources(definition));
-					}
-					return result;
-				}
-				catch (IOException ex) {
-					throw new DefinitionsFactoryException("Cannot load definition URLs", ex);
-				}
+                List<ApplicationResource> result = new LinkedList<ApplicationResource>();
+                for (String definition : definitions) {
+                    result.addAll(applicationContext.getResources(definition));
+                }
+                return result;
 			}
 			else {
-				return super.getSourceURLs(applicationContext);
+				return super.getSources(applicationContext);
 			}
 		}
 
 		@Override
-		protected BaseLocaleUrlDefinitionDAO instantiateLocaleDefinitionDao(
-                ApplicationContext applicationContext,
-                LocaleResolver resolver) {
+		protected BaseLocaleUrlDefinitionDAO instantiateLocaleDefinitionDao(ApplicationContext applicationContext, LocaleResolver resolver) {
 			BaseLocaleUrlDefinitionDAO dao = super.instantiateLocaleDefinitionDao(applicationContext, resolver);
 			if (checkRefresh && dao instanceof CachingLocaleUrlDefinitionDAO) {
 				((CachingLocaleUrlDefinitionDAO) dao).setCheckRefresh(checkRefresh);
@@ -371,14 +363,12 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
 		}
 
 		@Override
-		protected DefinitionsFactory createDefinitionsFactory(
-                ApplicationContext applicationContext,
-                LocaleResolver resolver) {
+		protected DefinitionsFactory createDefinitionsFactory(ApplicationContext applicationContext, LocaleResolver resolver) {
 
 			if (definitionsFactoryClass != null) {
 				DefinitionsFactory factory = BeanUtils.instantiate(definitionsFactoryClass);
- 				if (factory instanceof ApplicationContextAware) {
-					((ApplicationContextAware) factory).setApplicationContext(applicationContext);
+ 				if (factory instanceof org.apache.tiles.request.ApplicationContextAware) {
+					((org.apache.tiles.request.ApplicationContextAware) factory).setApplicationContext(applicationContext);
 				}
 				BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(factory);
 				if (bw.isWritableProperty("localeResolver")) {
@@ -422,9 +412,20 @@ public class TilesConfigurer implements ServletContextAware, InitializingBean, D
         private ELAttributeEvaluator createELEvaluator(final ApplicationContext applicationContext) {
 
             final ELAttributeEvaluator evaluator = new ELAttributeEvaluator();
-            final JspExpressionFactoryFactory efFactory = new JspExpressionFactoryFactory();
-            efFactory.setApplicationContext(applicationContext);
-            evaluator.setExpressionFactory(efFactory.getExpressionFactory());
+            try{
+                // jsp-api-2.1 doesn't default instantiate a factory for us
+                JspFactory factory = null != JspFactory.getDefaultFactory()
+                        ? JspFactory.getDefaultFactory()
+                        : (JspFactory) Class.forName("org.apache.jasper.runtime.JspFactoryImpl").newInstance();
+
+                evaluator.setExpressionFactory(factory.getJspApplicationContext(servletContext).getExpressionFactory());
+            } catch(ClassNotFoundException ex){
+                logger.error(ex.getMessage(), ex);
+            } catch(IllegalAccessException ex){
+                logger.error(ex.getMessage(), ex);
+            } catch(InstantiationException ex){
+                logger.error(ex.getMessage(), ex);
+            }
             final ELResolver elResolver = new CompositeELResolverImpl();
             evaluator.setResolver(elResolver);
             return evaluator;
