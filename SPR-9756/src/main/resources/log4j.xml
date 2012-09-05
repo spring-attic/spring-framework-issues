@@ -11,9 +11,9 @@
 	</appender>
 
 	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.core.env">
-		<level value="DEBUG" />
-	</logger>
+<!-- 	<logger name="org.springframework.core.env"> -->
+<!-- 		<level value="DEBUG" /> -->
+<!-- 	</logger> -->
 
 <!-- 	<logger name="org.springframework.web.context.support"> -->
 <!-- 		<level value="DEBUG" /> -->

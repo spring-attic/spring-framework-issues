@@ -1,68 +1,47 @@
 package org.springsource.investigation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
-
-abstract class BaseConfig {
-
-    @Autowired
-    protected Environment environment;
-
-    @Bean
-    public AppIdStringWrapper connectionFactoryLocator()
-    {
-        return new AppIdStringWrapper(environment.getProperty("appId"));
-    }
-}
-
-class AppIdStringWrapper {
-    private String profileName;
-
-    public AppIdStringWrapper(String profileName) {
-        this.profileName = profileName;
-    }
-
-    public String getProfileName() {
-        return this.profileName;
-    }
-}
-
 
 @Profile("prod")
 @Configuration
 @PropertySource({ "classpath:prod-app.properties" })
-class ProdConfig extends BaseConfig {
-}
-
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Profile("dev")
-@interface Dev {
-}
-
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Profile("prod")
-@interface Prod {
-}
-
-@Service
 public class App {
 
-    @Autowired
-    AppIdStringWrapper appIdStringWrapper;
+	@Autowired
+	protected Environment environment;
 
-    public void testApp()
-    {
-    }
+	@Autowired
+	protected ConfigurableApplicationContext context;
+
+	@Bean
+	public String foo() {
+		this.environment.getProperty("appId");
+		//assertThat(this.context.getEnvironment(), sameInstance(this.environment));
+		System.out.println("testing this.environment");
+		test(this.environment);
+		System.out.println("testing this.context.getBF().getBean(Env.class)");
+		test((Environment)this.context.getBeanFactory().getBean("environment"));
+		System.out.println("testing this.context.getEnv()");
+		test(this.context.getEnvironment());
+		return "bogus";
+	}
+
+	private void test(Environment env) {
+		if (this.context.getEnvironment() == env) {
+			System.out.println("environment belongs to autowired app context");
+		}
+		else if (this.context.getParent().getEnvironment() == env){
+			System.out.println("environment belongs to PARENT OF autowired app context");
+		}
+		else {
+			System.out.println("environment is of unknown origin");
+		}
+	}
 }

@@ -10,17 +10,16 @@
 
     <properties>
         <java-version>1.6</java-version>
-<!--         <org.springframework-version>3.1.1.RELEASE</org.springframework-version> -->
         <org.springframework-version>3.2.0.BUILD-SNAPSHOT</org.springframework-version>
         <org.slf4j-version>1.5.10</org.slf4j-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <repositories>
-	    <repository>
-	    <id>s2</id>
-	    <name>s2 snapshot</name>
-	    <url>http://repo.springsource.org/libs-snapshot</url>
-	    </repository>
+        <repository>
+        <id>s2</id>
+        <name>s2 snapshot</name>
+        <url>http://repo.springsource.org/libs-snapshot</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -42,20 +41,7 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
-<!--         Logging -->
-        
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <version>7.0.8</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>1.2_08</version>
-            <scope>optional</scope>
-        </dependency>
+        <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -77,7 +63,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

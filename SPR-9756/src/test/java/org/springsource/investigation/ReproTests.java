@@ -17,22 +17,29 @@
 package org.springsource.investigation;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 public class ReproTests {
+	@SuppressWarnings("unchecked")
 	@Test
 	public void repro() {
-		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-		ctx.getEnvironment().addActiveProfile("prod");
-		ctx.register(App.class);
-		ctx.refresh();
-		String testBean = ctx.getBean("testBean", String.class);
-		assertThat(testBean, equalTo("testBeanValue"));
-		String appId = ctx.getEnvironment().getProperty("appId");
-		assertThat(appId, equalTo("prod"));
+		ConfigurableApplicationContext parent = new GenericApplicationContext();
+		parent.refresh();
+
+		AnnotationConfigApplicationContext child = new AnnotationConfigApplicationContext();
+		child.setParent(parent);
+		child.refresh();
+
+		ConfigurableEnvironment env = child.getBean(ConfigurableEnvironment.class);
+		assertThat("UNKNOWN ENV", env, anyOf(sameInstance(parent.getEnvironment()), sameInstance(child.getEnvironment())));
+		assertThat("EXPECTED CHILD CTX ENV", env, sameInstance(child.getEnvironment()));
 	}
 
 }
