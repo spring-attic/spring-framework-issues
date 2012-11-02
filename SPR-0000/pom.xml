@@ -9,7 +9,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.2.0.BUILD-SNAPSHOT</version>
+			<version>3.1.3.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -25,11 +25,20 @@
 	</dependencies>
 	<repositories>
 		<repository>
-			<id>spring-maven-snapshot</id>
-			<name>Springframework Maven Snapshot Repository</name>
+			<id>s2-release</id>
+			<url>http://repo.springsource.org/release</url>
+		</repository>
+		<!--
+		<repository>
+			<id>s2-milestone</id>
+			<url>http://repo.springsource.org/milestone</url>
+		</repository>
+		<repository>
+			<id>s2-snapshot</id>
 			<url>http://repo.springsource.org/snapshot</url>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
+		-->
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
