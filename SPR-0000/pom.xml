@@ -38,6 +38,10 @@
 			<url>http://repo.springsource.org/snapshot</url>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
+		<repository>
+			<id>s2-staging</id>
+			<url>http://repo.springsource.org/libs-staging-local</url>
+		</repository>
 		-->
 	</repositories>
 	<properties>
