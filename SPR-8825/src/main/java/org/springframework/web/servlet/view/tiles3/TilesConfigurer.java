@@ -75,7 +75,7 @@ import org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory;
  *
  * <p>
  * The TilesConfigurer simply configures a TilesContainer using a set of files
- * containing definitions, to be accessed by {@link RendererView} instances.
+ * containing definitions, to be accessed by {@link TilesView} instances.
  * This is a Spring-based alternative (for usage in Spring configuration) to the
  * Tiles-provided {@link org.apache.tiles.web.startup.TilesListener} (for usage
  * in <code>web.xml</code>).
@@ -83,7 +83,7 @@ import org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory;
  * <p>
  * RendererViews can be managed by any
  * {@link org.springframework.web.servlet.ViewResolver}. For simple
- * convention-based view resolution, consider using {@link RendererViewResolver}.
+ * convention-based view resolution, consider using {@link TilesViewResolver}.
  *
  * <p>
  * A typical TilesConfigurer bean definition looks as follows:

@@ -47,7 +47,7 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.theme.FixedThemeResolver;
 
 public class RendererViewTest {
-	private RendererView testTarget;
+	private TilesView testTarget;
 	private ApplicationContext applicationContext;
 	private Renderer renderer;
 	private MockHttpServletRequest request;
@@ -84,7 +84,7 @@ public class RendererViewTest {
 		renderer = createMock(Renderer.class);
 		model = new HashMap<String, Object>();
 		model.put("modelAttribute", "modelValue");
-		testTarget = new RendererView();
+		testTarget = new TilesView();
 		testTarget.setTilesApplicationContext(applicationContext);
 		testTarget.setRenderer(renderer);
 		testTarget.setUrl(path);

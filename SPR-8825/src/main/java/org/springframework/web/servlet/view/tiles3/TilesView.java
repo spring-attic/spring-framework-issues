@@ -43,12 +43,28 @@ import org.springframework.web.util.WebUtils;
  * @author mick semb wever
  * @since 3.2
  */
-public class RendererView extends AbstractUrlBasedView {
+public class TilesView extends AbstractUrlBasedView {
+
 	private ApplicationContext applicationContext;
+
 	private Renderer renderer;
+
 	private boolean exposeForwardAttributes = false;
+
 	private boolean exposeJstlAttributes = true;
 
+
+	public void setTilesApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
+
+	public void setRenderer(Renderer renderer) {
+		this.renderer = renderer;
+	}
+
+	protected void setExposeJstlAttributes(boolean exposeJstlAttributes) {
+		this.exposeJstlAttributes = exposeJstlAttributes;
+	}
 
 	@Override
 	protected void initServletContext(ServletContext servletContext) {
@@ -64,18 +80,6 @@ public class RendererView extends AbstractUrlBasedView {
 		if (this.renderer == null) {
 			this.renderer = new DefinitionRenderer(TilesAccess.getContainer(this.applicationContext));
 		}
-	}
-
-	public void setTilesApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
-
-	public void setRenderer(Renderer renderer) {
-		this.renderer = renderer;
-	}
-
-	protected void setExposeJstlAttributes(boolean exposeJstlAttributes) {
-		this.exposeJstlAttributes = exposeJstlAttributes;
 	}
 
 	@Override

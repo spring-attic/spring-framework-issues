@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 /**
  * Convenience subclass of {@link UrlBasedViewResolver} that supports
- * {@link RendererView} (i.e. Tiles definitions) and custom subclasses of it.
+ * {@link TilesView} (i.e. Tiles definitions) and custom subclasses of it.
  *
  * <p>
  * The renderer class used by this resolver is specified via the "renderer"
@@ -38,17 +38,19 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
  *
  * @author Nicolas Le Bas
  * @since 3.2
- * @see RendererView
+ * @see TilesView
  */
-public class RendererViewResolver extends UrlBasedViewResolver {
+public class TilesViewResolver extends UrlBasedViewResolver {
 
 	private ApplicationContext tilesContext;
+
 	private Renderer renderer;
+
 
 	@Override
 	@SuppressWarnings("rawtypes")
 	protected Class getViewClass() {
-		return RendererView.class;
+		return TilesView.class;
 	}
 
 	/**
@@ -99,8 +101,8 @@ public class RendererViewResolver extends UrlBasedViewResolver {
 	}
 
 	@Override
-	protected RendererView buildView(String viewName) throws Exception {
-		RendererView view = (RendererView) super.buildView(viewName);
+	protected TilesView buildView(String viewName) throws Exception {
+		TilesView view = (TilesView) super.buildView(viewName);
 		view.setTilesApplicationContext(this.tilesContext);
 		view.setRenderer(this.renderer);
 		return view;

@@ -41,7 +41,7 @@ import org.springframework.web.context.support.StaticWebApplicationContext;
 
 public class RendererViewResolverTest {
 
-	private RendererViewResolver testTarget;
+	private TilesViewResolver testTarget;
 	private ApplicationContext tilesContext;
 	private StaticWebApplicationContext springContext;
 	private AutowireCapableBeanFactory beanFactory;
@@ -67,7 +67,7 @@ public class RendererViewResolverTest {
 		expect(tilesContext.getContext()).andReturn(springContext).anyTimes();
 		contentType = "application/test";
 		locale = Locale.ITALY;
-		testTarget = new RendererViewResolver();
+		testTarget = new TilesViewResolver();
 		testTarget.setTilesContext(tilesContext);
 		testTarget.setRenderer(renderer);
 		testTarget.setContentType(contentType);
@@ -79,7 +79,7 @@ public class RendererViewResolverTest {
 		expect(renderer.isRenderable(eq("/nonexistent.test"), isA(Request.class))).andReturn(false);
 		replay(tilesContext, beanFactory, renderer);
 		testTarget.setApplicationContext(springContext);
-		assertTrue(testTarget.resolveViewName("/template.test", locale) instanceof RendererView);
+		assertTrue(testTarget.resolveViewName("/template.test", locale) instanceof TilesView);
 		assertNull(testTarget.resolveViewName("/nonexistent.test", locale));
 		verify(tilesContext, beanFactory, renderer);
 	}
