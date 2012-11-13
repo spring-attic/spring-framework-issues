@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.apache.tiles.access.TilesAccess;
 import org.apache.tiles.impl.BasicTilesContainer;
+import org.apache.tiles.request.ApplicationAccess;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.render.Renderer;
@@ -59,9 +60,10 @@ public class RendererViewTest {
 	private StaticWebApplicationContext springContext;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		MockServletContext servletContext = new MockServletContext();
 		springContext = new StaticWebApplicationContext();
-		springContext.setServletContext(new MockServletContext());
+		springContext.setServletContext(servletContext);
 		springContext.refresh();
 
 		path = "/template.test";
@@ -79,15 +81,19 @@ public class RendererViewTest {
 
 		applicationContext = createMock(ApplicationContext.class);
 		Map<String, Object> appScope = new HashMap<String, Object>();
-		appScope.put(TilesAccess.CONTAINER_ATTRIBUTE, new BasicTilesContainer());
 		expect(applicationContext.getApplicationScope()).andReturn(appScope).anyTimes();
+		appScope.put(TilesAccess.CONTAINER_ATTRIBUTE, new BasicTilesContainer());
+
+		servletContext.setAttribute(ApplicationAccess.APPLICATION_CONTEXT_ATTRIBUTE, applicationContext);
+
 		renderer = createMock(Renderer.class);
 		model = new HashMap<String, Object>();
 		model.put("modelAttribute", "modelValue");
 		testTarget = new TilesView();
-		testTarget.setTilesApplicationContext(applicationContext);
+		testTarget.setServletContext(servletContext);
 		testTarget.setRenderer(renderer);
 		testTarget.setUrl(path);
+		testTarget.afterPropertiesSet();
 	}
 
 	@Test

@@ -22,12 +22,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tiles.TilesContainer;
 import org.apache.tiles.access.TilesAccess;
 import org.apache.tiles.renderer.DefinitionRenderer;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.render.Renderer;
 import org.apache.tiles.request.servlet.ServletRequest;
+import org.apache.tiles.request.servlet.ServletUtil;
 import org.springframework.web.servlet.support.JstlUtils;
 import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -45,18 +47,14 @@ import org.springframework.web.util.WebUtils;
  */
 public class TilesView extends AbstractUrlBasedView {
 
-	private ApplicationContext applicationContext;
-
 	private Renderer renderer;
 
 	private boolean exposeForwardAttributes = false;
 
 	private boolean exposeJstlAttributes = true;
 
+	private ApplicationContext applicationContext;
 
-	public void setTilesApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
 
 	public void setRenderer(Renderer renderer) {
 		this.renderer = renderer;
@@ -77,8 +75,12 @@ public class TilesView extends AbstractUrlBasedView {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		super.afterPropertiesSet();
+
+		this.applicationContext = ServletUtil.getApplicationContext(getServletContext());
+
 		if (this.renderer == null) {
-			this.renderer = new DefinitionRenderer(TilesAccess.getContainer(this.applicationContext));
+			TilesContainer container = TilesAccess.getContainer(this.applicationContext);
+			this.renderer = new DefinitionRenderer(container);
 		}
 	}
 

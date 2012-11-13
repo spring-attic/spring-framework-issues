@@ -68,7 +68,6 @@ public class RendererViewResolverTest {
 		contentType = "application/test";
 		locale = Locale.ITALY;
 		testTarget = new TilesViewResolver();
-		testTarget.setTilesContext(tilesContext);
 		testTarget.setRenderer(renderer);
 		testTarget.setContentType(contentType);
 	}
