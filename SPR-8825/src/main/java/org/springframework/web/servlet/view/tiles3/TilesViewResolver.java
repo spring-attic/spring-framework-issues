@@ -41,6 +41,7 @@ public class TilesViewResolver extends UrlBasedViewResolver {
 	/**
 	 * Set the {@link Renderer} to use.
 	 * If not set, by default {@link DefinitionRenderer} is used.
+	 * @see TilesView#setRenderer(Renderer)
 	 */
 	public void setRenderer(Renderer renderer) {
 		this.renderer = renderer;

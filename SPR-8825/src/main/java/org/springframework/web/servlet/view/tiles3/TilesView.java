@@ -43,6 +43,7 @@ import org.springframework.web.util.WebUtils;
  *
  * @author Nicolas Le Bas
  * @author mick semb wever
+ * @author Rossen Stoyanchev
  * @since 3.2
  */
 public class TilesView extends AbstractUrlBasedView {
@@ -56,10 +57,18 @@ public class TilesView extends AbstractUrlBasedView {
 	private ApplicationContext applicationContext;
 
 
+	/**
+	 * Set the {@link Renderer} to use.
+	 * If not set, by default {@link DefinitionRenderer} is used.
+	 */
 	public void setRenderer(Renderer renderer) {
 		this.renderer = renderer;
 	}
 
+	/**
+	 * Whether to expose JSTL attributes. By default set to {@code true}.
+	 * @see JstlUtils#exposeLocalizationContext(RequestContext)
+	 */
 	protected void setExposeJstlAttributes(boolean exposeJstlAttributes) {
 		this.exposeJstlAttributes = exposeJstlAttributes;
 	}
@@ -125,11 +134,17 @@ public class TilesView extends AbstractUrlBasedView {
 		}
 
 		Request tilesRequest = createTilesRequest(request, response);
-		if (this.renderer.isRenderable(getUrl(), tilesRequest)) {
-			this.renderer.render(getUrl(), tilesRequest);
-		}
+		this.renderer.render(getUrl(), tilesRequest);
 	}
 
+	/**
+	 * Create a Tiles {@link Request}. This implementation creates a
+	 * {@link ServletRequest}.
+	 *
+	 * @param request the current request
+	 * @param response the current response
+	 * @return the Tiles request
+	 */
 	protected Request createTilesRequest(final HttpServletRequest request, HttpServletResponse response) {
 		return new ServletRequest(this.applicationContext, request, response) {
 			@Override
