@@ -15,29 +15,13 @@
  */
 package org.springframework.web.servlet.view.tiles3;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import org.apache.tiles.request.ApplicationContext;
-import org.apache.tiles.request.DispatchRequest;
-import org.apache.tiles.request.Request;
-import org.apache.tiles.request.attribute.Addable;
 import org.apache.tiles.request.render.Renderer;
-import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 /**
- * Convenience subclass of
- * {@link org.springframework.web.servlet.view.AbstractCachingViewResolver} that
- * supports {@link RendererView} (i.e. Tiles definitions) and custom subclasses
- * of it.
+ * Convenience subclass of {@link UrlBasedViewResolver} that supports
+ * {@link RendererView} (i.e. Tiles definitions) and custom subclasses of it.
  *
  * <p>
  * The renderer class used by this resolver is specified via the "renderer"
@@ -56,12 +40,10 @@ import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
  * @since 3.2
  * @see RendererView
  */
-public class RendererViewResolver extends AbstractTemplateViewResolver {
+public class RendererViewResolver extends UrlBasedViewResolver {
 
 	private ApplicationContext tilesContext;
 	private Renderer renderer;
-	private Map<Locale, Request> localeRequests = new HashMap<Locale, Request>();
-	static final List<String> SCOPES = Arrays.asList("application", "session", "request");
 
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -116,118 +98,11 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
 		}
 	}
 
-	private Request getLocaleRequest(Locale locale) {
-		synchronized (localeRequests) {
-			Request result = localeRequests.get(locale);
-			if (result == null) {
-				result = new SpringRequest(new DispatchRequest() {
-					@Override
-					public boolean isUserInRole(String role) {
-						return true;
-					}
-
-					@Override
-					public boolean isResponseCommitted() {
-						return true;
-					}
-
-					@Override
-					public Writer getWriter() throws IOException {
-						throw new UnsupportedOperationException("Dummy request");
-					}
-
-					@Override
-					public Addable<String> getResponseHeaders() {
-						throw new UnsupportedOperationException("Dummy request");
-					}
-
-					@Override
-					public Locale getRequestLocale() {
-						throw new UnsupportedOperationException("Dummy request");
-					}
-
-					@Override
-					public PrintWriter getPrintWriter() throws IOException {
-						throw new UnsupportedOperationException("Dummy request");
-					}
-
-					@Override
-					public Map<String, String[]> getParamValues() {
-						return Collections.<String, String[]> emptyMap();
-					}
-
-					@Override
-					public Map<String, String> getParam() {
-						return Collections.<String, String> emptyMap();
-					}
-
-					@Override
-					public OutputStream getOutputStream() throws IOException {
-						throw new UnsupportedOperationException("Dummy request");
-					}
-
-					@Override
-					public Map<String, String[]> getHeaderValues() {
-						return Collections.<String, String[]> emptyMap();
-					}
-
-					@Override
-					public Map<String, String> getHeader() {
-						return Collections.<String, String> emptyMap();
-					}
-
-					@Override
-					public Map<String, Object> getContext(String scope) {
-						return Collections.<String, Object> emptyMap();
-					}
-
-					@Override
-					public List<String> getAvailableScopes() {
-						return Collections.<String> emptyList();
-					}
-
-					@Override
-					public ApplicationContext getApplicationContext() {
-						return RendererViewResolver.this.tilesContext;
-					}
-
-					@Override
-					public void dispatch(String path) throws IOException {
-						throw new UnsupportedOperationException("Dummy request");
-					}
-
-					@Override
-					public void include(String path) throws IOException {
-						throw new UnsupportedOperationException("Dummy request");
-					}
-
-					@Override
-					public void setContentType(String contentType) {
-						throw new UnsupportedOperationException("Dummy request");
-					}
-				}, locale);
-				localeRequests.put(locale, result);
-			}
-			return result;
-		}
-	}
-
-	@Override
-	protected RendererView loadView(String viewName, Locale locale) throws Exception {
-		if (renderer.isRenderable(getPrefix() + viewName + getSuffix(), getLocaleRequest(locale))) {
-			RendererView view = (RendererView) super.loadView(viewName, locale);
-			return view;
-		} else {
-			return null;
-		}
-	}
-
 	@Override
 	protected RendererView buildView(String viewName) throws Exception {
 		RendererView view = (RendererView) super.buildView(viewName);
-		view.setTilesApplicationContext(tilesContext);
-		view.setRenderer(renderer);
-		view.setUrl(getPrefix() + viewName + getSuffix());
+		view.setTilesApplicationContext(this.tilesContext);
+		view.setRenderer(this.renderer);
 		return view;
 	}
 

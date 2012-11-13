@@ -13,7 +13,7 @@
 	<mvc:view-controller path="/" view-name="home" />
 
     <bean id="tilesApplicationContext" class="org.springframework.web.servlet.view.tiles3.SpringApplicationContext"/>
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.RendererViewResolver"/>
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"/>
 
 </beans>

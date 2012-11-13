@@ -22,6 +22,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tiles.access.TilesAccess;
+import org.apache.tiles.renderer.DefinitionRenderer;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.render.Renderer;
@@ -47,11 +49,20 @@ public class RendererView extends AbstractUrlBasedView {
 	private boolean exposeForwardAttributes = false;
 	private boolean exposeJstlAttributes = true;
 
+
 	@Override
 	protected void initServletContext(ServletContext servletContext) {
 		super.initServletContext(servletContext);
 		if (servletContext.getMajorVersion() == 2 && servletContext.getMinorVersion() < 5) {
 			this.exposeForwardAttributes = true;
+		}
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		super.afterPropertiesSet();
+		if (this.renderer == null) {
+			this.renderer = new DefinitionRenderer(TilesAccess.getContainer(this.applicationContext));
 		}
 	}
 
@@ -65,6 +76,17 @@ public class RendererView extends AbstractUrlBasedView {
 
 	protected void setExposeJstlAttributes(boolean exposeJstlAttributes) {
 		this.exposeJstlAttributes = exposeJstlAttributes;
+	}
+
+	@Override
+	public boolean checkResource(final Locale locale) throws Exception {
+		Request request = new ServletRequest(this.applicationContext, null, null) {
+			@Override
+			public Locale getRequestLocale() {
+				return locale;
+			}
+		};
+		return this.renderer.isRenderable(getUrl(), request);
 	}
 
 	@Override
@@ -96,15 +118,19 @@ public class RendererView extends AbstractUrlBasedView {
 			}
 		}
 
-		Request tilesRequest = createRequest(request, response, this.applicationContext);
+		Request tilesRequest = createTilesRequest(request, response);
 		if (this.renderer.isRenderable(getUrl(), tilesRequest)) {
 			this.renderer.render(getUrl(), tilesRequest);
 		}
 	}
 
-	protected Request createRequest(HttpServletRequest request, HttpServletResponse response, ApplicationContext context) {
-		ServletRequest tilesRequest = new ServletRequest(context, request, response);
-		Locale locale = RequestContextUtils.getLocale(request);
-		return new SpringRequest(tilesRequest, locale);
+	protected Request createTilesRequest(final HttpServletRequest request, HttpServletResponse response) {
+		return new ServletRequest(this.applicationContext, request, response) {
+			@Override
+			public Locale getRequestLocale() {
+				return RequestContextUtils.getLocale(request);
+			}
+		};
 	}
+
 }
