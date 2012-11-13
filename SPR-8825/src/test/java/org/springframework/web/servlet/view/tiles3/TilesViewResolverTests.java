@@ -15,7 +15,6 @@
  */
 package org.springframework.web.servlet.view.tiles3;
 
-import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.isA;
@@ -33,34 +32,48 @@ import org.apache.tiles.access.TilesAccess;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.render.Renderer;
+import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.web.context.support.StaticWebApplicationContext;
 
-public class RendererViewResolverTest {
+/**
+ * Test fixture for {@link TilesViewResolver}.
+ *
+ * @author mick semb wever
+ */
+public class TilesViewResolverTests {
 
 	private TilesViewResolver testTarget;
+
 	private ApplicationContext tilesContext;
+
 	private StaticWebApplicationContext springContext;
+
 	private AutowireCapableBeanFactory beanFactory;
+
 	private TilesContainer tilesContainer;
+
 	private Renderer renderer;
+
 	private String contentType;
+
 	private Locale locale;
+
 
 	@Before
 	public void setUp() {
-		tilesContext = createMock(ApplicationContext.class);
+		tilesContext = EasyMock.createMock(ApplicationContext.class);
 
 		springContext = new StaticWebApplicationContext();
 		springContext.setServletContext(new MockServletContext());
 		springContext.refresh();
 
-		beanFactory = createMock(AutowireCapableBeanFactory.class);
-		tilesContainer = createMock(TilesContainer.class);
-		renderer = createMock(Renderer.class);
+		beanFactory = EasyMock.createMock(AutowireCapableBeanFactory.class);
+		tilesContainer = EasyMock.createMock(TilesContainer.class);
+		renderer = EasyMock.createMock(Renderer.class);
 		Map<String, Object> appScope = new HashMap<String, Object>();
 		appScope.put(TilesAccess.CONTAINER_ATTRIBUTE, tilesContainer);
 		expect(tilesContext.getApplicationScope()).andReturn(appScope).anyTimes();

@@ -47,17 +47,33 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.theme.FixedThemeResolver;
 
-public class RendererViewTest {
+/**
+ * Test fixture for {@link TilesView}.
+ *
+ * @author mick semb wever
+ */
+public class TilesViewTests {
+
 	private TilesView testTarget;
+
 	private ApplicationContext applicationContext;
+
 	private Renderer renderer;
+
 	private MockHttpServletRequest request;
+
 	private MockHttpServletResponse response;
+
 	private Map<String, Object> model;
+
 	private String path;
+
 	private String contentType;
+
 	private Locale locale;
+
 	private StaticWebApplicationContext springContext;
+
 
 	@Before
 	public void setUp() throws Exception {

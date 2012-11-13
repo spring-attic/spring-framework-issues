@@ -34,8 +34,10 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
 
 /**
+ * Test fixture for {@link TilesConfigurer}.
+ *
  * @author Nicolas Le Bas
- * */
+ */
 public class TilesConfigurerTests {
 
 	@Configuration
