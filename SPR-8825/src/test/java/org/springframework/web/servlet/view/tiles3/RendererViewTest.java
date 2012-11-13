@@ -1,14 +1,19 @@
 package org.springframework.web.servlet.view.tiles3;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.and;
+import static org.easymock.EasyMock.capture;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tiles.access.TilesAccess;
 import org.apache.tiles.impl.BasicTilesContainer;
@@ -30,8 +35,8 @@ public class RendererViewTest {
     private RendererView testTarget;
     private ApplicationContext applicationContext;
     private Renderer renderer;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+    private MockHttpServletRequest request;
+    private MockHttpServletResponse response;
     private Map<String, Object> model;
     private String path;
     private String contentType;
@@ -52,6 +57,7 @@ public class RendererViewTest {
         request.setAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE, springContext);
         request.setAttribute(DispatcherServlet.LOCALE_RESOLVER_ATTRIBUTE, new AcceptHeaderLocaleResolver());
         request.setAttribute(DispatcherServlet.THEME_RESOLVER_ATTRIBUTE, new FixedThemeResolver());
+        request.addPreferredLocale(locale);
 
         response = new MockHttpServletResponse();
         response.setContentType(contentType);
@@ -67,7 +73,6 @@ public class RendererViewTest {
         testTarget.setTilesApplicationContext(applicationContext);
         testTarget.setRenderer(renderer);
         testTarget.setUrl(path);
-        testTarget.setLocale(locale);
     }
 
     @Test
@@ -96,7 +101,6 @@ public class RendererViewTest {
         replay(applicationContext, renderer);
         testTarget.setApplicationContext(springContext);
         testTarget.setContentType(contentType);
-        testTarget.setExposeModelInRequest(false);
         testTarget.render(model, request, response);
         assertEquals(renderableRequest.getValue().getRequestLocale(), locale);
         assertSame("isRenderable and render received different requests", renderableRequest.getValue(),
@@ -110,7 +114,6 @@ public class RendererViewTest {
         replay(applicationContext, renderer);
         testTarget.setApplicationContext(springContext);
         testTarget.setContentType(contentType);
-        testTarget.setExposeModelInRequest(false);
         testTarget.render(model, request, response);
         verify(applicationContext, renderer);
     }

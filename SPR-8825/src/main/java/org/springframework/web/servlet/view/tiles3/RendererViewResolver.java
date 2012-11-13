@@ -61,7 +61,6 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
 
     private ApplicationContext tilesContext;
     private Renderer renderer;
-    private boolean exposeModelInRequest = true;
     private Map<Locale, Request> localeRequests = new HashMap<Locale, Request>();
     static final List<String> SCOPES = Arrays.asList("application", "session", "request");
 
@@ -78,16 +77,16 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
     public void setTilesContext(ApplicationContext tilesContext) {
         this.tilesContext = tilesContext;
     }
-    
+
     /**
      * Get the TilesContext in use.
-     * 
+     *
      * @return the tilesContext in use
      */
     public ApplicationContext getTilesContext() {
         return tilesContext;
     }
-    
+
     /**
      * Must be set. Use {@link TilesViewResolver} to set it up for Apache Tiles.
      *
@@ -96,21 +95,14 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
     public void setRenderer(Renderer renderer) {
         this.renderer = renderer;
     }
-    
+
     /**
      * Get the Renderer in use.
-     * 
+     *
      * @return the Renderer in use
      */
     public Renderer getRenderer() {
         return renderer;
-    }
-    
-    /**
-     * @param exposeSpringMacroHelpers the exposeInRequest to set
-     */
-    public void setExposeModelInRequest(boolean exposeModelInRequest) {
-        this.exposeModelInRequest = exposeModelInRequest;
     }
 
     @Override
@@ -208,7 +200,6 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
     protected RendererView loadView(String viewName, Locale locale) throws Exception {
         if (renderer.isRenderable(getPrefix() + viewName + getSuffix(), getLocaleRequest(locale))) {
             RendererView view = (RendererView) super.loadView(viewName, locale);
-            view.setLocale(locale);
             return view;
         } else {
             return null;
@@ -221,7 +212,6 @@ public class RendererViewResolver extends AbstractTemplateViewResolver {
         view.setTilesApplicationContext(tilesContext);
         view.setRenderer(renderer);
         view.setUrl(getPrefix() + viewName + getSuffix());
-        view.setExposeModelInRequest(exposeModelInRequest);
         return view;
     }
 

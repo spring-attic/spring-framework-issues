@@ -31,7 +31,10 @@ import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.render.Renderer;
 import org.apache.tiles.request.servlet.ServletRequest;
-import org.springframework.web.servlet.view.AbstractTemplateView;
+import org.springframework.web.servlet.support.JstlUtils;
+import org.springframework.web.servlet.support.RequestContext;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.util.WebUtils;
 
 /**
@@ -42,12 +45,11 @@ import org.springframework.web.util.WebUtils;
  * @author mick semb wever
  * @since 3.2
  */
-public class RendererView extends AbstractTemplateView {
+public class RendererView extends AbstractUrlBasedView {
     private ApplicationContext applicationContext;
     private Renderer renderer;
-    private Locale locale;
-    private boolean exposeModelInRequest = true;
     private boolean exposeForwardAttributes = false;
+    private boolean exposeJstlAttributes = true;
 
     @Override
     protected void initServletContext(ServletContext servletContext) {
@@ -65,45 +67,45 @@ public class RendererView extends AbstractTemplateView {
         this.renderer = renderer;
     }
 
-    public void setLocale(Locale locale){
-        this.locale = locale;
-    }
+	protected void setExposeJstlAttributes(boolean exposeJstlAttributes) {
+		this.exposeJstlAttributes = exposeJstlAttributes;
+	}
 
-    /**
-     * Set whether all request attributes should be added to the
-     * model prior to merging with the template. Default is "false".
-     */
-    public void setExposeModelInRequest(boolean exposeModelInRequest) {
-        this.exposeModelInRequest = exposeModelInRequest;
-    }
+	@Override
+	protected void renderMergedOutputModel(
+			Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    @Override
-    protected void renderMergedTemplateModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		exposeModelAsRequestAttributes(model, request);
 
-        if (exposeModelInRequest) {
-            exposeModelAsRequestAttributes(model, request);
-        }
+		if (this.exposeJstlAttributes) {
+			ServletContext servletContext = getServletContext();
+			JstlUtils.exposeLocalizationContext(new RequestContext(request, servletContext));
+		}
 
-        // Tiles is going to use a forward, but some web containers (e.g. OC4J 10.1.3)
-        // do not properly expose the Servlet 2.4 forward request attributes... However,
-        // must not do this on Servlet 2.5 or above, mainly for GlassFish compatibility.
-        if (!response.isCommitted() && this.exposeForwardAttributes) {
-           try {
-               WebUtils.exposeForwardRequestAttributes(request);
-           } catch (Exception ex) {
-               // Servlet container rejected to set internal attributes, e.g. on TriFork.
-               this.exposeForwardAttributes = false;
-           }
-        }
+		if (!response.isCommitted()) {
+			// Tiles is going to use a forward, but some web containers (e.g. OC4J 10.1.3)
+			// do not properly expose the Servlet 2.4 forward request attributes... However,
+			// must not do this on Servlet 2.5 or above, mainly for GlassFish compatibility.
+			if (this.exposeForwardAttributes) {
+				try {
+					WebUtils.exposeForwardRequestAttributes(request);
+				}
+				catch (Exception ex) {
+					// Servlet container rejected to set internal attributes, e.g. on TriFork.
+					this.exposeForwardAttributes = false;
+				}
+			}
+		}
 
-        Request tilesRequest = createRequest(request, response, applicationContext);
-        if (renderer.isRenderable(getUrl(), tilesRequest)) {
-            renderer.render(getUrl(), tilesRequest);
+        Request tilesRequest = createRequest(request, response, this.applicationContext);
+        if (this.renderer.isRenderable(getUrl(), tilesRequest)) {
+            this.renderer.render(getUrl(), tilesRequest);
         }
     }
 
     protected Request createRequest(HttpServletRequest request, HttpServletResponse response, ApplicationContext context) {
         ServletRequest tilesRequest = new ServletRequest(context, request, response);
+        Locale locale = RequestContextUtils.getLocale(request);
         return new SpringRequest(tilesRequest, locale);
     }
 }
