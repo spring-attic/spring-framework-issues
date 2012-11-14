@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:property-placeholder location="classpath:webapp.properties"/>
+
+	<mvc:annotation-driven/>
+
+	<mvc:view-controller path="/" view-name="home" />
+
+	<mvc:resources mapping="#{myBean.mapping}" location="${classpathLocation},/resources" cache-period="#{myBean.cacheSeconds}" />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="#{myBean.mapping}"/>
+			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean id="myBean" class="org.springframework.issues.MyBean">
+		<property name="mapping" value="/resources"/>
+		<property name="location" value="classpath:META-INF/web-resources"/>
+		<property name="cacheSeconds" value="15"/>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<context:component-scan base-package="org.springframework.issues" />
+  
+</beans>
