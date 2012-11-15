@@ -28,8 +28,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * {@link org.springframework.web.servlet.LocaleResolver}, exposing the
  * DispatcherServlet-managed locale.
  *
- * <p>
- * This adapter gets automatically registered by {@link TilesConfigurer}.
+ * <p>This adapter gets automatically registered by {@link TilesConfigurer}.
  *
  * @author Nicolas Le Bas
  * @since 3.2
@@ -44,7 +43,8 @@ public class SpringLocaleResolver extends DefaultLocaleResolver {
 			if (servletRequest != null) {
 				return RequestContextUtils.getLocale(servletRequest);
 			}
-		} catch (NotAServletEnvironmentException e) {
+		}
+		catch (NotAServletEnvironmentException e) {
 			// Ignore
 		}
 		return super.resolveLocale(request);

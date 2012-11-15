@@ -16,18 +16,16 @@
 
 package org.springframework.web.servlet.view.tiles3;
 
-import javax.servlet.ServletContext;
-import org.apache.tiles.request.Request;
+import static org.junit.Assert.assertNotNull;
+
 import org.apache.tiles.access.TilesAccess;
 import org.apache.tiles.impl.BasicTilesContainer;
-import org.apache.tiles.request.servlet.ServletApplicationContext;
+import org.apache.tiles.request.ApplicationContext;
+import org.apache.tiles.request.Request;
 import org.apache.tiles.request.servlet.ServletRequest;
-import org.apache.tiles.request.servlet.wildcard.WildcardServletApplicationContext;
-import static org.junit.Assert.*;
+import org.apache.tiles.request.servlet.ServletUtil;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -40,37 +38,30 @@ import org.springframework.mock.web.MockServletContext;
  */
 public class TilesConfigurerTests {
 
-	@Configuration
-	public static class AppConfig {
-		@Bean
-		public ServletApplicationContext applicationContext(ServletContext servletContext) {
-			return new WildcardServletApplicationContext(servletContext);
-		}
-
-		@Bean
-		public ServletContext servletContext() {
-			return new MockServletContext();
-		}
-	}
-
 	@Test
 	public void simpleBootstrap() {
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-		ServletContext sc = ctx.getBean(ServletContext.class);
+		MockServletContext servletContext = new MockServletContext();
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+
 		TilesConfigurer tc = new TilesConfigurer();
 		tc.setApplicationContext(ctx);
 		tc.setDefinitions(new String[] { "/org/springframework/web/servlet/view/tiles3/tiles-definitions.xml" });
 		tc.setCheckRefresh(true);
-		tc.setServletContext(sc);
+		tc.setServletContext(servletContext);
 		tc.afterPropertiesSet();
 
-		BasicTilesContainer container = (BasicTilesContainer) TilesAccess.getContainer(
-				ctx.getBean(ServletApplicationContext.class));
-		Request requestContext = new ServletRequest(container.getApplicationContext(), new MockHttpServletRequest(),
-				new MockHttpServletResponse());
+		ApplicationContext tilesContext = ServletUtil.getApplicationContext(servletContext);
+
+		BasicTilesContainer container = (BasicTilesContainer) TilesAccess.getContainer(tilesContext);
+		Request requestContext = new ServletRequest(container.getApplicationContext(),
+				new MockHttpServletRequest(), new MockHttpServletResponse());
 		assertNotNull(container.getDefinitionsFactory().getDefinition("test", requestContext));
 
 		tc.destroy();
+	}
+
+	@Configuration
+	public static class AppConfig {
 	}
 
 }

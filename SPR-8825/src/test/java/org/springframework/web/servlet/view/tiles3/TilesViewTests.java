@@ -16,27 +16,19 @@
 package org.springframework.web.servlet.view.tiles3;
 
 import static org.easymock.EasyMock.and;
-import static org.easymock.EasyMock.capture;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.eq;
-import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import org.apache.tiles.access.TilesAccess;
-import org.apache.tiles.impl.BasicTilesContainer;
-import org.apache.tiles.request.ApplicationAccess;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.render.Renderer;
-import org.easymock.Capture;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -44,8 +36,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.web.context.support.StaticWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.springframework.web.servlet.theme.FixedThemeResolver;
 
 /**
  * Test fixture for {@link TilesView}.
@@ -54,9 +44,9 @@ import org.springframework.web.servlet.theme.FixedThemeResolver;
  */
 public class TilesViewTests {
 
-	private TilesView testTarget;
+	private static final String VIEW_PATH = "template.test";
 
-	private ApplicationContext applicationContext;
+	private TilesView view;
 
 	private Renderer renderer;
 
@@ -64,94 +54,42 @@ public class TilesViewTests {
 
 	private MockHttpServletResponse response;
 
-	private Map<String, Object> model;
-
-	private String path;
-
-	private String contentType;
-
-	private Locale locale;
-
-	private StaticWebApplicationContext springContext;
-
 
 	@Before
 	public void setUp() throws Exception {
 		MockServletContext servletContext = new MockServletContext();
-		springContext = new StaticWebApplicationContext();
-		springContext.setServletContext(servletContext);
-		springContext.refresh();
-
-		path = "/template.test";
-		contentType = "application/test";
-		locale = Locale.ITALY;
+		StaticWebApplicationContext wac = new StaticWebApplicationContext();
+		wac.setServletContext(servletContext);
+		wac.refresh();
 
 		request = new MockHttpServletRequest();
-		request.setAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE, springContext);
-		request.setAttribute(DispatcherServlet.LOCALE_RESOLVER_ATTRIBUTE, new AcceptHeaderLocaleResolver());
-		request.setAttribute(DispatcherServlet.THEME_RESOLVER_ATTRIBUTE, new FixedThemeResolver());
-		request.addPreferredLocale(locale);
+		request.setAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE, wac);
 
 		response = new MockHttpServletResponse();
-		response.setContentType(contentType);
-
-		applicationContext = createMock(ApplicationContext.class);
-		Map<String, Object> appScope = new HashMap<String, Object>();
-		expect(applicationContext.getApplicationScope()).andReturn(appScope).anyTimes();
-		appScope.put(TilesAccess.CONTAINER_ATTRIBUTE, new BasicTilesContainer());
-
-		servletContext.setAttribute(ApplicationAccess.APPLICATION_CONTEXT_ATTRIBUTE, applicationContext);
 
 		renderer = createMock(Renderer.class);
-		model = new HashMap<String, Object>();
-		model.put("modelAttribute", "modelValue");
-		testTarget = new TilesView();
-		testTarget.setServletContext(servletContext);
-		testTarget.setRenderer(renderer);
-		testTarget.setUrl(path);
-		testTarget.afterPropertiesSet();
+
+		view = new TilesView();
+		view.setServletContext(servletContext);
+		view.setRenderer(renderer);
+		view.setUrl(VIEW_PATH);
+		view.afterPropertiesSet();
 	}
 
 	@Test
 	public void testRender() throws Exception {
-		request.setAttribute("modelAttribute", "modelValue");
-		Capture<Request> renderableRequest = new Capture<Request>();
-		expect(renderer.isRenderable(eq(path), and(isA(Request.class), capture(renderableRequest)))).andReturn(true);
-		Capture<Request> renderRequest = new Capture<Request>();
-		renderer.render(eq(path), and(isA(Request.class), capture(renderRequest)));
-		replay(applicationContext, renderer);
-		testTarget.setApplicationContext(springContext);
-		testTarget.setContentType(contentType);
-		testTarget.render(model, request, response);
-		assertEquals(renderableRequest.getValue().getRequestLocale(), locale);
-		assertSame("isRenderable and render received different requests", renderableRequest.getValue(),
-				renderRequest.getValue());
-		verify(applicationContext, renderer);
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("modelAttribute", "modelValue");
+
+		ApplicationContext tilesContext = createMock(ApplicationContext.class);
+
+		renderer.render(eq(VIEW_PATH), and(isA(Request.class), isA(Request.class)));
+		replay(tilesContext, renderer);
+
+		view.render(model, request, response);
+
+		assertEquals("modelValue", request.getAttribute("modelAttribute"));
+		verify(tilesContext, renderer);
 	}
 
-	@Test
-	public void testRenderNoAttributes() throws Exception {
-		Capture<Request> renderableRequest = new Capture<Request>();
-		expect(renderer.isRenderable(eq(path), and(isA(Request.class), capture(renderableRequest)))).andReturn(true);
-		Capture<Request> renderRequest = new Capture<Request>();
-		renderer.render(eq(path), and(isA(Request.class), capture(renderRequest)));
-		replay(applicationContext, renderer);
-		testTarget.setApplicationContext(springContext);
-		testTarget.setContentType(contentType);
-		testTarget.render(model, request, response);
-		assertEquals(renderableRequest.getValue().getRequestLocale(), locale);
-		assertSame("isRenderable and render received different requests", renderableRequest.getValue(),
-				renderRequest.getValue());
-		verify(applicationContext, renderer);
-	}
-
-	@Test
-	public void testNotRenderable() throws Exception {
-		expect(renderer.isRenderable(eq(path), isA(Request.class))).andReturn(false);
-		replay(applicationContext, renderer);
-		testTarget.setApplicationContext(springContext);
-		testTarget.setContentType(contentType);
-		testTarget.render(model, request, response);
-		verify(applicationContext, renderer);
-	}
 }
