@@ -51,6 +51,7 @@ import org.apache.tiles.locale.LocaleResolver;
 import org.apache.tiles.preparer.factory.PreparerFactory;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.ApplicationResource;
+import org.apache.tiles.request.servlet.wildcard.WildcardServletApplicationContext;
 import org.apache.tiles.startup.DefaultTilesInitializer;
 import org.apache.tiles.startup.TilesInitializer;
 import org.slf4j.Logger;
@@ -60,7 +61,6 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.context.ServletContextAware;
 
@@ -101,7 +101,7 @@ import org.springframework.web.context.ServletContextAware;
  * @author Rossen Stoyanchev
  * @since 3.2
  */
-public class TilesConfigurer implements ApplicationContextAware, ServletContextAware, InitializingBean, DisposableBean {
+public class TilesConfigurer implements ServletContextAware, InitializingBean, DisposableBean {
 
 	private static final boolean tilesElPresent =  // requires JSP 2.1 as well as Tiles EL module
 			ClassUtils.isPresent("javax.servlet.jsp.JspApplicationContext", TilesConfigurer.class.getClassLoader()) &&
@@ -124,8 +124,6 @@ public class TilesConfigurer implements ApplicationContextAware, ServletContextA
 	private Class<? extends PreparerFactory> preparerFactoryClass;
 
 	private boolean useMutableTilesContainer = false;
-
-	private org.springframework.context.ApplicationContext applicationContext;
 
 	private ServletContext servletContext;
 
@@ -243,11 +241,6 @@ public class TilesConfigurer implements ApplicationContextAware, ServletContextA
 		this.servletContext = servletContext;
 	}
 
-	public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
-
-
 	/**
 	 * Creates and exposes a TilesContainer for this web application,
 	 * delegating to the TilesInitializer.
@@ -257,9 +250,8 @@ public class TilesConfigurer implements ApplicationContextAware, ServletContextA
 	@Override
 	public void afterPropertiesSet() throws TilesException {
 
-		SpringApplicationContext preliminaryContext = new SpringApplicationContext();
-		preliminaryContext.setServletContext(this.servletContext);
-		preliminaryContext.setApplicationContext(this.applicationContext);
+		WildcardServletApplicationContext preliminaryContext =
+				new WildcardServletApplicationContext(this.servletContext);
 
 		if (this.tilesInitializer == null) {
 			this.tilesInitializer = new SpringTilesInitializer();
