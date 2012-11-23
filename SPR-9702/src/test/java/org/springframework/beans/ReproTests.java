@@ -14,7 +14,7 @@ import org.junit.Test;
 public class ReproTests {
 
     @Test
-    public void tester() throws Exception {
+    public void failsUnderGCPressure() throws Exception {
 
         // final Class<?> c = MyBean.class;
         final Class<?> c = Vehicle.class;
@@ -22,12 +22,19 @@ public class ReproTests {
         Introspector.getBeanInfo(c);
 
         while (true) {
-            System.out.println("test");
+            //System.out.println("test");
             new ExtendedBeanInfo(Introspector.getBeanInfo(c));
-            // CachedIntrospectionResults.forClass(c);
-            System.out.println("allocate");
+            //CachedIntrospectionResults.forClass(c);
+            //System.out.println("allocate");
             allocate();
         }
+    }
+
+    @Test
+    public void failsImmediately() throws Exception {
+        final Class<?> c = Vehicle.class;
+        Introspector.flushCaches();
+        new ExtendedBeanInfo(Introspector.getBeanInfo(c));
     }
 
     private final List<String> data = new ArrayList<String>();
