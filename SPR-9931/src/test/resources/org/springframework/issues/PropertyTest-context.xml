@@ -11,6 +11,10 @@
 	<context:annotation-config />
 	<context:property-placeholder location="test.properties"/>
 
+	<!-- Suggested work-around
+	<bean class="org.springframework.issues.ExpressionResolverFactoryPostProcessor" />
+	-->
+
 	<bean id="myPropertyBean" class="java.lang.String">
 		<constructor-arg value="${myproperty}" />
 	</bean>
