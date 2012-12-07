@@ -37,6 +37,14 @@ public class ReproTests {
 		context.close();
 	}
 
+	@Test
+	public void alsoFails() {
+		AnnotationConfigApplicationContext context =
+				new AnnotationConfigApplicationContext(TestConfiguration.class, Config.class);
+		assertNotNull(context.getBean("myBean"));
+		context.close();
+	}
+
 	@Configuration
 	@EnableCaching(proxyTargetClass = true)
 	public static class TestConfiguration implements CachingConfigurer {
@@ -61,12 +69,12 @@ public class ReproTests {
 
 	}
 
-		@Configuration
-		static class Config {
-			@Bean
-			Object fooRepository() {
-				return new Object();
-			}
+	@Configuration
+	static class Config {
+		@Bean
+		Object someBean() {
+			return new Object();
 		}
+	}
 
 }
