@@ -22,8 +22,17 @@ import org.springframework.context.annotation.Configuration;
 public class ReproTests {
 
 	@Test
-	public void repro() {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(TestConfiguration.class);
+	public void works() {
+		AnnotationConfigApplicationContext context =
+				new AnnotationConfigApplicationContext(Config.class, TestConfiguration.class);
+		assertNotNull(context.getBean("myBean"));
+		context.close();
+	}
+
+	@Test
+	public void fails() {
+		AnnotationConfigApplicationContext context =
+				new AnnotationConfigApplicationContext(TestConfiguration.class);
 		assertNotNull(context.getBean("myBean"));
 		context.close();
 	}
@@ -51,4 +60,13 @@ public class ReproTests {
 		}
 
 	}
+
+		@Configuration
+		static class Config {
+			@Bean
+			Object fooRepository() {
+				return new Object();
+			}
+		}
+
 }
