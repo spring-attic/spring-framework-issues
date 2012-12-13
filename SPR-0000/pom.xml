@@ -24,25 +24,25 @@
 		</dependency>
 	</dependencies>
 	<repositories>
+		<!--
 		<repository>
 			<id>s2-release</id>
 			<url>http://repo.springsource.org/release</url>
 		</repository>
-		<!--
 		<repository>
 			<id>s2-milestone</id>
 			<url>http://repo.springsource.org/milestone</url>
-		</repository>
-		<repository>
-			<id>s2-snapshot</id>
-			<url>http://repo.springsource.org/snapshot</url>
-			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
 		<repository>
 			<id>s2-staging</id>
 			<url>http://repo.springsource.org/libs-staging-local</url>
 		</repository>
 		-->
+		<repository>
+			<id>s2-snapshot</id>
+			<url>http://repo.springsource.org/snapshot</url>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
