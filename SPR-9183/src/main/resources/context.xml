@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <!-- to enable @Value support -->
+  <context:component-scan base-package=""/>
+
+  <!--uncommenting line below "marks" class as autowirable and problem does not occur-->
+  <!--bean id="before_overriding" class="AutowireAttempt"/-->
+
+  <bean id="overriding" class="AutowireAttempt">
+    <property name="field" value="overridden"/>
+  </bean>
+
+  <bean id="after_overriding" class="AutowireAttempt"/>
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Appenders -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+<!-- 			<param name="ConversionPattern" value="%-5p | %-28c | %m | %C{1}:%L%n" /> -->
+			<param name="ConversionPattern" value="%-5p | %-28c | %-25.25C{1}:%-4L | %m%n" />
+<!-- 			<param name="ConversionPattern" value="%-5p | %-28c | %m%n" /> -->
+		</layout>
+	</appender>
+
+	<logger name="spring-framework">
+		<level value="info" />
+	</logger>
+
+<!-- 	<logger name="spring-framework.jdbc"> -->
+<!-- 		<level value="info" /> -->
+<!-- 	</logger> -->
+
+<!-- 	<logger name="spring-framework.environment"> -->
+<!-- 		<level value="debug" /> -->
+<!-- 	</logger> -->
+
+<!-- 	<logger name="org.springframework"> -->
+<!-- 		<level value="info" /> -->
+<!-- 	</logger> -->
+
+	<!-- Root Logger -->
+	<root>
+		<priority value="warn" />
+		<appender-ref ref="console" />
+	</root>
+	
+</log4j:configuration>
