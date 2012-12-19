@@ -8,3 +8,5 @@ target
 .gradle
 build
 .DS_Store
+*.iml
+atlassian-ide-plugin.xml
