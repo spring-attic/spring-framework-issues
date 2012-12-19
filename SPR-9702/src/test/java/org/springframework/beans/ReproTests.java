@@ -1,10 +1,12 @@
 package org.springframework.beans;
 
 import java.beans.Introspector;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -35,6 +37,14 @@ public class ReproTests {
         final Class<?> c = Vehicle.class;
         Introspector.flushCaches();
         new ExtendedBeanInfo(Introspector.getBeanInfo(c));
+    }
+
+    @Test
+    public void failsUnderJava7() throws Exception {
+        for (int i = 0 ; i < 1000 ; i++) {
+            Introspector.flushCaches();
+            BeanUtils.getPropertyDescriptors(BigDecimal.class);
+        }
     }
 
     private final List<String> data = new ArrayList<String>();
