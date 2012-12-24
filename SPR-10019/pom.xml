@@ -155,6 +155,12 @@
 			<version>4.8</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<repositories>
