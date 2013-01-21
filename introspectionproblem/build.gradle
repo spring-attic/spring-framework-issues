@@ -2,7 +2,7 @@ apply plugin: 'groovy'
 apply plugin: 'eclipse'
 
 repositories {
-    mavenRepo url: 'http://repo.grails.org/grails/core'
+    maven { url 'http://repo.grails.org/grails/core' }
     mavenCentral()
 }
 
@@ -13,5 +13,5 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.2'
+    gradleVersion = '1.3'
 }
