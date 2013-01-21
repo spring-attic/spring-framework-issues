@@ -1,4 +1,5 @@
 apply plugin: 'groovy'
+apply plugin: 'eclipse'
 
 repositories {
     mavenRepo url: 'http://repo.grails.org/grails/core'
@@ -6,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    groovy      'org.codehaus.groovy:groovy-all:2.0.5'
+    groovy 'org.codehaus.groovy:groovy-all:2.0.5'
     compile 'org.springframework:spring-context:3.1.4.BUILD-SNAPSHOT'
     compile 'org.grails:grails-web:2.2.0'
 }
