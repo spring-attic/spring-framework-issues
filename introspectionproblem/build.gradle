@@ -1,0 +1,16 @@
+apply plugin: 'groovy'
+
+repositories {
+    mavenRepo url: 'http://repo.grails.org/grails/core'
+    mavenCentral()
+}
+
+dependencies {
+    groovy      'org.codehaus.groovy:groovy-all:2.0.5'
+    compile 'org.springframework:spring-context:3.1.4.BUILD-SNAPSHOT'
+    compile 'org.grails:grails-web:2.2.0'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.2'
+}
