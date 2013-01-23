@@ -1,4 +1,4 @@
-package org.springframework.issues;
+package org.springframework.issues.sub;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
