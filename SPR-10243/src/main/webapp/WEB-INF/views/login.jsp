@@ -10,7 +10,7 @@
 </head>
 <body>
 	<form:form method="post" modelAttribute="activateAccountForm">
-		<form:label path="login">
+		<form:label path="name">
 			<spring:message code="t_login" />
 		</form:label>
 		<input type="submit" />

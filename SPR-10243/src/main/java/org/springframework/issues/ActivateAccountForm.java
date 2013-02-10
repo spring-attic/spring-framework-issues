@@ -1,24 +1,27 @@
 
 package org.springframework.issues;
 
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
-@v
+@MatchingFields(field = "name", confirmField = "confirmName")
 public class ActivateAccountForm {
 
-	@NotEmpty(groups = Login1Checks.class)
-	@Size.List({
-		@Size(groups = Login2Checks.class, min = 2, message = "{value.too-short}"),
-		@Size(groups = Login2Checks.class, max = 4, message = "{value.too-long}") })
-	private String login = "x";
+	private String name = "x";
 
-	public String getLogin() {
-		return login;
+	private String confirmName = "y";
+
+	public String getName() {
+		return name;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	public String getConfirmName() {
+		return confirmName;
+	}
+
+	public void setConfirmName(String confirmName) {
+		this.confirmName = confirmName;
+	}
+
 }

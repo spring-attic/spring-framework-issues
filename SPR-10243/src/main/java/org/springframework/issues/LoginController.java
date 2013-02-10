@@ -18,7 +18,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String processActivationForm(@Validated({Login1Checks.class, Login2Checks.class}) ActivateAccountForm form, BindingResult result) {
+	public String processActivationForm(@Validated ActivateAccountForm form, BindingResult result) {
 		if (result.hasErrors()) {
 			return null;
 		}
