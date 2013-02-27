@@ -14,6 +14,7 @@ apply {
     plugin 'groovy'
     plugin 'application'
     plugin 'idea'
+    plugin 'eclipse'
 }
 
 mainClassName = 'MainJava'
