@@ -1,0 +1,101 @@
+ext {
+    projectVersion = '0.0.1-SNAPSHOT'
+    javaVersion = JavaVersion.VERSION_1_7
+    gradleVersion = '1.4'
+
+    groovyVersion = '2.1.0'
+    springVersion = '3.2.1.RELEASE'
+    aspectjVersion = '1.7.1'
+    logbackVersion = '1.0.9'
+    slf4jVersion = '1.7.2'
+}
+
+apply {
+    plugin 'groovy'
+    plugin 'application'
+    plugin 'idea'
+    plugin 'eclipse'
+}
+
+mainClassName = 'MainJava'
+defaultTasks 'clean', 'build'
+
+idea {
+    project {
+        languageLevel = javaVersion
+    }
+    module {
+       outputDir = file('build/classes/main')
+       testOutputDir = file('build/classes/test')
+    }
+}
+
+version = projectVersion
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+configurations {
+    all {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+}
+
+dependencies {
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+    compile group: 'org.springframework', name: 'spring-context', version: springVersion
+    compile group: 'org.springframework', name: 'spring-aop', version: springVersion
+    compile group: 'org.springframework', name: 'spring-aspects', version: springVersion
+    compile group: 'org.springframework', name: 'spring-instrument', version: springVersion
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: aspectjVersion
+
+    runtime group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+    runtime group: 'org.slf4j', name: 'jcl-over-slf4j', version: slf4jVersion
+}
+
+compileJava {
+    dependsOn ':validate'
+}
+
+tasks.withType(AbstractCompile) {
+    configure(options) {
+        encoding = 'UTF-8'
+        deprecation = true
+        debugOptions.debugLevel = 'source,lines,vars'
+    }
+}
+
+tasks.withType(GroovyCompile) {
+    configure(groovyOptions) {
+        encoding = 'UTF-8'
+        configure(forkOptions) {
+            memoryMaximumSize = '64m'
+        }
+    }
+}
+
+run {
+    jvmArgs = [
+            '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005',
+            '-javaagent:spring-instrument-3.2.1.RELEASE.jar',
+            ]
+}
+
+task wrapper(type: Wrapper) {
+    description = 'Generates a self-installing Gradle distribution.'
+    group = 'helper'
+    gradleVersion = project.gradleVersion
+}
+
+task validate {
+    description = 'Validates the build environment.'
+    group = 'verification'
+    doLast {
+        assert JavaVersion.current() >= javaVersion
+        "we target Java $javaVersion, current is ${JavaVersion.current()}"
+    }
+}
