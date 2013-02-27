@@ -7,6 +7,6 @@ import test.domain.Person;
 public class PersonService {
 
     public PersonService() {
-        new Person();
+        //new Person();
     }
 }
