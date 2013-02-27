@@ -8,6 +8,7 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
   <aop:aspectj-autoproxy proxy-target-class="true" />
+  <context:load-time-weaver />
 
   <bean id="myAspect" class="test.aop.MyAspect" />
   <bean id="personService" class="test.service.PersonService" />
@@ -16,5 +17,4 @@
     <property name="service" ref="personService" />
   </bean>
 
-  <context:load-time-weaver />
 </beans>
