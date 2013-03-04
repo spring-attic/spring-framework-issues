@@ -4,17 +4,21 @@
 	xmlns:context="http://www.springframework.org/schema/context" 
 	xmlns:util="http://www.springframework.org/schema/util" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
                         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+<!--                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd -->
 
-	<util:properties id="properties">
-		<prop key="foo">enclosing</prop>
+	<util:properties id="localProperties">
+		<prop key="k1">v1-local</prop>
 	</util:properties>
 
-	<context:property-placeholder properties-ref="properties" local-override="false" />
+	<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="properties" ref="localProperties"/>
+		<property name="localOverride" value="false"/>
+	</bean>
+<!-- 	<context:property-placeholder properties-ref="properties" local-override="false" /> -->
 
 	<bean id="testBean" class="org.springframework.tests.sample.beans.TestBean">
-		<property name="name" value="${foo}" />
+		<property name="name" value="${k1}" />
 	</bean>
 
 </beans>
