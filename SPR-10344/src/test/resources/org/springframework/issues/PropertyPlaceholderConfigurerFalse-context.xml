@@ -7,18 +7,19 @@
                         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 <!--                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd -->
 
-	<util:properties id="properties">
-		<prop key="foo">enclosing</prop>
+	<util:properties id="localProperties">
+		<prop key="k1">v1-local</prop>
 	</util:properties>
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="properties" ref="properties"/>
+		<property name="properties" ref="localProperties"/>
 		<property name="localOverride" value="false"/>
+<!-- 		<property name="systemPropertiesMode" value="2"/> -->
 	</bean>
 <!-- 	<context:property-placeholder properties-ref="properties" local-override="false" /> -->
 
 	<bean id="testBean" class="org.springframework.tests.sample.beans.TestBean">
-		<property name="name" value="${foo}" />
+		<property name="name" value="${k1}" />
 	</bean>
 
 </beans>
