@@ -1,3 +1,4 @@
+
 package org.springframework.issues;
 
 import org.springframework.aop.support.AbstractPointcutAdvisor;
@@ -12,33 +13,32 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 @EnableAspectJAutoProxy
 public class ReproConfig {
 
-/*
-    @Bean
-    public MethodValidationPostProcessor methodValidationPostProcessor() {
-        MethodValidationPostProcessor methodValidationPostProcessor = new MethodValidationPostProcessor();
-        return methodValidationPostProcessor;
-    }
-*/
+	/*
+	 * @Bean public MethodValidationPostProcessor methodValidationPostProcessor() {
+	 * MethodValidationPostProcessor methodValidationPostProcessor = new
+	 * MethodValidationPostProcessor(); return methodValidationPostProcessor; }
+	 */
 
-    @Bean
-    public OrderedMethodValidationPostProcessor orderedMethodValidationPostProcessor() {
-        return new OrderedMethodValidationPostProcessor();
-    }
+	@Bean
+	public OrderedMethodValidationPostProcessor orderedMethodValidationPostProcessor() {
+		return new OrderedMethodValidationPostProcessor();
+	}
 
-    public class OrderedMethodValidationPostProcessor extends MethodValidationPostProcessor {
+	public class OrderedMethodValidationPostProcessor extends
+			MethodValidationPostProcessor {
 
-        private int adviceOrder = LOWEST_PRECEDENCE;
+		private int adviceOrder = LOWEST_PRECEDENCE;
 
-        @Override
-        public void afterPropertiesSet() {
-            super.afterPropertiesSet();
-            AbstractPointcutAdvisor abstractPointcutAdvisor = (AbstractPointcutAdvisor) advisor;
-            abstractPointcutAdvisor.setOrder(adviceOrder);
-        }
+		@Override
+		public void afterPropertiesSet() {
+			super.afterPropertiesSet();
+			AbstractPointcutAdvisor abstractPointcutAdvisor = (AbstractPointcutAdvisor) advisor;
+			abstractPointcutAdvisor.setOrder(adviceOrder);
+		}
 
-        public void setAdviceOrder(int adviceOrder) {
-            this.adviceOrder = adviceOrder;
-        }
-    }
+		public void setAdviceOrder(int adviceOrder) {
+			this.adviceOrder = adviceOrder;
+		}
+	}
 
 }
