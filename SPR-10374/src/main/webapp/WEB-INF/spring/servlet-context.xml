@@ -2,23 +2,28 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
 	<mvc:annotation-driven />
 
-	<mvc:view-controller path="/" view-name="home" />
-
 	<bean id="mainPageController" 
-		class="org.springframework.issues.MainPageController"
-		parent="baseTrolleyAwareController">
+			class="org.springframework.issues.MainPageController"
+			parent="baseTrolleyAwareController">
+		<property name="trolley" ref="trolley"/>
 	</bean>
 
 	<bean id="baseTrolleyAwareController" 
 		class="org.springframework.issues.BaseTrolleyAwareController" />
+
+	<bean id="trolley" class="org.springframework.issues.TrolleyImpl" scope="session">
+		<aop:scoped-proxy proxy-target-class="true"/>
+	</bean>
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
