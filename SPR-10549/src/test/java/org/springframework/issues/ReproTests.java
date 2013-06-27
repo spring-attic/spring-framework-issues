@@ -25,6 +25,7 @@ public class ReproTests {
 
 	private void repro(String xml) {
 		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+		ctx.getEnvironment().setIgnoreUnresolvableNestedPlaceholders(true);
 		ctx.load("classpath:org/springframework/issues/" + xml);
 		ctx.refresh();
 
