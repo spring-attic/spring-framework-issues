@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="482.0" style="-fx-background-color: lightblue" xmlns:fx="http://javafx.com/fxml" fx:controller="org.springframework.issues.javafx.controller.LoginController">
+  <children>
+    <GridPane id="GridPane" layoutX="48.0" layoutY="115.0">
+      <children>
+        <TextField fx:id="username" prefWidth="200.0" promptText="Username" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <PasswordField fx:id="password" prefWidth="200.0" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+      </columnConstraints>
+      <hgap>
+        <Long fx:value="10" />
+      </hgap>
+      <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+      <vgap>
+        <Long fx:value="10" />
+      </vgap>
+    </GridPane>
+    <HBox id="HBox" alignment="CENTER" prefWidth="482.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+      <children>
+        <Label text="JavaFX Spring Demo - Login Screen" textAlignment="CENTER" textFill="#664900">
+          <font>
+            <Font name="System Bold" size="18.0" />
+          </font>
+        </Label>
+      </children>
+    </HBox>
+    <Label fx:id="header" layoutX="48.0" layoutY="82.0" text="Please provide username and password" textFill="GREY" />
+    <Button defaultButton="true" layoutX="200.0" layoutY="187.0" mnemonicParsing="false" onAction="#login" text="Entrar" />
+    <Button fx:id="ControladorInicioSesion" cancelButton="true" layoutX="272.0" layoutY="187.0" mnemonicParsing="false" onAction="#cerrar" text="Cerrar" />
+  </children>
+</AnchorPane>
