@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -19,13 +20,16 @@ import org.springframework.context.support.GenericXmlApplicationContext;
  */
 public class ReproTests {
 
+	private static final int TIMES = 10000;
+
 	ExecutorService executor;
 
 	@Test
 	public void checkTestSanity() throws Exception {
 		executor = Executors.newCachedThreadPool();
 		try {
-			for (int i = 0; i < 100000; ++i) {
+			for (int i = 0; i < TIMES; ++i) {
+				if (i % 100 == 0) System.out.println(i);
 				reproOnce(1);
 			}
 
@@ -38,7 +42,8 @@ public class ReproTests {
 	public void repro() throws Exception {
 		executor = Executors.newCachedThreadPool();
 		try {
-			for (int i = 0; i < 100000; ++i) {
+			for (int i = 0; i < TIMES; ++i) {
+				if (i % 100 == 0) System.out.println(i);
 				try {
 					reproOnce(4);
 
