@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <New id="postgres" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg>${jndi.dsname}</Arg>
+        <Arg>
+            <New class="com.atomikos.jdbc.AtomikosDataSourceBean">
+                <Set name="minPoolSize">2</Set>
+                <Set name="maxPoolSize">10</Set>
+                <Set name="xaDataSourceClassName">org.h2.jdbcx.JdbcDataSource</Set>
+                <Set name="UniqueResourceName">${jndi.dsname}</Set>
+                <Set name="testQuery">SELECT 1 </Set>
+                <Get name="xaProperties">
+                    <Call name="setProperty">
+                        <Arg>URL</Arg>
+                        <!--Arg>jdbc:h2:mem:testdb;INIT=runscript from '${project.build.testOutputDirectory}/testSchema.sql';LOCK_MODE=1;MVCC=TRUE;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;TRACE_LEVEL_SYSTEM_OUT=3;TRACE_LEVEL_FIle=4</Arg-->
+                        <Arg>jdbc:h2:mem:testdb;INIT=runscript from '${project.build.testOutputDirectory}/testSchema.sql';LOCK_MODE=1;MVCC=TRUE;DB_CLOSE_DELAY=-1;MODE=PostgreSQL</Arg>
+                     </Call>
+                     <Call name="setProperty">
+                         <Arg>user</Arg>
+                         <Arg>sa</Arg>
+                     </Call>
+                     <Call name="setProperty">
+                         <Arg>password</Arg>
+                         <Arg>sa</Arg>
+                     </Call>
+                </Get>
+            </New>
+        </Arg>
+    </New>
+    <New class="com.atomikos.icatch.config.UserTransactionServiceImp">
+        <Arg>
+            <New class="java.util.Properties">
+                <Call name="setProperty">
+                    <Arg>com.atomikos.icatch.service</Arg>
+                    <Arg>com.atomikos.icatch.standalone.UserTransactionServiceFactory</Arg>
+                </Call>
+                <Call name="setProperty">
+                    <Arg>com.atomikos.icatch.output_dir</Arg>
+                    <Arg>${project.build.directory}/logs/</Arg>
+                </Call>
+                <Call name="setProperty">
+                    <Arg>com.atomikos.icatch.log_base_dir</Arg>
+                    <Arg>${project.build.directory}/logs/</Arg>
+                </Call>
+                <Call name="setProperty">
+                    <Arg>com.atomikos.icatch.enable_logging</Arg>
+                    <Arg>true</Arg>
+                </Call>
+                <Call name="setProperty">
+                    <Arg>com.atomikos.icatch.console_log_level</Arg>
+                    <Arg>WARN</Arg>
+                </Call>
+                <Call name="setProperty">
+                    <Arg>com.atomikos.icatch.console_file_name</Arg>
+                    <Arg>atomikos-tm</Arg>
+                </Call>
+                <Call name="setProperty">
+                    <Arg>com.atomikos.icatch.log_base_name</Arg>
+                    <Arg>atomikos-base</Arg>
+                </Call>
+                <Call name="setProperty">
+                    <Arg>com.atomikos.icatch.tm_unique_name</Arg>
+                    <Arg>atomikos-txmgr</Arg>
+                </Call>
+            </New>
+        </Arg>
+        <Call name="init" />
+    </New>
+    <New id="txmgr" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>java:/TransactionManager</Arg>
+        <Arg>
+            <New class="com.atomikos.icatch.jta.UserTransactionManager">
+                <Set name="startupTransactionService">false</Set>
+                <Set name="forceShutdown">false</Set>
+                <Call name="init" />
+            </New>
+        </Arg>
+    </New>
+    <New id="tx" class="org.eclipse.jetty.plus.jndi.Transaction">
+        <Arg>
+            <New class="com.atomikos.icatch.jta.UserTransactionImp"/>
+        </Arg>
+    </New>
+</Configure>

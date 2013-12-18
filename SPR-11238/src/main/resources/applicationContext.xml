@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+    <!--support JSR-250-->
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+    
+    <!-- defind application variables-->
+    <util:map id="appProperies" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
+        <entry key="jndi.dataSource.name" value="${jndi.dsname}" />
+        <entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+        <entry key="hibernate.showSql" value="false" />
+        <entry key="i18n.localeParam" value="locale" />
+    </util:map>
+    
+    <!--DataSource setting -->
+    <!--jndi 設定-->
+    
+    <jee:jndi-lookup id="dataSource" jndi-name="#{appProperies['jndi.dataSource.name']}" 
+                     resource-ref="true" cache="false" lookup-on-startup="false" expected-type="javax.sql.DataSource"/>
+
+    <!--Import relative configuration-->
+    <import resource="applicationContext-mvc.xml"/>
+    <import resource="applicationContext-security.xml"/>
+    
+    
+    <!-- Hibernate Setting -->
+    <util:properties id="hibernateProperties" >
+        <prop key="hibernate.dialect">#{appProperies['hibernate.dialect']}</prop>
+        <prop key="hibernate.show_sql">#{appProperies['hibernate.showSql']}</prop>
+        <prop key="hibernate.max_fetch_depth">3</prop>
+        <!--prop key="hibernate.cache.provider_class">com.opensymphony.oscache.hibernate.OSCacheProvider</prop-->
+        <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+        <!--prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop-->
+        <!--prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop-->
+        <prop key="hibernate.cache.use_query_cache">true</prop>
+        <prop key="hibernate.cache.use_second_level_cache">true</prop>
+        <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+        <prop key="hibernate.bytecode.provider">cglib</prop>
+        <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
+        <prop key="hibernate.format_sql">#{appProperies['hibernate.showSql']}</prop>
+        <prop key="hibernate.archive.autodetection">class</prop>
+        <!--prop key="hibernate.hbm2ddl.auto">create</prop-->
+    </util:properties>
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="springmvc.model"/>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="#{appProperies['hibernate.showSql']}"/>
+                <property name="generateDdl" value="false"/>
+                <property name="databasePlatform" value="#{appProperies['hibernate.dialect']}" />
+            </bean>
+        </property>
+        <property name="jpaProperties" ref="hibernateProperties"/>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!--Enabled @Transactional-->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    
+    <!--JPA annotation processor-->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    
+    <!--Validator,comment it if you don't need 若是不需要驗證器，把下面這行移除--> 
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+    
+    <!--@Dao & @DaoManager processor-->
+    <bean class="springdao.DaoAnnotationBeanPostProcessor"/>
+    
+    <!--Spring Cache start,comment it if you don't need 若是不需用要Spring Cache功能，把下面這部分移除-->
+    <bean id="springCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager">
+            <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml" p:shared="true"/>
+        </property>
+    </bean>
+    <cache:annotation-driven cache-manager="springCacheManager"/>
+    <!--Spring Cache end-->
+</beans>

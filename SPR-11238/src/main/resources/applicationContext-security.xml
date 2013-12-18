@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:c="http://www.springframework.org/schema/c"
+             xmlns:p="http://www.springframework.org/schema/p"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    <!--chnage enabled to activate funtionality,如需開放相關功能，將值設為enabled-->
+    <global-method-security pre-post-annotations="disabled" secured-annotations="disabled" jsr250-annotations="disabled"/>
+    <!--Disable static path check to save time. 不過濾特定路徑以節省時間-->
+    <http pattern="/images" security="none"/>
+    <http pattern="/css" security="none"/>
+    <http pattern="/scripts" security="none"/>
+    <http pattern="/wro" security="none"/>
+    <http use-expressions="true"  disable-url-rewriting="true"  create-session="always" entry-point-ref="authEntryPoint">
+        <intercept-url pattern="/index" access="permitAll" requires-channel="http"/>
+        <intercept-url pattern="/login" access="permitAll" requires-channel="https"/>
+        <intercept-url pattern="/j_spring_security_check" access="permitAll" requires-channel="https"/>
+        <intercept-url pattern="/changePassword" access="fullyAuthenticated" requires-channel="https"/>
+        <!--http://www.pcnet.idv.tw/pcnet/network/network_ip_addr.htm CIDR expression 表示法-->
+        <intercept-url pattern="/admin/**" access="(hasIpAddress('192.168.0.0/16') or hasIpAddress('127.0.0.1')) and hasRole('ROLE_ADMIN')" requires-channel="any"/>
+        <intercept-url pattern="/user/**" access="authenticated" requires-channel="any"/>
+        <intercept-url pattern="/json/**" access="isAuthenticated()" requires-channel="any"/>
+        <intercept-url pattern="/**" access="permitAll" requires-channel="http"/>
+        
+        <form-login login-page="/login" authentication-failure-url="/login?authfailed=true" default-target-url="/index" always-use-default-target="false"/>
+        <logout invalidate-session="true" logout-url="/j_spring_security_logout" success-handler-ref="logoutSuccessHandler"/>
+        <session-management session-fixation-protection="none"/>
+        <remember-me key="test4spring4" user-service-ref="userDetailService"/>
+        <anonymous key="test4spring4" username="anonymous"/>
+        <!--Http 403,404 report page. 權限不足403,404時導向網址-->
+        <access-denied-handler error-page="/error?accessDeined=true"/>
+        <port-mappings>
+            <port-mapping http="8080" https="8443"/> 
+        </port-mappings>
+        <headers>
+            <cache-control/>
+            <content-type-options/>
+            <frame-options/>
+        </headers>
+        <csrf/>
+    </http>
+    
+    <beans:bean id="authEntryPoint" class="springmvc.context.AjaxAwareLoginUrlAuthenticationEntryPoint" scope="singleton" c:loginFormUrl="/login" />
+        
+    <!--logout process, from ver 3.0.6 not support spring-security-redirect  parameter,
+    登出處理，因為3.0.6以後不再支援 spring-security-redirect 參數，所以要自行處理-->
+    <beans:bean id="logoutSuccessHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler" 
+                p:defaultTargetUrl="/index" p:targetUrlParameter="spring-security-redirect">
+    </beans:bean>
+    
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailService">
+            <password-encoder hash="plaintext"/>
+        </authentication-provider>
+    </authentication-manager>
+    
+    <!-- http://static.springsource.org/spring-security/site/docs/3.1.3.RELEASE/reference/appendix-schema.html -->
+    <beans:bean id="userDetailService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl" p:enableGroups="false">
+        <beans:property name="dataSource" ref="dataSource"/>
+        <beans:property name="authoritiesByUsernameQuery">
+            <beans:value><![CDATA[SELECT account as username,authority as authority FROM authorities WHERE account=?]]>
+            </beans:value>
+        </beans:property>
+        <beans:property name="usersByUsernameQuery">
+            <beans:value><![CDATA[SELECT account as username,passwd as password,1 as enabled FROM appmember WHERE account=?]]>
+            </beans:value>
+        </beans:property>
+        <beans:property name="usernameBasedPrimaryKey" value="false"/>
+    </beans:bean>
+</beans:beans>

@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Integration" junit="false" parallel="tests" thread-count="1" configfailurepolicy="skip" verbose="0" skipfailedinvocationcounts="false" annotations="JDK">
+    <test verbose="1" name="integrate-test">
+        <!--browser:  firefox , googlechrome , iexplore-->
+        <parameter name="contextPath" value="${context.path}"/>
+        <parameter name="browser" value="${browser}"/>
+        <parameter name="http.port" value="${test.http.port}"/> 	
+        <classes>
+            <!--                   
+            -->              
+            <class name="springmvc.controller.TestIntegration"/>
+        </classes>        
+        <!--groups>
+            <run>
+                <include name="integrate" />
+            </run>
+        </groups-->
+    </test>
+</suite> 

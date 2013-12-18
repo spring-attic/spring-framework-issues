@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <mvc:argument-resolvers>
+            <!-- For mobile -->
+            <bean class="springmvc.context.DeviceWebArgumentResolver"/>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="false" />
+        <property name="favorParameter" value="false" />
+        <property name="ignoreAcceptHeader" value="false" />
+        <property name="mediaTypes" >
+            <value>
+                html=text/html
+                json=application/json
+            </value>
+        </property>
+    </bean>
+    <mvc:interceptors>
+        <!-- For i18n -->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="#{appProperies['i18n.localeParam']}"/>
+        <!-- For mobile -->
+        <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+    </mvc:interceptors>
+    
+    <!-- i18n start-->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+    <bean id="messageAccessor" class="org.springframework.context.support.MessageSourceAccessor" c:_0-ref="messageSource"/>
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basenames="messages" />
+    <!-- i18n end -->
+    
+    <!--enable multipart upload ,啟用檔案上傳-->
+    <!--bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"-->
+    <!--max upload 檔案最大上傳1M
+    <property name="maxUploadSize" value="1048576"/>-->
+    <!--/bean-->
+    <mvc:view-controller path="/" view-name="index"/>
+    <mvc:view-controller path="/index" view-name="index"/>
+    <mvc:view-controller path="/login" view-name="login"/>
+    <!--replace above login to identifier when using openid,使用OpenId時將上列的login替換成下面的identifer-->
+    <!--mvc:view-controller path="/identifier" view-name="identifier"/-->
+    <mvc:view-controller path="/error" view-name="error"/>
+    <mvc:view-controller path="/changePassword" view-name="changePassword"/>
+    
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/view/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+</beans>

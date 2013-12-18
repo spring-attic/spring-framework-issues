@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/FML/1.0.1"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+  id="General FAQ">
+  <part id="General">
+    <faq id="where">
+      <question>如何建置專案?</question>
+      <answer>
+         <ol>
+            <li>參考<a href="http://code.google.com/p/javawiki/wiki/StarupMaven?wl=zh-Hant">Maven 的使用說明</a></li>
+            <li>以 mvn test 進行單元測試</li>
+            <li>以 mvn verify 進行整合測試(過程中會進行打包)</li>
+            <li>或是以 mvn package 進行打包</li>
+         </ol>
+      </answer>
+    </faq>
+    <faq id="why">
+      <question>如何產生文件?</question>
+      <answer>
+        <p>
+          最簡單的方式就是執行 mvn site ，就會在 target/site下建立所有文件
+        </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>
