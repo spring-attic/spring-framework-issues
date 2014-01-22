@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+       default-lazy-init="true">
+
+
+    <context:annotation-config/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <alias alias="dataSource" name="hsqlDataSource"/>
+    <bean id="hsqlDataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName"    value="org.hsqldb.jdbcDriver"/>
+        <property name="url"                value="jdbc:hsqldb:mem:testdb"/>
+        <property name="username"           value="sa"/>
+        <property name="password"           value=""/>
+    </bean>
+
+    <bean id="tlJPAVendorAdapter"
+          class="org.springframework.orm.jpa.vendor.TopLinkJpaVendorAdapter">
+        <property name="showSql"            value="false"/>
+        <property name="generateDdl"        value="true"/>
+        <property name="database"           value="HSQL"/>
+    </bean>
+
+    <alias alias="entityManagerFactory" name="tlEntityManagerFactory"/>
+    <bean id="tlEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource"             ref="dataSource"/>
+        <property name="jpaVendorAdapter"       ref="tlJPAVendorAdapter"/>
+        <property name="persistenceXmlLocation" value="classpath:persistence.xml"/>
+        <property name="persistenceUnitName"    value="TESTPU"/>
+    </bean>
+    
+    <alias alias="transactionManager" name="tlTransactionManager"/>
+    <bean id="tlTransactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory"   ref="tlEntityManagerFactory"/>
+        <property name="dataSource"             ref="dataSource"/>
+    </bean>
+
+    <bean class="org.springframework.issues.TestEntityDAOEJB"/>
+    
+</beans>
