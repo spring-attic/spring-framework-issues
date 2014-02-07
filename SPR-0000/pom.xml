@@ -9,7 +9,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.2.2.BUILD-SNAPSHOT</version>
+			<version>4.0.1.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -27,20 +27,20 @@
 		<!--
 		<repository>
 			<id>s2-release</id>
-			<url>http://repo.springsource.org/release</url>
+			<url>http://repo.spring.io/release</url>
 		</repository>
 		<repository>
 			<id>s2-milestone</id>
-			<url>http://repo.springsource.org/milestone</url>
+			<url>http://repo.spring.io/milestone</url>
 		</repository>
 		<repository>
 			<id>s2-staging</id>
-			<url>http://repo.springsource.org/libs-staging-local</url>
+			<url>http://repo.spring.io/libs-staging-local</url>
 		</repository>
 		-->
 		<repository>
 			<id>s2-snapshot</id>
-			<url>http://repo.springsource.org/snapshot</url>
+			<url>http://repo.spring.io/snapshot</url>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
 	</repositories>
