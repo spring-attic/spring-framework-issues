@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Alessandro Polverini
  */
 @Controller
-//@RequestMapping("/test")
 @Transactional
 public class TestController {
 
