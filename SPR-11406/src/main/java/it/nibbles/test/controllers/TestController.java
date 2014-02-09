@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Alessandro Polverini
  */
 @Controller
-@RequestMapping("/test")
+//@RequestMapping("/test")
 @Transactional
 public class TestController {
 
     @Autowired
     private TestService testService;
 
-    @RequestMapping("/newUser/{uid}")
+    @RequestMapping("/newUser/{name}")
     @ResponseBody
-    public Object testNewUser(@PathVariable String uid, @RequestParam String name) {
+    public Object testNewUser(@PathVariable String name) {
         User user;
         try {
             user = testService.findUser(name);
