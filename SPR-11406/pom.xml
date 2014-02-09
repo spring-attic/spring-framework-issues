@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>SPR-11406</name>
   <groupId>it.nibbles</groupId>
-  <artifactId>AirJB</artifactId>
+  <artifactId>SPR-11406</artifactId>
   <packaging>war</packaging>
   <version>0.1-wip</version>
   <url>http://maven.apache.org</url>
