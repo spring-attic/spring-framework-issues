@@ -17,7 +17,12 @@
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 ">
-	
+
+    <context:annotation-config />
+    <context:component-scan base-package="org.springframework.issues"/>
+
+    <tx:annotation-driven proxy-target-class="false" />
+
     <mvc:annotation-driven />
 
     <mvc:view-controller path="/" view-name="home" />
@@ -27,9 +32,4 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <context:annotation-config />
-    <context:component-scan base-package="org.springframework.issues"/>
-
-    <tx:annotation-driven proxy-target-class="false" />
-    
 </beans>
