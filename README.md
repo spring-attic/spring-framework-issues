@@ -34,8 +34,8 @@ project to demonstrate it.
 
 ### Create a project that reproduces your issue
 
-The idea is to create the smallest possible project to demonstrate the issue.  The project may be built
-with Maven or Gradle, and must contain only sources, XML and other necessary text files.  No JARs, please!
+The idea is to create the smallest possible project to demonstrate the issue. The project may be built
+with Maven and must contain only sources, XML and other necessary text files. No JARs, please!
 
 For the purpose of these instructions, we'll assume your new JIRA issue ID is "SPR-9876"
 

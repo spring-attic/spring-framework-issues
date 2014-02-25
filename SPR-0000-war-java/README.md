@@ -9,11 +9,6 @@ use the `./create-repro-project.sh` script to create a fresh copy to
 a new directory having the same name as the JIRA issue you're trying
 to reproduce and edit from there.
 
-Both Gradle (`build.gradle`) and Maven (`pom.xml`) build scripts are
-included for your convenience and choice.  Once you've created your
-copy of this directory, delete whichever build script you don't wish
-to use, and then edit the remaining one to suit your needs.
-
 ## Deploying
 
 It is possible to deploy your application directly from the command-line
