@@ -19,16 +19,15 @@ to use, and then edit the remaining one to suit your needs.
 It is possible to deploy your application directly from the command-line
 using maven. You can use either [cargo](http://cargo.codehaus.org/) or
 the [jetty plugin](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html)
-at your best convenience or if the problem is dependent of the servlet container.
+to run on a wide range of containers.
 
 ### Cargo
 
-By default Cargo is configure to start `Tomcat7` and can be invoked by
-running `mvn package cargo:run`. Cargo can manage a [wide range of
+By default Cargo is configured to start `Tomcat7` and can be invoked by
+running `mvn package cargo:run`. Cargo can also run a [wide range of other
 containers](http://cargo.codehaus.org/Containers) and you can easily add
-yours by editing the `pom.xml`. For instance, the `tomcat8` profile
-deploys the application to Tomcat8 instead of Tomcat7 and can be invoked
-with `mvn package cargo:run -Ptomcat8`
+yours by editing the `pom.xml`. For instance, a `tomcat8` profile
+has been added and can be invoked via `mvn package cargo:run -Ptomcat8`.
 
 ### Jetty
 
