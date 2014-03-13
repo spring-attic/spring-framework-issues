@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework.issues</groupId>
-    <artifactId>SPR-7345</artifactId>
+    <artifactId>SPR-11491</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
