@@ -43,6 +43,8 @@
 	<filter-mapping>
 		<filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
