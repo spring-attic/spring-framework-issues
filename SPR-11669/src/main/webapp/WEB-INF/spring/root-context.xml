@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Root Context: defines shared resources visible to all other web 
+        components -->
+
+    <context:component-scan base-package="org.springframework.issues.spr11669.domain" />
+
+    <tx:annotation-driven />
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver" />
+        <property name="url"
+            value="jdbc:h2:mem:SPR-11669;DB_CLOSE_DELAY=-1;" />
+        <property name="username" value="sa" />
+        <property name="password" value="" />
+        <property name="defaultAutoCommit" value="false" />
+    </bean>
+
+    <jpa:repositories
+        base-package="org.springframework.issues.spr11669.domain.repository" />
+
+    <bean id="jpaVendorAdapter"
+        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="false" />
+        <property name="database" value="H2" />
+    </bean>
+
+    <bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan"
+            value="org.springframework.issues.spr11669.domain.model" />
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.hbm2ddl.auto" value="none" />
+                <entry key="hibernate.ejb.naming_strategy"
+                    value="org.hibernate.cfg.ImprovedNamingStrategy" />
+                <entry key="hibernate.connection.charSet" value="UTF-8" />
+                <entry key="hibernate.show_sql" value="false" />
+                <entry key="hibernate.format_sql" value="false" />
+                <entry key="hibernate.use_sql_comments" value="true" />
+                <entry key="hibernate.jdbc.batch_size" value="30" />
+                <entry key="hibernate.jdbc.fetch_size" value="100" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <jdbc:initialize-database data-source="dataSource"
+        ignore-failures="ALL">
+        <jdbc:script location="classpath:database/ddl.sql" />
+        <jdbc:script location="classpath:database/dml.sql" />
+    </jdbc:initialize-database>
+
+
+</beans>
