@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:nonamespaceschemalocation="ehcache.xsd" 
+         defaultTransactionTimeoutInSeconds="600" name="ehcache-hibernate">
+
+    <defaultCache maxEntriesLocalHeap="250" eternal="false" timeToLiveSeconds="3600">
+    </defaultCache>
+
+</ehcache>
