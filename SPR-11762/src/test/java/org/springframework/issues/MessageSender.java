@@ -43,8 +43,10 @@ public class MessageSender {
 
 	public void send() {
 		System.out.println("Sending class not found messages");
-		jmsTemplate.send("class-not-found", new SampleClassNotFoundMessageCreator());
-		jmsTemplate.send("class-not-found", new SampleClassNotFoundMessageCreator());
+		for (int i = 0; i < 100; i++) {
+			jmsTemplate.send("class-not-found-1", new SampleClassNotFoundMessageCreator());
+			jmsTemplate.send("class-not-found-2", new SampleClassNotFoundMessageCreator());
+		}
 
 		System.out.println("Sending a simple text message");
 		jmsTemplate.send("simple", new SimpleMessageCreator());

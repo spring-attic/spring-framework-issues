@@ -21,6 +21,7 @@ public class ConsumerConfig {
 	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
 		factory.setConnectionFactory(activeMqConfig.connectionFactory());
+		factory.setConcurrency("10");
 		return factory;
 	}
 }

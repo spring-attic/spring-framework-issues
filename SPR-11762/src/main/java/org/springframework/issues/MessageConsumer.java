@@ -15,8 +15,13 @@ public class MessageConsumer {
 		System.out.println("Received " + o);
 	}
 
-	@JmsListener(destination = "class-not-found")
-	public void handle(Object o) {
-		System.out.println("Received " + o);
+	@JmsListener(destination = "class-not-found-1")
+	public void handle1(Object o) {
+		System.out.println("Received (one) " + o);
+	}
+
+	@JmsListener(destination = "class-not-found-2")
+	public void handle2(Object o) {
+		System.out.println("Received (two) " + o);
 	}
 }
