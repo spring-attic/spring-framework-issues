@@ -17,7 +17,7 @@ public class ActiveMqConfig {
 
 	@Bean
 	public ConnectionFactory connectionFactory() {
-		return new ActiveMQConnectionFactory("failover:(tcp://127.0.0.1:61616)");
+		return new ActiveMQConnectionFactory("failover:(tcp://192.168.0.239:61616)");
 	}
 
 	@Bean
