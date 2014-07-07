@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="stomp.js"></script>
+    <script>
+        var url = "ws://localhost:8080/stomp";
+        var client = Stomp.client(url);
+        client.connect({}, function(frame) {
+
+            console.log('Connected ' + frame);
+
+            client.subscribe("/topic/prefix.foo", function(message) {
+                console.log("Foo message received " + message.body);
+            });
+
+            client.send("/app/prefix.foo", {}, "");
+            console.log("Send message to /app/prefix.foo");
+
+        }, function(error) {
+            console.log("STOMP protocol error " + error);
+        });
+
+    </script>
+</head>
+<body>
+
+<p>Open the developer console to see application logs!</p>
+
+</body>
+</html>
