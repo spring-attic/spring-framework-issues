@@ -23,13 +23,12 @@ import org.springframework.stereotype.Controller;
  * @author Sebastien Deleuze
  * @since 4.1
  */
-@MessageMapping("/prefix")
+@MessageMapping("prefix")
 @Controller
 public class TestController {
 
 	@MessageMapping("foo")
 	public String foo() {
 		return "bar";
-
 	}
 }
