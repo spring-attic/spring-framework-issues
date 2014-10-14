@@ -1,11 +1,13 @@
-
 Start the project:
+
     $ mvn package cargo:run -Ptomcat8
 
 Perform the request:
+
     $ curl -v --data "" http://localhost:8080/SPR-12287/test
 
 Sample log output:
+
     $ curl -v --data "" http://localhost:8080/SPR-12287/test
     
     * Hostname was NOT found in DNS cache
