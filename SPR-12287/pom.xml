@@ -10,8 +10,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<java.version>1.8</java.version>
-		<spring.version>4.0.4.RELEASE</spring.version>
+		<java.version>1.7</java.version>
+		<spring.version>4.1.1.RELEASE</spring.version>
 		<slf4j.version>1.7.5</slf4j.version>
 
 		<jetty.version>9.1.2.v20140210</jetty.version>
@@ -150,9 +150,9 @@
 		-->
 
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.3.3</version>
 		</dependency>
 
 		<!-- Rome Atom+RSS

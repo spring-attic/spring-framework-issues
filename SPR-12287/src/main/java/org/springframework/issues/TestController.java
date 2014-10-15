@@ -31,8 +31,11 @@ public class TestController {
 
 	@RequestMapping(value="/test", method = RequestMethod.POST)
 	public Callable<ResponseEntity<Void>> post() {
-		return () -> {
-			return new ResponseEntity<>(HttpStatus.OK);
+		return new Callable<ResponseEntity<Void>>() {
+			@Override
+			public ResponseEntity<Void> call() throws Exception {
+				return new ResponseEntity<>(HttpStatus.OK);
+			}
 		};
 	}
 
