@@ -1,0 +1,7 @@
+a {
+	background-image: url(../img/logo.png);
+}
+
+span {
+	background-image: url(/img/logo.png);
+}

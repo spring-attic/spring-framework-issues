@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=utf-8" />
+	<html>
+<body>
+	<h2>SPR-12281 Test case</h2>
+	<ul>
+		<li><a href="/css/test.css">Link to /css/test.css</a></li>
+		<li><a href="/resource">Link to /resource</a></li>
+	</ul>
+	
+	<hr/>
+	<a href="https://jira.spring.io/browse/SPR-12281">https://jira.spring.io/browse/SPR-12281</a>
+</body>
+	</html>
+</jsp:root>
