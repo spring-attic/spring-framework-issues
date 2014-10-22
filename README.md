@@ -71,6 +71,8 @@ cd spring-framework-issues
 
 * It is already a buildable Maven project, so you may use your IDE's built-in support for Maven to do
   the importing.
+* If this is a web project, you can run it on the command line with an embedded container:
+  `mvn clean package cargo:run -Ptomcat8`
 
 4\. Add, commit, and push your local fork
 
