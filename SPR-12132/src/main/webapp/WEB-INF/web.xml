@@ -13,6 +13,13 @@
     	<param-value>org.springframework.issues.config</param-value>
 	</context-param>
 
+	<!-- TODO: uncomment those lines to enable fix to SPR-12132
+	<context-param>
+		<param-name>responseEncodedHtmlEscape</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	-->
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
