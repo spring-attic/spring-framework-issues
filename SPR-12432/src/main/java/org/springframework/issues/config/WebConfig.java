@@ -56,6 +56,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		// classpath configuration works
+		//registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+		// servlet 3 resource does not
+		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
 	}
 }
