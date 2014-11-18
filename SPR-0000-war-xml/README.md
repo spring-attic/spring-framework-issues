@@ -24,6 +24,10 @@ containers](http://cargo.codehaus.org/Containers) and you can easily add
 yours by editing the `pom.xml`. For instance, a `tomcat8` profile
 has been added and can be invoked via `mvn package cargo:run -Ptomcat8`.
 
+You can remote debug the application, in your IDE, by using the following command:
+ `mvn package cargo:run -Ptomcat8 -Pdebug`. Note that you can customize the debug
+ port used with the `cargo.jvm.debug.port` maven property.
+
 ### Jetty
 
 To deploy your application to jetty9, simply invoke `mvn jetty:run`. It

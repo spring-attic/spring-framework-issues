@@ -19,6 +19,8 @@
 		<cargo.container.url>
 			http://www.eu.apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/apache-tomcat-7.0.57.zip
 		</cargo.container.url>
+		<cargo.container.jvmargs>-Xms96m -Xmx512m -Djava.awt.headless=true</cargo.container.jvmargs>
+		<cargo.jvm.debug.port>8000</cargo.jvm.debug.port>
 	</properties>
 
 	<dependencies>
@@ -232,7 +234,7 @@
 							<cargo.tomcat.ajp.port>1099</cargo.tomcat.ajp.port>
 							<cargo.rmi.port>1099</cargo.rmi.port>
 							<cargo.logging>medium</cargo.logging>
-							<cargo.jvmargs>-Xms96m -Xmx512m -Djava.awt.headless=true</cargo.jvmargs>
+							<cargo.jvmargs>${cargo.container.jvmargs}</cargo.jvmargs>
 						</properties>
 					</configuration>
 					<container>
@@ -272,6 +274,17 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+		<profile>
+			<id>debug</id>
+			<properties>
+				<cargo.container.jvmargs>
+					-Xdebug
+					-Xrunjdwp:transport=dt_socket,address=${cargo.jvm.debug.port},suspend=n,server=y
+					-Xnoagent
+					-Djava.compiler=NONE
+				</cargo.container.jvmargs>
+			</properties>
 		</profile>
 	</profiles>
 
