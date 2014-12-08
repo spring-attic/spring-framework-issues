@@ -15,9 +15,9 @@
 		<slf4j.version>1.7.5</slf4j.version>
 
 		<jetty.version>9.1.2.v20140210</jetty.version>
-		<cargo.container.id>tomcat7x</cargo.container.id>
+		<cargo.container.id>tomcat6x</cargo.container.id>
 		<cargo.container.url>
-			http://www.eu.apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/apache-tomcat-7.0.57.zip
+			http://www.eu.apache.org/dist/tomcat/tomcat-6/v6.0.41/bin/apache-tomcat-6.0.41.zip
 		</cargo.container.url>
 		<cargo.container.jvmargs>-Xms96m -Xmx512m -Djava.awt.headless=true</cargo.container.jvmargs>
 		<cargo.jvm.debug.port>8000</cargo.jvm.debug.port>
