@@ -10,17 +10,8 @@
 <body>
 
     <!-- comparing to Ids does not call the converters -->
-    <!--
     <form action="#" th:action="@{/test}" th:object="${userForm}" method="post">
         <select id="lecturers" multiple="true" th:field="*{selectedUsersIds}">
-            <option th:each="user : ${userList}" th:text="${user.name}" th:value="${user.id}">User</option>
-        </select>
-    </form>
-    -->
-
-    <!-- reproduce the issue -->
-    <form action="#" th:action="@{/test}" th:object="${userForm}" method="post">
-        <select id="users" multiple="true" th:field="*{selectedUsers}">
             <option th:each="user : ${userList}" th:text="${user.name}" th:value="${user.id}">User</option>
         </select>
     </form>

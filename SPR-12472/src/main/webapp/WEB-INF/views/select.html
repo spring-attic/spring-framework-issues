@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>SPR-12472</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+</head>
+<body>
+
+    <!-- using a custom select expression -->
+    <form action="#" th:action="@{/test}" th:object="${userForm}" method="post">
+        <select id="users" multiple="true">
+            <option th:each="user : ${userList}" th:text="${user.name}" th:value="${user.id}"
+                    th:selected="${#lists.contains(userForm.selectedUsers, user)}">User</option>
+        </select>
+    </form>
+</body>
+</html>

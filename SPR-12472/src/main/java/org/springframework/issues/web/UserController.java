@@ -33,9 +33,35 @@ public class UserController implements InitializingBean {
 		return user.toString();
 	}
 
-	@RequestMapping("/")
-	public String home(Model model) {
+	@RequestMapping("/issue")
+	public String issue(Model model) {
 
+		fillModel(model);
+		return "issue";
+	}
+
+	@RequestMapping("/ids")
+	public String ids(Model model) {
+
+		fillModel(model);
+		return "ids";
+	}
+
+	@RequestMapping("/select")
+	public String select(Model model) {
+
+		fillModel(model);
+		return "select";
+	}
+
+	@RequestMapping("/comparator")
+	public String comparator(Model model) {
+
+		fillModel(model);
+		return "comparator";
+	}
+
+	private void fillModel(Model model) {
 		model.addAttribute("userList", repository.findAll());
 		logger.info("fetched the list of all users");
 
@@ -44,8 +70,6 @@ public class UserController implements InitializingBean {
 		logger.info("selected two particular users");
 
 		model.addAttribute("userForm", form);
-
-		return "index";
 	}
 
 	@Override

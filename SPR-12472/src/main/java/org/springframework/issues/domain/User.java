@@ -32,11 +32,17 @@ public class User {
 	}
 
 	@Override
-	public boolean equals(Object user) {
-		if (user instanceof Long) { return this.id == user; }
-		else if (user instanceof String) { return Long.toString(this.id).equals(user); }
-		else if (user instanceof User) { return this.id == (((User) user).getId()); }
-		else return false;
+	public boolean equals(Object o) {
+
+		if (this == o) return true;
+		if (!(o instanceof User)) return false;
+		User user = (User) o;
+		return id.equals(user.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
 	}
 
 	@Override

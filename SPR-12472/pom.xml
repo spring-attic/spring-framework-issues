@@ -57,10 +57,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<!-- snapshot dependency to test latest spring-data-commons improvements -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>1.7.1.RELEASE</version>
+			<version>1.6.0.BUILD-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
