@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>SPR-12630</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" th:src="@{/main.js}"/>
+</head>
+<body>
+    <p th:text="'Hello, ' + ${name} + '!'" />
+    <p>Here is a link: <a th:href="@{/foo/bar}">Foo Bar</a>
+    </p>
+</body>
+</html>
