@@ -5,10 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" type="text/css" href="<c:url value="/static/style.css" />">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/static/style.css" />">
+    <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/3.3.1/css/bootstrap.min.css"/>"/>
 <title>Home</title>
 </head>
 <body>
   <h1>Home</h1>
+  <p>CSS Link: <c:url value="/static/style.css" /></p>
+  <p>CSS Link webjar: <c:url value="/webjars/bootstrap/3.3.1/css/bootstrap.min.css"/></p>
 </body>
 </html>

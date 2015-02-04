@@ -21,4 +21,6 @@
 
 	<mvc:resources mapping="/static/**" location="classpath:/static/" cache-period="120"/>
 
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
 </beans>
