@@ -43,13 +43,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- CGLIB, required for @Configuration usage -->
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>2.2</version>
-		</dependency>
-
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
