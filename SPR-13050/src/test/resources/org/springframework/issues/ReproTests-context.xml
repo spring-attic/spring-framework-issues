@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="myFoo" class="org.springframework.issues.Foo">
+		<property name="objectMap">
+			<map>
+				<entry>
+					<key>
+						<value>1</value>
+					</key>
+					<value>"a1"</value>
+				</entry>
+				<entry>
+					<key>
+						<value>2</value>
+					</key>
+					<value>"a2"</value>
+				</entry>
+				<entry>
+					<key>
+						<value>3</value>
+					</key>
+					<value>"a3"</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="myFooFixed" class="org.springframework.issues.Foo">
+		<property name="objectMap">
+			<map key-type="java.lang.Long">
+				<entry>
+					<key>
+						<value>1</value>
+					</key>
+					<value>"a1"</value>
+				</entry>
+				<entry>
+					<key>
+						<value>2</value>
+					</key>
+					<value>"a2"</value>
+				</entry>
+				<entry>
+					<key>
+						<value>3</value>
+					</key>
+					<value>"a3"</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+</beans>
