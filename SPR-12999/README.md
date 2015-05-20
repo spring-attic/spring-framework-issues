@@ -4,11 +4,15 @@ The project will be available at: http://localhost:8080/SPR-12999/
 
 ## Running the repro application
 
-    mvn clean package cargo:run -Ptomcat8
+    mvn clean package cargo:run -DskipTests=true
+    
+Or, with remote debugging from your IDE on port 5005:
+    
+    mvn clean package cargo:run -DskipTests=true -Pdebug
 
 Go to http://localhost:8080/SPR-12999/docs/main.css - this should serve a sample CSS file.
     
-Go to http://localhost:8080/SPR-12999/docs/test - this should serve HTTP 404.
+Go to http://localhost:8080/SPR-12999/maven/log4j/ - this should serve HTTP 404 or 204, not HTTP 500.
 
 ## Deploying
 

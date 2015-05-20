@@ -30,5 +30,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/docs/**").addResourceLocations("classpath:/docs/");
+		registry.addResourceHandler("/maven/**").addResourceLocations("classpath:/META-INF/maven/log4j/");
 	}
 }
