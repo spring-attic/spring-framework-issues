@@ -26,6 +26,7 @@ public class SampleController {
 	@RequestMapping("/user")
 	MappingJackson2JsonView user() {
 		MappingJackson2JsonView view = new MappingJackson2JsonView();
+		view.setExtractValueFromSingleKeyModel(true);
 		view.addStaticAttribute("user", new User("Sébastien", "Deleuze"));
 		view.setPrefixJson(true);
 		return view;
