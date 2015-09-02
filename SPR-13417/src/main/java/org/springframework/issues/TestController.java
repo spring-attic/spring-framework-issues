@@ -1,29 +1,36 @@
 package org.springframework.issues;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class TestController {
 
-    @RequestMapping(name= "/test", method = RequestMethod.POST)
-    @ResponseBody
-    public String handle(@RequestBody(required = false) String body) {
-        return "OK";
-    }
-
-    @RequestMapping(name= "/testjson", method = RequestMethod.POST,
-            produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public String handle(@RequestBody(required = false) Book body) {
-        return "OK";
+    @RequestMapping(name= "/testjson", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Book handle(@RequestBody(required = false) Book body) {
+        return new Book("Hello", "World");
     }
 
     public class Book {
-        String title;
-        String author;
+        private String title;
+        private String author;
+
+        public Book(String title, String author) {
+            this.title = title;
+            this.author = author;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
     }
 }
