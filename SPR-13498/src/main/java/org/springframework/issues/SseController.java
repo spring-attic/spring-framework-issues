@@ -1,6 +1,5 @@
 package org.springframework.issues;
 
-import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -18,28 +17,29 @@ public class SseController {
 	private static Logger logger = LoggerFactory.getLogger(SseController.class);
 
 
-	@RequestMapping(path = "/api/events", method = RequestMethod.GET)
+	@RequestMapping(path = "/sse", method = RequestMethod.GET)
 	public SseEmitter getEvents() {
+
 		SseEmitter emitter = new SseEmitter();
-		emitter.onTimeout(new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("hello timeout");
-				emitter.complete();
-			}
-		});
+
+//		emitter.onTimeout(new Runnable() {
+//			@Override
+//			public void run() {
+//				System.out.println("hello timeout");
+//				emitter.complete();
+//			}
+//		});
+
 		Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
 			try {
 				emitter.send(SseEmitter.event().data("Thread writing: " + Thread.currentThread()).name("ping"));
 			}
-			catch (Exception e) {
-				logger.error("In catch1: {}", e.getMessage());
-			}
-			catch (Throwable t) {
-				logger.error("In catch2: {}", t.getMessage());
+			catch (Throwable e) {
+				logger.error("In catch: {}", e.getMessage());
 			}
 
 		} , 1000, 1000, TimeUnit.MILLISECONDS);
+
 		return emitter;
 	}
 

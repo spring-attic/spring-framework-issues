@@ -15,40 +15,46 @@
  */
 package org.springframework.issues;
 
-import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-public class AsyncServlet extends HttpServlet {
+// Demonstrates Tomcat issue:
+// https://bz.apache.org/bugzilla/show_bug.cgi?id=58457
+
+@Controller
+public class RawServletAsyncController extends HttpServlet {
 
 	private final AtomicInteger index = new AtomicInteger();
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+	@RequestMapping(path = "/async", method = RequestMethod.GET)
+	public void handle(HttpServletRequest request, ServletOutputStream os) throws Exception {
 
 		System.out.println("Starting async request");
-		AsyncContext asyncContext = req.startAsync(req, resp);
+		AsyncContext asyncContext = request.startAsync();
 		asyncContext.setTimeout(5000);
 
 		Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
 			try {
 				int indexValue = index.getAndIncrement();
 				System.out.println(Thread.currentThread() + " index: " + indexValue);
-				resp.getOutputStream().println(Thread.currentThread() + " index: " + indexValue);
-				resp.getOutputStream().flush();
+				os.println(Thread.currentThread() + " index: " + indexValue);
+				os.flush();
 			}
 			catch (Throwable e) {
 				System.out.println("Exception: " + e.getMessage());
 			}
 
 		} , 1000, 1000, TimeUnit.MILLISECONDS);
-
 	}
+
 }
