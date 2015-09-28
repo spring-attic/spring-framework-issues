@@ -12,12 +12,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration
-public class DelegatingWebMvcConfigurationWithContentNegotiationManagerTests {
+public class DelegatingWebMvcConfigurationWithOtherAutowiredDependenciesAndCodeTests {
 
     @Autowired
     ApplicationContext context;
@@ -29,15 +31,24 @@ public class DelegatingWebMvcConfigurationWithContentNegotiationManagerTests {
         @Bean
         TestWebMvcConfigurer testWebMvcConfigurerWithContentNegotiationManager() {
             return new TestWebMvcConfigurer() {
+                @Autowired
+                ApplicationContext context;
+
                 @Autowired @Lazy
-                ContentNegotiationManager contentNegotiationManager;
+                private ContentNegotiationManager contentNegotiationManager;
+
+                @Autowired @Lazy
+                private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
+
+                @Autowired @Lazy
+                private HandlerExceptionResolver handlerExceptionResolver;
 
                 /**
                  * Note - it is plausable that users would need/want to autowire in the
-                 * ContentNegotiationManager into their interceptors or other MVC plumbing
+                 * above dependencies into their interceptors or other MVC plumbing
                  * that is configurable using the WebMvcConfigurer interface.  When the
-                 * ContentNegotiationManager is autowired, the "configureContentNegotiation"
-                 * callback method never gets called.  See the error message for specific details.
+                 * above dependencies are autowired, several WebMvcConfigurer callback
+                 * method never gets called.  See the error message for specific details.
                  */
             };
         }
@@ -51,4 +62,3 @@ public class DelegatingWebMvcConfigurationWithContentNegotiationManagerTests {
     }
 
 }
-
