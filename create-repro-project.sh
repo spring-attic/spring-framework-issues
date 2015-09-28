@@ -32,3 +32,4 @@ cp -r $source_dir/src $target_dir/
 cp $source_dir/README-template.md $target_dir/README.md
 cp $source_dir/pom.xml $target_dir/
 perl -p -i -e $expr $target_dir/pom.xml
+perl -p -i -e $expr $target_dir/README.md
