@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>SPR-13502</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+</head>
+<body>
+<h1>SPR-13502</h1>
+
+<div>
+    <form action="#" th:action="@{/}" th:object="${myForm}" method="post">
+        <label th:for="*{name}">Name</label>
+        <input type="text" th:field="*{name}" />
+        <ul>
+            <li th:each="project : ${T(org.springframework.issues.SpringProjects).values()}">
+                <input type="checkbox" th:field="*{projects}" th:value="${project}" />
+                <label th:for="${#ids.prev('projects')}"
+                       th:text="${project}">Project name</label>
+            </li>
+        </ul>
+        <button type="submit" name="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>
