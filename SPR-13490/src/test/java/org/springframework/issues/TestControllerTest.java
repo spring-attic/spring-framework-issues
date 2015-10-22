@@ -24,19 +24,31 @@ public class TestControllerTest {
 
     @Test
     public void shouldSend200WithValidPayload() throws Exception {
-        mockMvc.perform(post("/").content("{\"message\":\"spring\"}").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post("/mandatory-body").content("{\"message\":\"spring\"}").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string("\"hello\""));
     }
 
     @Test
     public void shouldSend400WithEmptyBody() throws Exception {
-        mockMvc.perform(post("/")).andExpect(status().isBadRequest());
+        mockMvc.perform(post("/mandatory-body")).andExpect(status().isBadRequest());
     }
 
     @Test
     public void shouldSend400WithEmptyJsonObject() throws Exception {
-        mockMvc.perform(post("/").content("{}").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post("/mandatory-body").content("{}").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldSend400WithNullJsonObject() throws Exception {
+        mockMvc.perform(post("/mandatory-body").content("null").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldSend200WithNullJsonObject() throws Exception {
+        mockMvc.perform(post("/optional-body").content("null").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }
