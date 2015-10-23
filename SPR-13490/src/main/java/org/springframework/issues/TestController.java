@@ -15,8 +15,13 @@ public class TestController {
         binder.addValidators(new PayloadValidator());
     }
 
-    @RequestMapping("/")
-    public String emptyBody(@RequestBody @Validated Payload payload) {
+    @RequestMapping("/mandatory-body")
+    public String mandatoryBody(@RequestBody @Validated Payload payload) {
+        return "hello";
+    }
+
+    @RequestMapping("/optional-body")
+    public String optionalBody(@RequestBody(required = false) @Validated Payload payload) {
         return "hello";
     }
 }
