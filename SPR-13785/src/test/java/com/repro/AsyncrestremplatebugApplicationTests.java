@@ -32,12 +32,13 @@ public class AsyncrestremplatebugApplicationTests {
         headers.add(AUTHORIZATION, authHeader);
         ListenableFuture<ResponseEntity<String>> future =
             asyncRestTemplate.exchange("http://localhost:8080/sleepingendpoint", GET, new HttpEntity<String>(headers), String.class);
-        future.addCallback(s -> {}, f -> {
-            System.err.println("CALLED ERROR HANDLER");
-            throw new SystemException(f);
-        });
         // NOTE - only difference is that this sleeps
         Thread.sleep(5000);
+        future.addCallback(s -> {}, f -> {
+            System.err.println("CALLED ERROR HANDLER");
+            throw new SystemException(f);	// <-- this fails in the test thread
+        });
+        // the below is never reached
         ResponseEntity<String> resp = future.get();
         assertTrue(resp.getStatusCode().is2xxSuccessful());
 	}
@@ -53,9 +54,9 @@ public class AsyncrestremplatebugApplicationTests {
             asyncRestTemplate.exchange("http://localhost:8080/sleepingendpoint", GET, new HttpEntity<String>(headers), String.class);
         future.addCallback(s -> {}, f -> {
             System.err.println("BUG -> SystemException not propaging up the chain <- BUG");
-            throw new SystemException(f);
+            throw new SystemException(f);	// <-- this fails in executor thread
         });
-        ResponseEntity<String> resp = future.get();
+        ResponseEntity<String> resp = future.get();	// <-- this fails with ExecutionException
         assertTrue(resp.getStatusCode().is2xxSuccessful());
 	}
 
