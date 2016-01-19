@@ -29,6 +29,7 @@ public class ServletServerHttpRequestTests {
     @Test
     public void getURI() throws Exception {
         URI uri = new URI("https://example.com/%E4%B8%AD%E6%96%87?redirect=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-framework");
+        mockRequest.setScheme(uri.getScheme());
         mockRequest.setServerName(uri.getHost());
         mockRequest.setServerPort(uri.getPort());
         // NOTE: should use getRawPath() instead of getPath() is decoded, while HttpServletRequest.setRequestURI() is encoded
