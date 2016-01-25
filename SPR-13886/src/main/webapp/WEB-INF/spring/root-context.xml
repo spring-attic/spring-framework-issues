@@ -8,8 +8,6 @@
 
 	<jdbc:embedded-database id="testDS" />
 
-	<context:load-time-weaver />
-
 	<bean id="testEmf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="testDS" />
 		<property name="jpaVendorAdapter">
@@ -44,11 +42,6 @@
 			<list>
 				<value>org.springframework.issues.entity</value>
 			</list>
-		</property>
-		<property name="loadTimeWeaver">
-			<bean class="org.springframework.issues.hibernate.HibernateLoadTimeWeaverAwareProcessor">
-				<constructor-arg ref="loadTimeWeaver" />
-			</bean>
 		</property>
 	</bean>
 
