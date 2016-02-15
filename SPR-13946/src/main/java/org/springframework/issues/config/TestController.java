@@ -15,6 +15,7 @@
  */
 package org.springframework.issues.config;
 
+import java.io.OutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.MediaType;
@@ -27,7 +28,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 @Controller
 public class TestController {
 
-	@RequestMapping(value = "/provision", method = RequestMethod.POST)
+	@RequestMapping("/emitter")
 	ResponseBodyEmitter provision() throws Exception {
 
 		final ResponseBodyEmitter emitter = new ResponseBodyEmitter();
@@ -35,7 +36,7 @@ public class TestController {
 			String[] chunks = { "chunk1", "chunk2", "chunk3" };
 			for (String chunk : chunks) {
 				try {
-					emitter.send(chunk, MediaType.APPLICATION_JSON);
+					emitter.send(chunk, MediaType.TEXT_PLAIN);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -49,4 +50,25 @@ public class TestController {
 		}).run();
 		return emitter;
 	}
+
+	@RequestMapping("/out")
+	void provision(HttpServletResponse response) throws Exception {
+
+		String[] chunks = { "chunk1", "chunk2", "chunk3" };
+		response.setContentType("text/html; charset=UTF-8");
+		OutputStream os = response.getOutputStream();
+
+		for (String chunk : chunks) {
+			os.write(chunk.getBytes());
+			os.flush();
+			response.flushBuffer();
+			System.out.println("chunk sent!");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
+
