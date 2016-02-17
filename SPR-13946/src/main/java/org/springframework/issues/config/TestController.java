@@ -47,7 +47,7 @@ public class TestController {
 				}
 			}
 			emitter.complete();
-		}).run();
+		}).start();
 		return emitter;
 	}
 
