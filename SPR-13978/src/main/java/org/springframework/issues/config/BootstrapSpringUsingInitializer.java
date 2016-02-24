@@ -18,21 +18,16 @@ public class BootstrapSpringUsingInitializer extends AbstractAnnotationConfigDis
     private static final Logger logger = LoggerFactory.getLogger(BootstrapSpringUsingInitializer.class);
 
 
-    @Override protected WebApplicationContext createServletApplicationContext() {
-        return new AnnotationConfigWebApplicationContext();
-    }
-
     @Override protected String[] getServletMappings() {
         return new String[]{ "/" };
     }
 
     @Override protected Class<?>[] getRootConfigClasses() {
-        return null;
-        // XXX this causes an IllegalStateException when WebApplicationContextUtils.getRequiredWebApplicationContext() is called from StartupListener
+        return new Class<?>[]{ WebConfig.class };
     }
 
     @Override protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{ WebConfig.class };
+        return null;
     }
 
     @Override protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
