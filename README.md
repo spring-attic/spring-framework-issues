@@ -1,7 +1,7 @@
 ## Welcome!
 
 This repository is designed to allow Spring users and team members to contribute self-contained projects
-reproducing issues logged against Spring's JIRA issue tracker at https://jira.springsource.org.  It offers
+reproducing issues logged against Spring's JIRA issue tracker at https://jira.spring.io.  It offers
 the following advantages over attaching .zip or even patch files to JIRA issues:
 
 * A streamlined process for evaluating issues so more bugs get fixed more quickly!
@@ -15,10 +15,10 @@ All around a better way of interacting with the Spring team.
 
 ## Logging an issue against Spring's JIRA issue tracker
 
-1. First, [search SPR JIRA](https://jira.springframework.org/browse/SPR) to see if your issue has already
+1. First, [search SPR JIRA](https://jira.spring.io/browse/SPR) to see if your issue has already
    been reported. If so, there may already be a reproduction issue in this repository!
 1. If after searching an issue does not already exist,
-   [create a new issue](https://jira.springsource.org/secure/CreateIssue!default.jspa)
+   [create a new issue](https://jira.spring.io/secure/CreateIssue!default.jspa)
     * You will now have an issue named, for example, "SPR-9876".  Make note of this, as you'll need it
       below when creating your project.
 
