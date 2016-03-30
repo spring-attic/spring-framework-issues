@@ -44,6 +44,7 @@ public class MvcFormattersTests {
 		ReflectionUtils.makeAccessible(converterField);
 		Object converters = ReflectionUtils.getField(converterField, conversionService);
 
+		// add a break point and test that converters contains a DomainClassConverter instance
 		Assert.assertNotNull("the conversion service should exist", conversionService);
 		// assert that the DomainClassConverter has been registered
 		Assert.assertTrue(conversionService.canConvert(Object.class, Object.class));
