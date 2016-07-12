@@ -56,10 +56,15 @@
 					<container>
 						<containerId>tomcat8x</containerId>
 						<zipUrlInstaller>
-							<url>http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.zip</url>
+							<url>http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.35/bin/apache-tomcat-8.0.35.zip</url>
 						</zipUrlInstaller>
 					</container>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.3.10.v20160621</version>
 			</plugin>
 		</plugins>
 	</build>
