@@ -1,0 +1,30 @@
+<configuration debug="false" scan="true" scanPeriod="10000">
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<charset>utf-8</charset>
+			<pattern>%d{dd/MM/yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<timestamp key="timestamp" datePattern="yyyyMMdd-HHmmss"/>
+
+	
+	<logger name="org.eclipse.jetty" level="INFO"/>
+	<logger name="org.eclipse.jetty.http" level="WARN"/>
+	<logger name="org.eclipse.jetty.annotations" level="WARN"/>
+	<logger name="org.eclipse.jetty.plus.annotation" level="WARN"/>
+	<logger name="org.apache.jasper" level="WARN"/>
+	<logger name="org.apache.tomcat" level="WARN"/>
+	<logger name="jndi" level="WARN"/>
+	<logger name="org.eclipse.jetty.webapp.WebAppClassLoader" level="WARN"/>
+	<logger name="org.springframework" level="WARN"/>
+	<logger name="org.springframework.security" level="DEBUG"/>
+	<logger name="org.springframework.web" level="WARN"/>
+	<logger name="org.springframework.context.annotation.ClassPathBeanDefinitionScanner" level="WARN"/>
+
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
