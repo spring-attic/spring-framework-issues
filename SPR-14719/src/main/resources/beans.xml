@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd">
 
-	<lang:groovy proxy-target-class="true" refresh-check-delay="1000"
+	<lang:groovy proxy-target-class="true" refresh-check-delay="1000" id="foo"
 		script-source="file:src/main/resources/controller.groovy" />
 
 </beans>

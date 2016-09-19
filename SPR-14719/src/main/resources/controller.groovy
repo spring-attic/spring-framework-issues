@@ -1,12 +1,14 @@
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.cache.annotation.Cacheable
 
-@RestController
 class Sample {
-	
-	@RequestMapping("/")
-	String home() {
+
+	@Cacheable("foo")
+	String test() {
 		"Hello World"
 	}
-	
+
+	String toString() {
+		test()
+	}
+
 }
