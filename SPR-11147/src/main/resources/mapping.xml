@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : mapping.xml
+    Created on : March 30, 2010, 4:54 PM
+    Author     : igilany
+    Description:
+        Purpose of the document follows.
+-->
+
+<mapping>
+  <class name="org.trepel.spring.xstream.Data" auto-complete="true"/>
+
+</mapping>
