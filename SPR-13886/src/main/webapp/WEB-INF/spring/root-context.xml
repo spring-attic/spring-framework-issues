@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<jdbc:embedded-database id="testDS" />
+
+	<bean id="testEmf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="testDS" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<!-- this is normally initialized from the jpaVendorAdapter in afterPropertiesSet(), but it is needed earlier 
+			by the post-processor -->
+		<property name="jpaDialect">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+		</property>
+		<property name="persistenceUnitName" value="testPU" />
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+				<entry key="hibernate.enable_lazy_load_no_trans" value="true" />
+				<!-- this deprecated setting enables all 3 new setting following -->
+				<entry key="hibernate.ejb.use_class_enhancer" value="true" />
+				<!--
+				<entry key="hibernate.enhancer.enableDirtyTracking" value="true" />
+				<entry key="hibernate.enhancer.enableLazyInitialization" value="true" />
+				<entry key="hibernate.enhancer.enableAssociationManagement" value="true" />
+				-->
+				<entry key="hibernate.id.new_generator_mappings" value="false" />
+				<!--
+				<entry key="hibernate.show_sql" value="true" />
+				<entry key="hibernate.format_sql" value="true" />
+				<entry key="hibernate.hbm2ddl.auto" value="update" />
+				-->
+			</map>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>org.springframework.issues.entity</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="testEmf" />
+	</bean>
+
+	<!-- required by JPA -->
+	<context:load-time-weaver />
+
+	<!-- enable this workaround to make it start -->
+	<!--
+	<bean class="org.springframework.issues.hibernate.HibernateLoadTimeWeaverAwareProcessor">
+		<constructor-arg ref="loadTimeWeaver" />
+	</bean>
+	-->
+</beans>
