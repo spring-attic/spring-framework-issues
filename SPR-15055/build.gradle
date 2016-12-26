@@ -1,0 +1,40 @@
+group = 'org.springframework.issues'
+version = '1.0.0.SNAPSHOT'
+
+buildscript {
+    ext {
+        kotlin_version = '1.0.5-2'
+        springBootVersion = '1.4.3.RELEASE'
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'kotlin'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'idea'
+
+repositories {
+    maven { url 'http://repo.spring.io/snapshot' }
+    mavenCentral()
+}
+
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter')
+    compile 'commons-logging:commons-logging:1.1.1'
+    compile 'log4j:log4j:1.2.17'
+    testCompile 'junit:junit:4.11'
+}
+
+[compileJava, compileTestJava]*.options*.compilerArgs = ['-Xlint:all']
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
