@@ -10,9 +10,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
-		<spring.version>4.3.1.RELEASE</spring.version>
-		<slf4j.version>1.7.21</slf4j.version>
-		<tomcat.version>8.0.36</tomcat.version>
+		<spring.version>4.3.5.RELEASE</spring.version>
+		<slf4j.version>1.7.22</slf4j.version>
+		<tomcat.version>8.5.9</tomcat.version>
 	</properties>
 
 	<dependencies>
@@ -64,7 +64,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -218,7 +218,7 @@
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.5.0</version>
+				<version>1.6.2</version>
 				<configuration>
 					<configuration>
 						<properties>
