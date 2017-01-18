@@ -33,7 +33,8 @@ public class ReproTests {
                 Server.HOST, Server.PORT).build();
 
         Flux<Person> people = client.exchange(request)
-                .flatMap(response -> response.bodyToFlux(Person.class));
+                .flatMap(response -> response.bodyToFlux(Person.class))
+                .doOnEach(System.out::println);
 
         StepVerifier.create(people)
                 .expectNext(new Person("John", 36))

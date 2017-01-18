@@ -1,12 +1,10 @@
 package org.springframework.issues;
 
-
 import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.http.server.reactive.ReactorHttpHandlerAdapter;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.ipc.netty.http.server.HttpServer;
 
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class Server {
 
     static final String HOST = "localhost";
 
-    static final int PORT = 8080;
+    static final int PORT = 8081;
 
     private static List<Person> personList = new ArrayList<>();
 
@@ -35,7 +33,6 @@ public class Server {
         return route(GET("/person").and(accept(APPLICATION_JSON)),
                 (request) -> ServerResponse
                         .ok()
-                        .headers(request.headers().asHttpHeaders())
                         .contentType(APPLICATION_JSON)
                         .body(Flux.fromIterable(personList), Person.class));
     }
