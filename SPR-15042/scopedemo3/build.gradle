@@ -1,0 +1,37 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'scopedemo1'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter')
+	compile('org.apache.commons:commons-pool2')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
