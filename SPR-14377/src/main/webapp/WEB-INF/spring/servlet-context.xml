@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+>
+
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <mvc:message-converters register-defaults="true">
+<!--             <ref bean="jacksonMessageConverter" /> -->
+            <ref bean="formMessageConverter" />
+            <ref bean="byteArrayConverter" />
+            <ref bean="stringMessageConverter" />
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean" />
+
+    <context:component-scan base-package="org.springframework.issues" />
+    <context:annotation-config />
+
+
+<!--     <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> -->
+<!--         <constructor-arg> -->
+<!--             <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"> -->
+<!--                 <property name="featuresToDisable"> -->
+<!--                     <array> -->
+<!--                         <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" /> -->
+<!--                     </array> -->
+<!--                 </property> -->
+<!--                 <property name="featuresToEnable"> -->
+<!--                     <array> -->
+<!--                         <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT" /> -->
+<!--                         <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING" /> -->
+<!--                         <util:constant static-field="com.fasterxml.jackson.databind.DeserializationFeature.READ_ENUMS_USING_TO_STRING" /> -->
+<!--                     </array> -->
+<!--                 </property> -->
+<!--                 <property name="serializationInclusion"> -->
+<!--                     <util:constant static-field="com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL" /> -->
+<!--                 </property> -->
+<!--             </bean> -->
+<!--         </constructor-arg> -->
+<!--         <property name="supportedMediaTypes"> -->
+<!--             <array> -->
+<!--                 <value>application/json</value> -->
+<!--             </array> -->
+<!--         </property> -->
+<!--     </bean> -->
+    <bean id="formMessageConverter" class="org.springframework.http.converter.FormHttpMessageConverter" />
+    <bean id="byteArrayConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <array>
+                <value>application/octet-stream</value>
+                <value>text/csv</value>
+                <value>text/plain</value>
+                <value>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</value>
+                <value>application/pdf</value>
+                <value>application/*</value>
+            </array>
+        </property>
+    </bean>
+    <bean id="stringMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <array>
+                <value>text/html;charset=UTF-8</value>
+                <value>text/javascript</value>
+                <value>text/plain</value>
+            </array>
+        </property>
+    </bean>
+
+</beans>
