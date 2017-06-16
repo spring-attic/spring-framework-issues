@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.example.bug" })
+@ComponentScan(basePackages = { "org.springframework.issues" })
 public class ApplicationStarter {
 
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-spring.application.name: webflux-server-response-bug
+spring.application.name: spr-15677
 server.port: 8181
 
 # Logging

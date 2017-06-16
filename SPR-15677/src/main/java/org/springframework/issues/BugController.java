@@ -1,9 +1,10 @@
 package org.springframework.issues;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 /**
@@ -12,10 +13,10 @@ import reactor.core.publisher.Mono;
 @Controller
 public class BugController {
 
-	@GetMapping(path = "/bug", produces = "text/html; charset=utf-8")
+	@PostMapping(path = "/bug", produces = "text/html; charset=utf-8")
 	@ResponseBody
-	public Mono<ServerResponse> getTest() {
+	public Mono<ResponseEntity<String>> getTest(@RequestBody Mono<String> data) {
 
-		return ServerResponse.ok().body(Mono.just("<html><body><p>This should work</p></body></html>"), String.class);
+		return data.map(s -> "<html><body><p>" + s + "</p></body></html>").flatMap(s -> Mono.just(ResponseEntity.ok(s)));
 	}
 }
