@@ -1,0 +1,6 @@
+spring.application.name: webflux-server-response-bug
+server.port: 8181
+
+# Logging
+logging.level.root: INFO
+
