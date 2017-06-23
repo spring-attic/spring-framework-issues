@@ -1,0 +1,5 @@
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework:spring-framework-bom:5.0.0.BUILD-SNAPSHOT"
+	}
+}
