@@ -12,13 +12,23 @@ public class ClientApp {
 
 	public static void main(String[] args) {
 		int toBeSent = 257;
-		Flux<SendEvent> flux = Flux.range(1, toBeSent)
-				.map(count -> new SendEvent(String.valueOf(count)));
+		Flux<String> flux = Flux.range(1, toBeSent).map(count -> {
+			String result = "{\"content\":" + "\"" + count + "\"}";
+			if (count == 1) {
+				return "[" + result;
+			}
+			else if (count == toBeSent) {
+				return "," + result + "]";
+			}
+			else {
+				return "," + result;
+			}
+		});
 
 		WebClient client = WebClient.create();
 		ClientResponse result = client.post().uri(URI.create("http://localhost:8080/eventSink"))
-				.contentType(MediaType.APPLICATION_STREAM_JSON)
-				.body(flux, SendEvent.class)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(flux, String.class)
 				.exchange()
 				.block();
 

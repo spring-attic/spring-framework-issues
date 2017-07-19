@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SendEventController {
 
-	@PostMapping(value = "eventSink", consumes = MediaType.APPLICATION_STREAM_JSON_VALUE)
+	@PostMapping(value = "eventSink", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<ResponseEntity<String>> eventSink(@RequestBody Flux<SendEvent> flux) {
 		return flux
 				.doOnNext(event -> System.err.println(event.getContent()))
