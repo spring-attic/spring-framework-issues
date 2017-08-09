@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Foo {
 
-	// The parent service with parent generic type is wanted. 
-	// But I think a child service with child generic type should also work. 
+	// A dependency with type "ParentService<ParentGeneric>", 
+	// but only candidate with type ChildService<ChildGeneric> is supplied.(The ChildService is the candidate) 
+	// I think this should work, (a generic covariance type should be accepted), but spring refused it.
 	@Autowired
 	ParentService<ParentGeneric> serv;
 	
