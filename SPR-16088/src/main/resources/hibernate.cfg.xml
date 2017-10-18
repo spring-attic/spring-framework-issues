@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+    <session-factory>
+        <!-- disable hibernate ORM + javax.persistence for now. We're not using it on our persisted entities.
+            http://docs.jboss.org/hibernate/validator/4.2/reference/en-US/html_single/#validator-checkconstraints-orm-hibernateevent -->
+        <property name="javax.persistence.validation.mode">NONE</property>
+
+        <property name="connection.autocommit">false</property>
+
+        <property name="jadira.usertype.databaseZone">jvm</property>
+        <property name="jadira.usertype.javaZone">jvm</property>
+
+        <!-- see: http://stackoverflow.com/questions/32968527/hibernate-sequence-doesnt-exist -->
+        <property name="hibernate.id.new_generator_mappings">false</property>
+
+        <mapping class="org.springframework.issues.TestEntity" />
+
+    </session-factory>
+</hibernate-configuration>

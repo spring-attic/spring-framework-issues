@@ -1,0 +1,3 @@
+# Repro project for SPR-16088
+
+To make things simple, this is just a spring boot project (but it is not a spring boot issue). You can just run `MyTest` to see the issue. We would expect to see the constraint violation from creating two rows with the same value (10) but instead the first connection locks the second and we get a timeout. To see this "working", uncomment the two `@Bean` definitions in `ApplicationConfig.java`. Using the `HibernateTransactionManager` will place the data sources in the `TransactionSynchronizationManager` which allows the connections to be shared. The JTA transaction manager (and the Hibernate `SessionFactory`) do not call `TransactionSynchronizationManager.bindResource(...)` and thus the JdbcTemplate does not share the same connection.
