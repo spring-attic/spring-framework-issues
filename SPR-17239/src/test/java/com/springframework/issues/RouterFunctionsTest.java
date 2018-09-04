@@ -4,9 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.server.HandlerStrategies;
-import org.springframework.web.server.i18n.FixedLocaleContextResolver;
-
-import java.util.Locale;
 
 public class RouterFunctionsTest {
 
@@ -18,7 +15,6 @@ public class RouterFunctionsTest {
                 .bindToRouterFunction(RouterFunctions.router())
                 .handlerStrategies(HandlerStrategies.builder()
                         .exceptionHandler(new ExceptionHandler())
-                        .localeContextResolver(new FixedLocaleContextResolver(Locale.ENGLISH))
                         .build())
                 .build();
     }
