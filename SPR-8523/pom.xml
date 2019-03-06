@@ -54,13 +54,13 @@
 		<repository>
 			<id>spring-maven-snapshot</id>
 			<name>Springframework Maven Snapshot Repository</name>
-			<url>http://maven.springframework.org/snapshot</url>
+			<url>https://maven.springframework.org/snapshot</url>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
 		<repository>
 			<id>maven-central</id>
 			<name>Maven Central Repository</name>
-			<url>http://repo1.maven.org/maven2/</url>
+			<url>https://repo1.maven.org/maven2/</url>
 		</repository>
 	</repositories>
 	<properties>

@@ -50,7 +50,7 @@
 	<repositories>
 		<repository>
 			<id>springsource</id>
-			<url>http://repo.springsource.org/snapshot</url>
+			<url>https://repo.springsource.org/snapshot</url>
 		</repository>
 	</repositories>
 </project>

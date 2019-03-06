@@ -8,7 +8,7 @@ apply plugin: 'idea'
 repositories {
     mavenLocal()
     mavenCentral()
-    mavenRepo urls: 'http://maven.springframework.org/snapshot'
+    mavenRepo urls: 'https://maven.springframework.org/snapshot'
 }
 
 dependencies {

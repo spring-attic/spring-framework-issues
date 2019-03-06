@@ -37,7 +37,7 @@
 	<repositories>
 		<repository>
 			<id>s2-snapshot</id>
-			<url>http://repo.springsource.org/snapshot</url>
+			<url>https://repo.springsource.org/snapshot</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>

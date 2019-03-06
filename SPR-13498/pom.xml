@@ -294,7 +294,7 @@
 		<repository>
 			<id>spring-maven-snapshot</id>
 			<name>Springframework Maven Snapshot Repository</name>
-			<url>http://repo.spring.io/snapshot</url>
+			<url>https://repo.spring.io/snapshot</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>

@@ -6,7 +6,7 @@
     <packaging>war</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <name>Repro project for SPR-9756</name>
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
 
     <properties>
         <java-version>1.6</java-version>
@@ -18,7 +18,7 @@
         <repository>
         <id>s2</id>
         <name>s2 snapshot</name>
-        <url>http://repo.springsource.org/libs-snapshot</url>
+        <url>https://repo.springsource.org/libs-snapshot</url>
         </repository>
     </repositories>
 

@@ -67,7 +67,7 @@
 		<repository>
 			<id>repo.springsource.org</id>
 			<name>SpringSource Repository</name>
-			<url>http://repo.springsource.org/libs-snapshot</url>
+			<url>https://repo.springsource.org/libs-snapshot</url>
 		</repository>
 	</repositories>
 	<build>

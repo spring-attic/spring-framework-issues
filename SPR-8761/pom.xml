@@ -31,7 +31,7 @@
 		<repository>
 			<id>springsource</id>
 			<name>springsource</name>
-			<url>http://repo.springsource.org/libs-snapshot</url>
+			<url>https://repo.springsource.org/libs-snapshot</url>
 		</repository>
 	</repositories>
 </project>

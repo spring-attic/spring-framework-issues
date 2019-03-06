@@ -9,7 +9,7 @@
 	<repositories>
 		<repository>
 			<id>springsource</id>
-			<url>http://repo.springsource.org/libs-snapshot</url>
+			<url>https://repo.springsource.org/libs-snapshot</url>
 		</repository>
 	</repositories>
 	<dependencies>

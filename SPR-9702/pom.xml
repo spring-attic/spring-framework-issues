@@ -22,7 +22,7 @@
 		<repository>
 			<id>spring-maven-snapshot</id>
 			<name>Springframework Maven Snapshot Repository</name>
-			<url>http://repo.springsource.org/libs-snapshot</url>
+			<url>https://repo.springsource.org/libs-snapshot</url>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
 	</repositories>

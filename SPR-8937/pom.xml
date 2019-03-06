@@ -8,7 +8,7 @@
 	<version>0.0.1.SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Spring JIRA Bug Reproduce</name>
-	<url>http://www.springframework.org</url>
+	<url>https://www.springframework.org</url>
 	<properties>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<!-- <spring.framework.version>3.0.7.RELEASE</spring.framework.version> -->

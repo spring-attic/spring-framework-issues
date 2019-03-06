@@ -8,7 +8,7 @@
 	<version>1.0.0.CI-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Spring Utility</name>
-	<url>http://www.springframework.org</url>
+	<url>https://www.springframework.org</url>
 	<description>
 		<![CDATA[
       This project is a minimal jar utility with Spring configuration.

@@ -40,7 +40,7 @@
     <licenses>
         <license>
             <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
     <developers>
@@ -48,22 +48,22 @@
             <id>yes2000</id>
             <name>Kent Yeh</name>
             <email>kent.yeh????@gmail.com</email>
-            <url>http://code.google.com/p/javawiki/wiki/StarupMaven?wl=zh-Hant</url>
+            <url>https://code.google.com/p/javawiki/wiki/StarupMaven?wl=zh-Hant</url>
             <roles>
                 <role>architect</role>
                 <role>developer</role>
             </roles>
             <timezone>+8</timezone>
             <properties>
-                <picUrl>http://lh3.googleusercontent.com/-riyCbTcpYdo/AAAAAAAAAAI/AAAAAAAAAAA/47MhS2LUlZo/s48-c-k/photo.jpg</picUrl>
+                <picUrl>https://lh3.googleusercontent.com/-riyCbTcpYdo/AAAAAAAAAAI/AAAAAAAAAAA/47MhS2LUlZo/s48-c-k/photo.jpg</picUrl>
             </properties>
         </developer>
     </developers>
     
     <!--Defaine your Srouce Management,設定源碼版本管理-->
     <scm>
-        <url>http://code.google.com/p/test4spring4/source/browse/trunk/</url>
-        <connection>scm:svn:http://test4spring4.googlecode.com/svn/trunk/</connection>
+        <url>https://code.google.com/p/test4spring4/source/browse/trunk/</url>
+        <connection>scm:svn:https://test4spring4.googlecode.com/svn/trunk/</connection>
         <developerConnection>scm:svn:https://test4spring4.googlecode.com/svn/trunk/</developerConnection>
     </scm>
 
@@ -71,7 +71,7 @@
         <repository>
             <id>gwtrepo</id>
             <name>Kent's Repository</name>
-            <url>http://gwtrepo.googlecode.com/svn/repo</url>
+            <url>https://gwtrepo.googlecode.com/svn/repo</url>
         </repository>
     </repositories>
     
@@ -677,14 +677,14 @@
                                 <verbose>false</verbose>
                                 <linksource>true</linksource>
                                 <links>
-                                    <link>http://download.oracle.com/javase/7/docs/api/</link>
-                                    <link>http://download.oracle.com/javaee/7/api/</link>
-                                    <link>http://docs.spring.io/spring/docs/current/javadoc-api/</link>
-                                    <link>http://docs.spring.io/spring-security/site/docs/current/apidocs/</link>
-                                    <link>http://docs.spring.io/spring-mobile/docs/current/api/</link>
-                                    <link>http://docs.jboss.org/hibernate/stable/core/javadocs/</link>
-                                    <link>http://logging.apache.org/log4j/2.x/log4j-api/apidocs/</link>
-                                    <link>http://logging.apache.org/log4j/2.x/log4j-core/apidocs/</link>
+                                    <link>https://download.oracle.com/javase/7/docs/api/</link>
+                                    <link>https://download.oracle.com/javaee/7/api/</link>
+                                    <link>https://docs.spring.io/spring/docs/current/javadoc-api/</link>
+                                    <link>https://docs.spring.io/spring-security/site/docs/current/apidocs/</link>
+                                    <link>https://docs.spring.io/spring-mobile/docs/current/api/</link>
+                                    <link>https://docs.jboss.org/hibernate/stable/core/javadocs/</link>
+                                    <link>https://logging.apache.org/log4j/2.x/log4j-api/apidocs/</link>
+                                    <link>https://logging.apache.org/log4j/2.x/log4j-core/apidocs/</link>
                                 </links>
                             </configuration>
                             <reportSets>
