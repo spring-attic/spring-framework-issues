@@ -1,5 +1,5 @@
 ~~ @version $Revision$ ($Author$) $Date$
-~~ 格式請見 http://maven.apache.org/guides/mini/guide-apt-format.html
+~~ 格式請見 https://maven.apache.org/guides/mini/guide-apt-format.html
 
  -----
  APT 格式說明
@@ -10,5 +10,5 @@
 
 APT 格式說明
 
-  APT 格式請參考{{{http://maven.apache.org/guides/mini/guide-apt-format.html}線上說明}}.
+  APT 格式請參考{{{https://maven.apache.org/guides/mini/guide-apt-format.html}線上說明}}.
 

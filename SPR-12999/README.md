@@ -17,15 +17,15 @@ Go to http://localhost:8080/SPR-12999/maven/log4j/ - this should serve HTTP 404 
 ## Deploying
 
 It is possible to deploy your application directly from the command-line
-using maven. You can use either [cargo](http://cargo.codehaus.org/) or
-the [jetty plugin](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html)
+using maven. You can use either [cargo](https://cargo.codehaus.org/) or
+the [jetty plugin](https://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html)
 to run on a wide range of containers.
 
 ### Cargo
 
 By default Cargo is configured to start `Tomcat7` and can be invoked by
 running `mvn package cargo:run`. Cargo can also run a [wide range of other
-containers](http://cargo.codehaus.org/Containers) and you can easily add
+containers](https://cargo.codehaus.org/Containers) and you can easily add
 yours by editing the `pom.xml`. For instance, a `tomcat8` profile
 has been added and can be invoked via `mvn package cargo:run -Ptomcat8`.
 

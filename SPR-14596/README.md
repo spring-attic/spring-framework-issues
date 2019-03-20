@@ -16,8 +16,8 @@ using maven. See the next two sections on Cargo and Jetty.
 
 ### Cargo
 
-You can deploy with the [Cargo Maven plugin](http://cargo.codehaus.org/) which
-supports a wide [range of servers](http://cargo.codehaus.org/Containers).
+You can deploy with the [Cargo Maven plugin](https://cargo.codehaus.org/) which
+supports a wide [range of servers](https://cargo.codehaus.org/Containers).
 The required command is `mvn package cargo:run`.
 
 By default Cargo is configured to start with `Tomcat 8` but you can easily
@@ -27,7 +27,7 @@ and version. The pom.xml  or to switch to debug settings.
 ### Jetty
 
 You can also deploy with the
-[Jetty Maven plugin](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html).
+[Jetty Maven plugin](https://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html).
 The required command is `mvn jetty:run` or `mvnDebug jetty:run`.
 
 ## Logging

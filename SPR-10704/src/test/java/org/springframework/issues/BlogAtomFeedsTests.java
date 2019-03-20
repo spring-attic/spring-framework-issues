@@ -52,7 +52,7 @@ public class BlogAtomFeedsTests {
 	public void feedHasCorrectMetadataMockMvcXpath() throws Exception {
 		mockMvc.perform(get("/blog.atom"))
 				.andExpect(xpath("/feed/title").string("Test Feed"))
-				.andExpect(xpath("/feed/icon").string("http://www.example.com/favicon.ico"))
+				.andExpect(xpath("/feed/icon").string("https://www.example.com/favicon.ico"))
 				.andReturn();
 	}
 
@@ -62,7 +62,7 @@ public class BlogAtomFeedsTests {
 		Document doc = doGetForDocument("/blog.atom");
 
 		assertThat(xpath.evaluate("/feed/title", doc), is("Test Feed"));
-		assertThat(xpath.evaluate("/feed/icon", doc), is("http://www.example.com/favicon.ico"));
+		assertThat(xpath.evaluate("/feed/icon", doc), is("https://www.example.com/favicon.ico"));
 	}
 
 	private Document doGetForDocument(String path) throws Exception {

@@ -20,7 +20,7 @@ public class RestTemplateTests {
 
     @Test
     public void google() {
-        String url = "http://www.google.com/ig/calculator?q=1USD=?EUR";
+        String url = "https://www.google.com/ig/calculator?q=1USD=?EUR";
 		String response = this.restTemplate.getForObject(url, String.class);
 
         assertEquals("{lhs: \"1 U.S. dollar\",rhs: \"1 U.S. dollar\",error: \"\",icc: true}", response);

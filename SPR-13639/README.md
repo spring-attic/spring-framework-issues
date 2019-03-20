@@ -5,8 +5,8 @@ class in your IDE or on the command line with `mvn test`.
 
 ### Cargo
 
-You can deploy with the [Cargo Maven plugin](http://cargo.codehaus.org/) which
-supports a wide [range of servers](http://cargo.codehaus.org/Containers).
+You can deploy with the [Cargo Maven plugin](https://cargo.codehaus.org/) which
+supports a wide [range of servers](https://cargo.codehaus.org/Containers).
 The required command is `mvn package cargo:run`.
 
 By default Cargo is configured to start with `Tomcat 8` but you can easily

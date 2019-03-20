@@ -12,7 +12,7 @@ public class BlogPostAtomViewer extends AbstractAtomFeedView {
 	@Override
 	protected void buildFeedMetadata(Map<String, Object> model, Feed feed, HttpServletRequest request) {
 		feed.setTitle("Test Feed");
-		feed.setIcon("http://www.example.com/favicon.ico");
+		feed.setIcon("https://www.example.com/favicon.ico");
 		super.buildFeedMetadata(model, feed, request);
 	}
 

@@ -27,7 +27,7 @@ Install WildFly 8.1 then configure add a postgres module:
 ```
 cd $JBOSS_HOME
 mkdir -p modules/org/postgresql/main
-wget http://jdbc.postgresql.org/download/postgresql-9.3-1102.jdbc41.jar
+wget https://jdbc.postgresql.org/download/postgresql-9.3-1102.jdbc41.jar
 mv postgresql-9.3-1102.jdbc41.jar modules/org/postgresql/main
 ```
 

@@ -30,7 +30,7 @@ project to demonstrate it.
 ### First-time setup
 
 1. [Create a Github account](https://github.com/signup/free) if you don't already have one
-1. [Fork this repository and clone it locally](http://help.github.com/fork-a-repo/)
+1. [Fork this repository and clone it locally](https://help.github.com/fork-a-repo/)
 
 ### Create a project that reproduces your issue
 
@@ -82,7 +82,7 @@ git commit -m "Add repro project for SPR-9876"
 git push
 ```
 
-5\. [Send a pull request from the Github web interface](http://help.github.com/send-pull-requests/)
+5\. [Send a pull request from the Github web interface](https://help.github.com/send-pull-requests/)
 
 * The Spring Framework team will be notified and will look at your request
 

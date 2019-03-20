@@ -1,11 +1,11 @@
 /*
  * jQuery UI Tabs 1.8.2
  *
- * Copyright (c) 2010 AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright (c) 2010 AUTHORS.txt (https://jqueryui.com/about)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
- * http://docs.jquery.com/UI/Tabs
+ * https://docs.jquery.com/UI/Tabs
  *
  * Depends:
  *	jquery.ui.core.js
@@ -370,7 +370,7 @@ $.widget("ui.tabs", {
 						showTab(el, $show);
 					});
 
-					self.load(self.anchors.index(this)); // TODO make passing in node possible, see also http://dev.jqueryui.com/ticket/3171
+					self.load(self.anchors.index(this)); // TODO make passing in node possible, see also https://dev.jqueryui.com/ticket/3171
 					
 					this.blur();
 					return false;

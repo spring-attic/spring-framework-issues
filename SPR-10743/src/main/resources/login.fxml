@@ -8,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="482.0" style="-fx-background-color: lightblue" xmlns:fx="http://javafx.com/fxml" fx:controller="org.springframework.issues.javafx.controller.LoginController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="482.0" style="-fx-background-color: lightblue" xmlns:fx="https://www.oracle.com/technetwork/java/javafx/" fx:controller="org.springframework.issues.javafx.controller.LoginController">
   <children>
     <GridPane id="GridPane" layoutX="48.0" layoutY="115.0">
       <children>

@@ -20,7 +20,7 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
  */
 public class ReproTests {
 
-    private UriComponentsBuilder baseUri = UriComponentsBuilder.fromHttpUrl("http://example.com");
+    private UriComponentsBuilder baseUri = UriComponentsBuilder.fromHttpUrl("https://example.com");
 
 
     /**
@@ -33,7 +33,7 @@ public class ReproTests {
         controller.getMessage("MSG0001");
         URI uri = MvcUriComponentsBuilder.relativeTo(baseUri).withMethodCall(controller).build().toUri();
 
-        assertThat(uri, is(URI.create("http://example.com/messages/MSG0001")));
+        assertThat(uri, is(URI.create("https://example.com/messages/MSG0001")));
     }
 
 
@@ -47,7 +47,7 @@ public class ReproTests {
         controller.getMessageWithEntity("MSG0001");
         URI uri = MvcUriComponentsBuilder.relativeTo(baseUri).withMethodCall(controller).build().toUri();
 
-        assertThat(uri, is(URI.create("http://example.com/messages/MSG0001")));
+        assertThat(uri, is(URI.create("https://example.com/messages/MSG0001")));
     }
 
 

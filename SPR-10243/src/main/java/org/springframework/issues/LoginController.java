@@ -22,7 +22,7 @@ public class LoginController {
 		if (result.hasErrors()) {
 			return null;
 		}
-		return "redirect:http://www.springsource.org";
+		return "redirect:https://www.springsource.org";
 	}
 
 }
