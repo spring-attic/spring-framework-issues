@@ -4,9 +4,9 @@
 	xmlns:amq="http://activemq.apache.org/schema/core"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		https://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://activemq.apache.org/schema/core
-		http://activemq.apache.org/schema/core/activemq-core.xsd">
+		https://activemq.apache.org/schema/core/activemq-core.xsd">
 
 	<beans>
 		<amq:broker useJmx="false" persistent="false">

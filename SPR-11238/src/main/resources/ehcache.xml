@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">    
+ xsi:noNamespaceSchemaLocation="https://www.ehcache.org/ehcache.xsd">    
     <diskStore path="java.io.tmpdir"/>
     <defaultCache eternal="false" maxElementsInMemory="100" overflowToDisk="true" />
     <cache name="springmvc.model.Member" maxEntriesLocalHeap="50" eternal="false" timeToLiveSeconds="600">

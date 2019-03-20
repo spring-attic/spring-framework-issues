@@ -1,8 +1,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxws="http://cxf.apache.org/jaxws"
-	xsi:schemaLocation="http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
-      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-      http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
+	xsi:schemaLocation="http://cxf.apache.org/core https://cxf.apache.org/schemas/core.xsd
+      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://cxf.apache.org/jaxws https://cxf.apache.org/schemas/jaxws.xsd"
 	xmlns:p="http://www.springframework.org/schema/p">
 
 	<bean id="conn1" class="org.springframework.jira.GoodBean">

@@ -3,8 +3,8 @@
             xmlns:beans="http://www.springframework.org/schema/beans"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	    xmlns:c="http://www.springframework.org/schema/c"
-            xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+            xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
     <!--chnage enabled to activate funtionality,如需開放相關功能，將值設為enabled-->
     <global-method-security pre-post-annotations="disabled" secured-annotations="disabled" jsr250-annotations="disabled"/>
     <!--Disable static path check to save time. 不過濾特定路徑以節省時間-->
@@ -16,7 +16,7 @@
     <http use-expressions="true" disable-url-rewriting="true"  entry-point-ref="authEntryPoint">
         <intercept-url pattern="/index" access="permitAll" requires-channel="http"/>
         <intercept-url pattern="/changePassword" access="fullyAuthenticated" requires-channel="https"/>
-        <!--http://www.pcnet.idv.tw/pcnet/network/network_ip_addr.htm CIDR表示法-->
+        <!--https://www.pcnet.idv.tw/pcnet/network/network_ip_addr.htm CIDR表示法-->
         <intercept-url pattern="/admin/**" access="(hasIpAddress('192.168.0.0/16') or hasIpAddress('127.0.0.1')) and hasRole('ROLE_ADMIN')" requires-channel="any"/>
         <intercept-url pattern="/user/**" access="authenticated" requires-channel="any"/> 
         <intercept-url pattern="/json/**" access="isAuthenticated()" requires-channel="any"/>
@@ -24,13 +24,13 @@
         
         <openid-login login-page="/identifier" authentication-failure-url="/error?authfailed=true"  login-processing-url="/j_spring_openid_security_check" user-service-ref="openIdUserService" >
             <attribute-exchange>
-                <!-- Spec see http://www.hyves-developers.nl/documentation/openid/specifications--> 
+                <!-- Spec see https://www.hyves-developers.nl/documentation/openid/specifications--> 
                 <!--spring security not support Simple Registration Attribute(sReg).因為spring security 不支援Simple Registration Attribute,所以必須將sReg指定為Ax交換屬性-->       
-                <openid-attribute name="nickname" type="http://axschema.org/namePerson/friendly" required="true" />
-                <openid-attribute name="fullname" type="http://axschema.org/namePerson" required="false" />
+                <openid-attribute name="nickname" type="https://axschema.org/namePerson/friendly" required="true" />
+                <openid-attribute name="fullname" type="https://axschema.org/namePerson" required="false" />
                 <!--Other customed defind attribute. 以下為配合OpenId Provider所提供交換屬性的schema,本專案不會用到這些屬性,省略以減少url長度
-                <openid-attribute name="customAttribute1" type="http://www.norbelbaby.com.tw/schema/1.0/customAttribute1" required="false" />
-                <openid-attribute name="customAttribute2" type="http://www.norbelbaby.com.tw/schema/1.0/customAttribute2" required="false" />
+                <openid-attribute name="customAttribute1" type="https://www.norbelbaby.com.tw/schema/1.0/customAttribute1" required="false" />
+                <openid-attribute name="customAttribute2" type="https://www.norbelbaby.com.tw/schema/1.0/customAttribute2" required="false" />
                 -->
             </attribute-exchange>
         </openid-login>

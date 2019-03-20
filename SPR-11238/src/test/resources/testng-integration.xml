@@ -1,4 +1,4 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Integration" junit="false" parallel="tests" thread-count="1" configfailurepolicy="skip" verbose="0" skipfailedinvocationcounts="false" annotations="JDK">
     <test verbose="1" name="integrate-test">
         <!--browser:  firefox , googlechrome , iexplore-->

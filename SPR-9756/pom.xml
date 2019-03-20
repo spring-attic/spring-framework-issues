@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.issues</groupId>
     <artifactId>SPR-9756</artifactId>
     <packaging>war</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <name>Repro project for SPR-9756</name>
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
 
     <properties>
         <java-version>1.6</java-version>
@@ -18,7 +18,7 @@
         <repository>
         <id>s2</id>
         <name>s2 snapshot</name>
-        <url>http://repo.springsource.org/libs-snapshot</url>
+        <url>https://repo.springsource.org/libs-snapshot</url>
         </repository>
     </repositories>
 

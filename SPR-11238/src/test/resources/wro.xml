@@ -8,9 +8,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
     <group name="all">
-        <css>http://code.jquery.com/ui/&jqueryui.version;/themes/smoothness/jquery-ui.css</css>
-        <js>http://code.jquery.com/jquery-&jquery.version;.js</js>
-        <js>http://code.jquery.com/jquery-migrate-&jquery.migrate.version;.js</js>
-        <js>http://code.jquery.com/ui/&jqueryui.version;/jquery-ui.js</js>
+        <css>https://code.jquery.com/ui/&jqueryui.version;/themes/smoothness/jquery-ui.css</css>
+        <js>https://code.jquery.com/jquery-&jquery.version;.js</js>
+        <js>https://code.jquery.com/jquery-migrate-&jquery.migrate.version;.js</js>
+        <js>https://code.jquery.com/ui/&jqueryui.version;/jquery-ui.js</js>
     </group>
 </groups>
