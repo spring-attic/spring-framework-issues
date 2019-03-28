@@ -33,7 +33,7 @@ idea {
 version = projectVersion
 
 repositories {
-    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2/' }
 }
 
 sourceCompatibility = javaVersion

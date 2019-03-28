@@ -7,7 +7,7 @@ apply plugin: 'idea'
 
 repositories {
     maven { url 'http://repo.spring.io/snapshot' }
-    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2/' }
 }
 
 dependencies {

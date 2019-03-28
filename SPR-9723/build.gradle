@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 
 repositories {
     maven { url 'http://repo.grails.org/grails/core' }
-    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2/' }
 }
 
 dependencies {

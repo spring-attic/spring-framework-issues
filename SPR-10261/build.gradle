@@ -6,7 +6,7 @@ apply plugin: 'eclipse-wtp'
 ext.springVersion = "3.2.1.RELEASE"
 
 repositories {
-    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2/' }
 }
 
 dependencies {

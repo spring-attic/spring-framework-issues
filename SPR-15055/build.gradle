@@ -7,8 +7,8 @@ buildscript {
         springBootVersion = '1.4.3.RELEASE'
     }
     repositories {
-        jcenter()
-        mavenCentral()
+        maven { url 'https://jcenter.bintray.com/' }
+        maven { url 'https://repo.maven.apache.org/maven2/' }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -24,7 +24,7 @@ apply plugin: 'idea'
 
 repositories {
     maven { url 'http://repo.spring.io/snapshot' }
-    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2/' }
 }
 
 dependencies {

@@ -9,7 +9,7 @@ buildscript {
         maven {
             url "http://repo.spring.io/libs-milestone"
         }
-        mavenCentral()
+        maven { url 'https://repo.maven.apache.org/maven2/' }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -20,7 +20,7 @@ repositories {
     maven {
         url "http://repo.spring.io/libs-milestone"
     }
-    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2/' }
 }
 apply plugin: 'java'
 apply plugin: 'eclipse'

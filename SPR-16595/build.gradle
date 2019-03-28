@@ -3,7 +3,7 @@ buildscript {
 		springBootVersion = '2.1.0.M3'
 	}
 	repositories {
-		mavenCentral()
+		maven { url 'https://repo.maven.apache.org/maven2/' }
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
 	}
@@ -27,7 +27,7 @@ sourceCompatibility = 1.8
 ext['spring.version']          = '5.1.0.BUILD-SNAPSHOT'
 
 repositories {
-	mavenCentral()
+	maven { url 'https://repo.maven.apache.org/maven2/' }
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
 }

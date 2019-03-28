@@ -2,7 +2,7 @@ buildscript {
     repositories {
         maven { url "https://repo.spring.io/libs-release" }
         mavenLocal()
-        mavenCentral()
+        maven { url 'https://repo.maven.apache.org/maven2/' }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
@@ -21,7 +21,7 @@ jar {
 
 repositories {
     mavenLocal()
-    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2/' }
     maven { url "https://repo.spring.io/libs-release" }
 }
 
